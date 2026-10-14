@@ -1239,3 +1239,38 @@ html::-webkit-scrollbar{width:0;height:0}
 @media(max-width:980px){.skx{grid-template-columns:repeat(2,1fr)}.skx-strips{grid-template-columns:1fr}}
 @media(max-width:620px){.skx{grid-template-columns:1fr}}
 .skx-c .skx-t{margin-top:4px}
+
+/* parcours: editorial timeline (year, company, what I did, key figure) */
+.tlx{border-bottom:1px solid var(--line);margin-top:8px}
+.tlx-r{display:grid;grid-template-columns:minmax(150px,210px) minmax(200px,1fr) minmax(280px,1.4fr);gap:clamp(18px,3vw,44px);align-items:start;padding:clamp(26px,3.4vw,40px) clamp(8px,1.4vw,20px);border-top:1px solid var(--line);transition:background .25s}
+.tlx-r:hover{background:color-mix(in srgb,var(--acc) 6%,transparent)}
+.tlx-y{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:clamp(40px,5vw,72px);line-height:.9;color:var(--acc);display:flex;align-items:baseline;gap:10px}
+.tlx-y i{font-style:normal;font-size:.45em}
+.tlx-co{display:flex;flex-direction:column;gap:8px}
+.tlx-logo{height:30px;display:flex;align-items:center}
+.tlx-logo img{height:100%;width:auto;max-width:170px;object-fit:contain;object-position:left}
+.tlx-logo img.dk{display:none}
+:root[data-theme="dark"] .tlx-logo img.dk{display:block}:root[data-theme="dark"] .tlx-logo img.lt{display:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .tlx-logo img.dk{display:block}:root:not([data-theme="light"]) .tlx-logo img.lt{display:none}}
+.tlx-anon{align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:6px 11px}
+.tlx-co h3{font-size:19px;line-height:1.25;margin:4px 0 0}
+.tlx-co small{font-size:13.5px;color:var(--mute);font-weight:600}
+.tlx-d p{margin:0;font-size:15.5px;line-height:1.65;color:var(--mute)}
+.tlx-d .tlx-k{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:16px;padding:9px 16px;border-radius:999px;background:color-mix(in srgb,var(--acc) 12%,transparent);border:1px solid color-mix(in srgb,var(--acc) 28%,transparent)}
+.tlx-k b{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:20px;color:var(--acc);white-space:nowrap}
+.tlx-k span{font-size:13.5px;font-weight:600;color:var(--ink)}
+@media(max-width:900px){.tlx-r{grid-template-columns:1fr;gap:12px}.tlx-y{font-size:44px}}
+.tlx-y{flex-direction:column;align-items:flex-start;gap:8px}
+.tlx-y i{font:700 11px/1 var(--font,Archivo);letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:var(--acc);padding:5px 9px;border-radius:999px}
+
+/* parcours: skills as editorial rows, same language as the timeline */
+.skr{border-bottom:1px solid var(--line);margin-top:8px}
+.skr-r{display:grid;grid-template-columns:70px minmax(260px,1.1fr) minmax(260px,1fr);gap:clamp(18px,3vw,44px);align-items:baseline;padding:clamp(22px,2.8vw,34px) clamp(8px,1.4vw,20px);border-top:1px solid var(--line);transition:background .25s}
+.skr-r:hover{background:color-mix(in srgb,var(--acc) 6%,transparent)}
+.skr-n{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:18px;color:var(--acc)}
+.skr-h h3{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;text-transform:uppercase;font-size:clamp(22px,2.6vw,36px);line-height:1;color:var(--ink);margin:0}
+.skr-h p{margin:10px 0 0;font-size:15.5px;line-height:1.55;color:var(--mute)}
+.skr-t{margin:0;font-size:15.5px;line-height:1.9;color:var(--mute)}
+.skr-t i{font-style:normal;margin:0 8px;color:var(--acc)}
+.skr-t span.key{color:var(--acc);font-weight:800}
+@media(max-width:900px){.skr-r{grid-template-columns:44px 1fr;row-gap:8px}.skr-t{grid-column:2}}

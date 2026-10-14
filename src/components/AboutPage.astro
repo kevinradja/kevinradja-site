@@ -7,7 +7,7 @@ const tl = [
   ['2026 →', T('Manager Data & Digital · grand groupe automobile', 'Data & Digital Manager · major automotive group'), T('Registre de formations, outils partagés avec les RH, cockpit d’adoption du portail interne. Une équipe que j’accompagne en coach plutôt qu’en chef. En parallèle, activité freelance Data & BI.', 'Training registry, tools shared with HR, adoption cockpit for the internal portal. A team I support as a coach rather than a boss. Freelance Data & BI activity alongside.')],
   ['2025', T('Business Information · Coface, Europe centrale & de l’Est', 'Business Information · Coface, Central & Eastern Europe'), T('Cockpit commercial Power BI pour 12 pays et 500+ utilisateurs, clôtures mensuelles sécurisées, qualité des bases de prospection B2B. Reporting −30 %.', 'Power BI sales cockpit for 12 countries and 500+ users, secured monthly closes, B2B prospecting data quality. Reporting −30%.')],
   ['2024', T('Perf & Data · Google France', 'Perf & Data · Google France'), T('Cockpit de mesure pour 180 grands comptes (Plx/BigQuery, Google Sheets), accompagnement GA4, Consent Mode et Enhanced Conversions des annonceurs du CAC 40.', 'Measurement cockpit for 180 key accounts (Plx/BigQuery, Google Sheets), GA4, Consent Mode and Enhanced Conversions support for CAC 40 advertisers.')],
-  ['2023', T('Corporate Strategic Planning · Dassault Systèmes', 'Corporate Strategic Planning · Dassault Systèmes'), T('Pipelines Python et cubes IBM TM1 du Global Analytics Model : 12 industries, 6 marques, données IDC, Gartner, Omdia, Oxford Economics. Traitement 100 h → quelques heures.', 'Python pipelines and IBM TM1 cubes for the Global Analytics Model: 12 industries, 6 brands, IDC, Gartner, Omdia and Oxford Economics data. Processing 100 h → a few hours.')],
+  ['2023', T('Corporate Strategic Planning · Dassault Systèmes', 'Corporate Strategic Planning · Dassault Systèmes'), T('Pipelines Python et cubes IBM TM1 du Global Analytics Model : 12 industries, 6 marques, données IDC, Gartner, Omdia, Oxford Economics. Traitement des données : 100 h → 3 h.', 'Python pipelines and IBM TM1 cubes for the Global Analytics Model: 12 industries, 6 brands, IDC, Gartner, Omdia and Oxford Economics data. Data processing: 100 h → 3 h.')],
   ['2022', T('Équipe Web · KPMG France & KPMG Avocats', 'Web team · KPMG France & KPMG Avocats'), T('Content Factory sur Adobe Experience Manager, SEO, lancement du site KPMG Avocats avec près de 300 articles migrés.', 'Content Factory on Adobe Experience Manager, SEO, launch of the KPMG Avocats site with close to 300 migrated articles.')],
 ];
 // Company names in the timeline take their brand colour (the automotive group stays neutral: anonymised).
@@ -19,6 +19,13 @@ const brand = (s: string) => esc(s)
   .replace('Dassault Systèmes', '<span class="b-ds">Dassault Systèmes</span>')
   .replace(/KPMG/g, '<span class="b-kp">KPMG</span>');
 const dot = (s: string) => /Coface/.test(s) ? 'cf' : /Google/.test(s) ? 'go' : /Dassault/.test(s) ? 'ds' : /KPMG/.test(s) ? 'kp' : '';
+const tlx = [
+  { y: '2026', logo: null, co: T('Grand groupe automobile', 'Major automotive group'), k: '+35 %', kl: T('d’engagement des utilisateurs actifs', 'active user engagement') },
+  { y: '2025', logo: ['coface.svg', 'coface-dark.svg'], co: 'Coface', k: '−30 %', kl: T('de temps de production du reporting', 'reporting production time') },
+  { y: '2024', logo: ['google.svg', 'google.svg'], co: 'Google France', k: '68,7 %', kl: T('d’adoption GA4 sur 180 grands comptes', 'GA4 adoption across 180 key accounts') },
+  { y: '2023', logo: ['dassault.svg', 'dassault-dark.svg'], co: 'Dassault Systèmes', k: '100 h → 3 h', kl: T('de traitement des données', 'of data processing') },
+  { y: '2022', logo: ['kpmg.svg', 'kpmg-dark.svg'], co: 'KPMG', k: '300', kl: T('articles migrés sans perte SEO', 'articles migrated with no SEO loss') },
+];
 const tools = [
   [T('Data viz & BI', 'Data viz & BI'), ['Power BI', 'DAX', 'Power Query', 'Tableau', 'Looker Studio', 'Excel', 'Google Sheets', 'Google Analytics']],
   [T('Données & ETL', 'Data & ETL'), ['SQL', 'BigQuery', 'Snowflake', 'dbt', 'Dataiku', 'SAP', 'Python', 'IBM TM1 Cognos']],
@@ -30,6 +37,7 @@ const tools = [
 const certs: string[] = ['Google Advanced Data Analytics', 'Google Business Intelligence', 'Google Project Management', 'Dataiku Advanced Datasets', 'dbt Fundamentals', 'Snowflake', T('Construire des agents IA', 'Building AI agents')];
 const degree = T('Master Informatique & Digital · EFREI Paris', 'MSc Computer Science & Digital · EFREI Paris');
 const langs = [[T('Français', 'French'), T('natif', 'native')], [T('Anglais', 'English'), T('natif', 'native')], [T('Tamoul', 'Tamil'), T('natif', 'native')], [T('Japonais', 'Japanese'), T('intermédiaire', 'intermediate')], [T('Allemand', 'German'), T('notions', 'basic')], [T('Roumain', 'Romanian'), T('notions', 'basic')]];
+const skTop: (string[] | undefined)[] = [['Excel', 'Power BI', 'Power Query', 'DAX', 'Looker Studio'], ['SQL', 'Python', 'BigQuery', 'Snowflake', 'dbt'], ['Google Analytics 4', 'Consent Mode', 'Adobe Experience Manager', 'SEO', 'JavaScript']];
 const skIcons = ['📊', '🧹', '🛰️', '🎯', '💶', '🧭'];
 const skDesc = [
   T('Des tableaux de bord qu’on lit en cinq secondes.', 'Dashboards you can read in five seconds.'),
@@ -64,17 +72,25 @@ const how = [
   <div class="ab-stack">
     <div>
       <div class="head"><div><div class="kicker">{T('Chronologie', 'Timeline')}</div><h2>{T('Quatre maisons, cinq ans.', 'Four houses, five years.')}</h2></div></div>
-      <div class="tl ab-tl">{tl.map(x => <div class:list={['it rv', dot(x[1] as string)]}><div class="d">{x[0]}</div><h3 set:html={brand(x[1] as string)} /><p style="font-size:15px">{x[2]}</p></div>)}</div>
+      <div class="tlx">{tl.map((x, n) => { const d = tlx[n]; const role = (x[1] as string).split(' · ')[0]; return (
+        <article class="tlx-r rv">
+          <div class="tlx-y">{d.y}{n === 0 && <i>{T('aujourd’hui', 'today')}</i>}</div>
+          <div class="tlx-co">
+            {d.logo ? (<span class="tlx-logo"><img class="lt" src={`/logos/${d.logo[0]}`} alt={d.co} loading="lazy" /><img class="dk" src={`/logos/${d.logo[1]}`} alt="" loading="lazy" /></span>) : (<span class="tlx-anon">{d.co}</span>)}
+            <h3>{role}</h3>
+            {d.logo && <small>{d.co}</small>}
+          </div>
+          <div class="tlx-d"><p>{x[2]}</p><p class="tlx-k"><b>{d.k}</b><span>{d.kl}</span></p></div>
+        </article>) })}</div>
     </div>
     <div>
       <div class="head"><div><div class="kicker">{T('Compétences', 'Skills')}</div><h2>{T('Ce que je sais faire.', 'What I can do.')}</h2></div></div>
-      <div class="skx">
+      <div class="skr">
         {tools.map((t, ci) => (
-          <article class="skx-c rv">
-            <span class="skx-n">{String(ci + 1).padStart(2, '0')}</span>
-            <h3>{t[0]}</h3>
-            <p>{skDesc[ci]}</p>
-            <div class="skx-t">{(t[1] as string[]).map(c => <span class:list={[{ key: ['Excel', 'Power BI', 'SQL', 'Python'].includes(c) }]}>{c}</span>)}</div>
+          <article class="skr-r rv">
+            <span class="skr-n">{String(ci + 1).padStart(2, '0')}</span>
+            <div class="skr-h"><h3>{t[0]}</h3><p>{skDesc[ci]}</p></div>
+            <p class="skr-t">{(skTop[ci] || (t[1] as string[]).slice(0, 5)).map((c, k) => <>{k > 0 && <i>·</i>}<span class:list={[{ key: ['Excel', 'Power BI', 'SQL', 'Python'].includes(c) }]}>{c}</span></>)}</p>
           </article>
         ))}
       </div>
