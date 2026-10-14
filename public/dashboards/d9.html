@@ -8,7 +8,7 @@
 .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
 .card h2{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
-.chat{height:330px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px}
+.chat{height:330px;overflow:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:10px;padding-right:4px}
 .m{max-width:88%;padding:9px 12px;border-radius:12px;white-space:pre-line}
 .u{align-self:flex-end;background:var(--b);color:#fff;border-bottom-right-radius:4px}
 .bot{align-self:flex-start;background:#1e2c39;border:1px solid var(--line);border-bottom-left-radius:4px}
@@ -24,6 +24,7 @@
 .bar i{display:block;height:9px;border-radius:9px;background:#24323f;overflow:hidden}.bar i span{display:block;height:100%;background:var(--a);border-radius:9px}
 .note{font-size:11.5px;color:var(--mute);margin-top:10px}
 @media(max-width:760px){.grid{grid-template-columns:1fr}.chat{height:280px}}
+.chat::-webkit-scrollbar{display:none}
 </style></head><body>
 <div class="top"><div><h1 id="t1"></h1><small id="t2"></small></div><span class="tag" id="t3"></span></div>
 <div class="grid">
