@@ -1203,3 +1203,14 @@ html::-webkit-scrollbar{width:0;height:0}
 .sbar-t b:after{content:"";position:absolute;left:50%;bottom:-4px;width:9px;height:9px;border-radius:50%;background:var(--acc);transform:translateX(-50%);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 25%,transparent)}
 @media(max-width:700px){.sbar{right:6px}.sbar-l{font-size:8px}.sbar-t{height:110px}}
 .sbar-l i{writing-mode:horizontal-tb}
+
+/* testimonials, linked to the matching case study */
+.avis{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.avis-c{position:relative;margin:0;display:flex;flex-direction:column;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 26px 24px}
+.avis-q{position:absolute;top:6px;left:20px;font:800 64px/1 var(--disp);color:var(--acc);opacity:.35}
+.avis-c blockquote{margin:14px 0 0;font-size:17px;line-height:1.6;color:var(--ink)}
+.avis-c figcaption{display:flex;flex-direction:column;gap:2px;margin-top:auto}
+.avis-c figcaption b{font-size:15px}
+.avis-c figcaption span{font-size:13.5px;color:var(--mute)}
+.avis-p{display:flex;gap:10px;align-items:baseline;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--acc);text-decoration:none}
+.avis-p em{font-style:normal;font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;white-space:nowrap}

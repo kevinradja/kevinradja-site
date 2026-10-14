@@ -1,0 +1,27 @@
+---
+import { testimonials } from '../data/testimonials';
+import { projects } from '../data/projects';
+const { lang } = Astro.props as { lang: 'fr' | 'en' };
+const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
+const base = lang === 'fr' ? '/realisations/' : '/en/work/';
+---
+{testimonials.length > 0 && (
+<section class="sec c-avis" id="avis">
+  <div class="wrap">
+    <div class="c-head"><div class="kicker">{T('Ils en parlent', 'What they say')}</div><h2>{T('Retours de mission.', 'Feedback from the field.')}</h2></div>
+    <div class="avis">
+      {testimonials.map(t => {
+        const p = t.project ? projects.find(x => x.slug === t.project) : undefined;
+        return (
+          <figure class="avis-c rv">
+            <span class="avis-q" aria-hidden="true">“</span>
+            <blockquote>{t.quote[lang]}</blockquote>
+            <figcaption><b>{t.name}</b><span>{t.role[lang]} · {t.company[lang]}</span></figcaption>
+            {p && <a class="avis-p" href={base + p.slug + '/'}><em>{p.kpi.v}</em>{p.title[lang]} →</a>}
+          </figure>
+        );
+      })}
+    </div>
+  </div>
+</section>
+)}

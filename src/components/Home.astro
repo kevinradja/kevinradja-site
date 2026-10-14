@@ -30,6 +30,7 @@ const viz = [
   `<svg viewBox="0 0 200 110"><rect class="growy" x="40" y="10" width="46" height="84" rx="3" fill="var(--line2)" /><rect class="growy" x="114" y="44" width="46" height="50" rx="3" fill="var(--acc)" /><line x1="0" y1="94" x2="200" y2="94" stroke="var(--line2)" /><text x="63" y="109" font-size="11" text-anchor="middle" fill="var(--mute)">${T('AVANT', 'BEFORE')}</text><text x="137" y="109" font-size="11" text-anchor="middle" fill="var(--mute)">${T('APRÈS', 'AFTER')}</text></svg>`,
 ];
 const featured = [projects[3], projects[4], projects[5]];
+import Testimonials from './Testimonials.astro';
 ---
 <!-- 1. HERO : giant centered title, the "device" rises over it -->
 <section class="c-hero">
@@ -195,6 +196,8 @@ const featured = [projects[3], projects[4], projects[5]];
     </div>
   </div>
 </section>
+
+<Testimonials lang={lang} />
 
 <!-- 4. MISSION : full-bleed petrol, words light up while scrolling -->
 <section class="c-mission">
