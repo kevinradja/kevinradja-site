@@ -1139,3 +1139,5 @@ body{overflow-x:clip}
 /* contact card: main call button in white on the dark theme */
 :root[data-theme="dark"] .cc .btn.p{background:#F4EFE4;color:#0C3A3E;border-color:#F4EFE4}
 :root[data-theme="dark"] .cc .btn.p:hover{background:#fff;color:#0C3A3E}
+/* hero title: sized by both width and height so it never swallows the screen */
+.c-title{font-size:clamp(44px,min(9vw,13.5vh),140px);line-height:.94}
