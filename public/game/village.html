@@ -569,7 +569,11 @@ function challenge(n,cb){var c=(CH[n.id]||{})[L];if(!c){cb();return}
     if(k==='arrowdown'||k==='arrowright'||k==='s'||k==='d'){chSel=(chSel+1)%nOpt;paint()}else if(k==='arrowup'||k==='arrowleft'||k==='z'||k==='w'||k==='q'||k==='a'){chSel=(chSel+nOpt-1)%nOpt;paint()}else if(k==='enter'||k===' '||k==='e')act(chSel)};
   paint()}
 var chKey=null;
-function say(list,cb){Q=list.slice();onDone=cb||null;next()}
+/* long lines are split into several bubbles at sentence ends (Space to continue) */
+function splitLine(l){if(!l||l.fn||!l.t||l.t.length<=120)return [l];var parts=l.t.split(/(?<=[.!?…:])\s+/),out=[],cur='';
+  parts.forEach(function(p){if(cur&&(cur+' '+p).length>120){out.push(cur);cur=p}else cur=cur?cur+' '+p:p});if(cur)out.push(cur);
+  return out.map(function(t){var c={};for(var k in l)c[k]=l[k];c.t=t;return c})}
+function say(list,cb){Q=[];list.forEach(function(l){Q=Q.concat(splitLine(l))});onDone=cb||null;next()}
 function next(){cur=Q.shift();if(!cur){tap=null;dlg.classList.add('hide');var f=onDone;onDone=null;cur=null;if(f)f();return}
   if(cur.fn){var fn=cur.fn;cur=null;fn(next);return}
   dlg.classList.remove('hide','mem','nar');if(cur.k==='mem')dlg.classList.add('mem');if(cur.k==='nar')dlg.classList.add('nar');

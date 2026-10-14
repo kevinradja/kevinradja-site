@@ -268,6 +268,10 @@ import Testimonials from './Testimonials.astro';
       <div class="deal-av"><img src="/avatar-think.svg" alt="" width="400" height="400" /><span class="deal-bubble" data-a={T('Hmm…', 'Hmm…')} data-b={T('Et hop !', 'Here you go!')} data-c={T('Choisissez une carte !', 'Pick a card!')}>{T('Hmm…', 'Hmm…')}</span></div>
       <Pricing lang={lang} compact />
     </div>
+    <div class="card" style="margin-top:22px;padding:24px 28px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+      <div><div class="kicker" style="margin-bottom:6px">{T('Première marche', 'First step')}</div><h3>{T('Audit data de 2 h · 150 €, déduits si on travaille ensemble.', '2-hour data audit · €150, credited if we work together.')}</h3><p style="font-size:14.5px;margin-top:6px">{T('Vous repartez avec un diagnostic écrit de votre reporting et trois actions concrètes.', 'You leave with a written diagnosis of your reporting and three concrete actions.')}</p></div>
+      <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver l’audit', 'Book the audit')}</a>
+    </div>
     <div style="margin-top:18px;text-align:center"><a class="btn s" href={r('pricing', lang)}>{T('Options, déroulé et questions fréquentes', 'Options, process and FAQ')} →</a></div>
   </div>
 </section>
