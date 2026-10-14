@@ -65,8 +65,8 @@ const nav = [
         </div>
       </div></div>
       <svg class="wpad" viewBox="0 0 240 160" aria-hidden="true">
-        <defs><linearGradient id="pdb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E353D"/><stop offset="1" stop-color="#171B20"/></linearGradient></defs>
-        <path d="M58 22 C40 22 30 30 24 46 C14 72 6 104 10 128 C13 146 30 152 42 142 C54 132 62 116 74 108 C90 100 150 100 166 108 C178 116 186 132 198 142 C210 152 227 146 230 128 C234 104 226 72 216 46 C210 30 200 22 182 22 C164 22 152 30 120 30 C88 30 76 22 58 22 Z" fill="url(#pdb)" stroke="#0B0D10" stroke-width="3"/>
+        <defs><filter id="pdpx" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" x="0" y="0" width="240" height="160"><feFlood x="2" y="2" width="1" height="1"/><feComposite width="4" height="4"/><feTile result="t"/><feComposite in="SourceGraphic" in2="t" operator="in"/><feMorphology operator="dilate" radius="2"/></filter><linearGradient id="pdb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E353D"/><stop offset="1" stop-color="#171B20"/></linearGradient></defs>
+        <g filter="url(#pdpx)"><path d="M58 22 C40 22 30 30 24 46 C14 72 6 104 10 128 C13 146 30 152 42 142 C54 132 62 116 74 108 C90 100 150 100 166 108 C178 116 186 132 198 142 C210 152 227 146 230 128 C234 104 226 72 216 46 C210 30 200 22 182 22 C164 22 152 30 120 30 C88 30 76 22 58 22 Z" fill="url(#pdb)" stroke="#0B0D10" stroke-width="3"/>
         <path d="M52 30 C70 28 84 36 120 36 C156 36 170 28 188 30" fill="none" stroke="#4A535D" stroke-width="2" stroke-linecap="round" opacity=".7"/>
         <circle cx="120" cy="52" r="11" fill="#0B0D10"/><circle cx="120" cy="52" r="8" fill="#1AA7B0"/><text x="120" y="55.5" text-anchor="middle" font-size="8" font-weight="800" fill="#0B2A2C" font-family="Archivo,sans-serif">KR</text>
         <rect x="100" y="66" width="9" height="5" rx="2.5" fill="#4A535D"/><rect x="131" y="66" width="9" height="5" rx="2.5" fill="#4A535D"/>
@@ -80,7 +80,7 @@ const nav = [
           <circle class="wring" cx="180" cy="70" r="12" fill="none" stroke="#9FE0D8" stroke-width="3"/>
           <g class="wa"><circle cx="180" cy="70" r="9.5" fill="#3DBE5A" stroke="#0B0D10" stroke-width="1.5"/><text x="180" y="73.5" fill="#0B2A0F" font-size="10">A</text></g>
         </g>
-      </svg>
+      </g></svg>
     </div>
     <p class="wask">{lang === 'fr' ? 'Appuyez sur A pour décoller' : 'Press A to take off'} <kbd>A</kbd><small>{lang === 'fr' ? 'ou Espace, Entrée, clic gauche ou clic droit' : 'or Space, Enter, left or right click'}</small></p>
     <button class="wskip" type="button">{lang === 'fr' ? 'Passer' : 'Skip'} ›</button>
