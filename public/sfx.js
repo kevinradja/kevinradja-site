@@ -17,7 +17,20 @@
   };
   window.KR=window.KR||{};
   window.KR.sfx={play:function(n){try{S[n]&&S[n]()}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};
-  /* UI sounds on the site: buttons, links in nav/cards */
-  document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('a,button');if(!el||el.dataset.silent!=null)return;S.click()},true);
-  document.addEventListener('mouseover',function(e){var el=e.target.closest&&e.target.closest('.btn,.nav a.l,.door,.pc,.ic');if(!el||el._h)return;el._h=1;setTimeout(function(){el._h=0},200);S.hover()},true);
+  /* UI sounds on the site. Nav links each get their own note of a pentatonic scale,
+     so clicking through the menu plays a small melody; other clicks vary slightly. */
+  var SCALE=[523.25,587.33,659.25,783.99,880,1046.5,1174.66,1318.51];
+  function navIdx(el){var l=[].slice.call(document.querySelectorAll('.nav a.l'));return l.indexOf(el)}
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  function navNote(i,soft){var f=SCALE[i%SCALE.length];if(soft){tone(f*2,0,.04,'sine',.02);return}
+    tone(f,0,.16,'triangle',.07);tone(f*1.5,.035,.12,'sine',.03);tone(f*2,.07,.09,'sine',.02)}
+  function uiClick(el){
+    var i=navIdx(el);if(i>-1)return navNote(i);
+    if(el.classList.contains('logo')){[0,2,4].forEach(function(k,j){tone(SCALE[k],j*.05,.14,'triangle',.06)});return}
+    if(el.classList.contains('li')){tone(659.25,0,.08,'sine',.06);tone(987.77,.06,.14,'sine',.06);return}
+    if(el.classList.contains('cta')||el.classList.contains('p')){tone(523.25,0,.1,'triangle',.07);tone(783.99,.05,.1,'triangle',.06);tone(1046.5,.1,.16,'sine',.05);return}
+    if(el.classList.contains('ic')){tone(rnd(700,820),0,.05,'sine',.06,rnd(1100,1300));return}
+    var f=rnd(470,580);tone(f,0,.06,'triangle',.07);tone(f*2,.02,.05,'sine',.04)}
+  document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('a,button');if(!el||el.dataset.silent!=null)return;uiClick(el)},true);
+  document.addEventListener('mouseover',function(e){var el=e.target.closest&&e.target.closest('.btn,.nav a.l,.nav .li,.door,.pc,.ic');if(!el||el._h)return;el._h=1;setTimeout(function(){el._h=0},200);var i=navIdx(el);if(i>-1)navNote(i,true);else tone(rnd(1450,1750),0,.035,'sine',.025)},true);
 })();
