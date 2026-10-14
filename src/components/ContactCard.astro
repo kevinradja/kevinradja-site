@@ -9,6 +9,7 @@ const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
     <div class="m">KR<i>.csv</i></div>
     <div class="n">Kevin Radja</div>
     <div class="t" set:html={T('Consultant Data &amp; BI freelance<br>Paris · à distance, France &amp; international', 'Freelance Data &amp; BI Consultant<br>Paris · remote, France &amp; worldwide')} />
+    <div class="now2">{T('Actuellement Manager Data & Digital', 'Currently Data & Digital Manager')}<span>{T('dans un grand groupe automobile · freelance en parallèle', 'at a major automotive group · freelancing alongside')}</span></div>
     <div class="av"><b class="dot" style="box-shadow:0 0 0 4px rgba(63,211,220,.25);background:#3FD3DC"></b><span>{ui.common.available[lang]}</span></div>
     <div class="q">{T('Vos données Excel, SQL ou Power BI transformées en tableaux de bord clairs et en reporting automatisé.', 'Your Excel, SQL or Power BI data turned into clear dashboards and automated reporting.')}</div>
     <div class="k"><span>Power BI</span><span>SQL</span><span>Excel</span><span>Python</span><span>Power Automate</span><span>DAX / M</span></div>

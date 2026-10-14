@@ -47,7 +47,7 @@ export const ui = {
     back: { fr: '← Retour au portfolio', en: '← Back to portfolio' },
     next: { fr: 'Projet suivant', en: 'Next project' },
     trusted: { fr: 'Ils me font confiance', en: 'Trusted by teams at' },
-    available: { fr: 'Disponible pour de nouvelles missions', en: 'Available for new projects' },
+    available: { fr: 'Disponible à temps partiel pour de nouvelles missions', en: 'Available part-time for new projects' },
   },
 };
 
