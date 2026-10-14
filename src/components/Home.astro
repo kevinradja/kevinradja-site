@@ -289,7 +289,7 @@ const featured = [projects[3], projects[4], projects[5]];
       var meas=function(){half=tk.scrollWidth/2};meas();addEventListener('resize',meas);addEventListener('load',meas);
       var wrap=function(){if(!half)return;while(x<=-half)x+=half;while(x>0)x-=half};
       var last=performance.now();(function f(t){var dt=t-last;last=t;if(!drag&&!hover&&t>idle)x-=dt*.045;wrap();tk.style.transform='translate3d('+x+'px,0,0)';requestAnimationFrame(f)})(last);
-      mq.addEventListener('mouseenter',function(){hover=true});mq.addEventListener('mouseleave',function(){hover=false;drag=false;mq.classList.remove('drag')});
+      mq.addEventListener('mouseenter',function(){hover=true});mq.addEventListener('mouseleave',function(){hover=false;drag=false;mq.classList.remove('drag');var C=cs();if(C)C.stop()});addEventListener('pointercancel',function(){drag=false;var C=cs();if(C)C.stop()});addEventListener('blur',function(){var C=cs();if(C)C.stop()});
       mq.addEventListener('pointerdown',function(e){drag=true;sx=e.clientX;ox=x;moved=0});
       addEventListener('pointermove',function(e){if(!drag)return;var d=e.clientX-sx;moved=Math.max(moved,Math.abs(d));if(moved>5)mq.classList.add('drag');var dx=e.clientX-(mq._lx||e.clientX);mq._lx=e.clientX;x=ox+d;whoosh(dx)});
       addEventListener('pointerup',function(){if(!drag)return;drag=false;var C=cs();if(C)C.stop();idle=performance.now()+1500;setTimeout(function(){mq.classList.remove('drag')},0)});
