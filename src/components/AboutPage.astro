@@ -50,20 +50,20 @@ const how = [
   </div>
 </div></section>
 <section class="sec"><div class="wrap">
-  <div class="grid g2" style="gap:48px;align-items:start">
+  <div class="ab-stack">
     <div>
       <div class="head"><div><div class="kicker">{T('Chronologie', 'Timeline')}</div><h2>{T('Quatre maisons, cinq ans.', 'Four houses, five years.')}</h2></div></div>
-      <div class="tl">{tl.map(x => <div class:list={['it rv', dot(x[1] as string)]}><div class="d">{x[0]}</div><h3 set:html={brand(x[1] as string)} /><p style="font-size:15px">{x[2]}</p></div>)}</div>
+      <div class="tl ab-tl">{tl.map(x => <div class:list={['it rv', dot(x[1] as string)]}><div class="d">{x[0]}</div><h3 set:html={brand(x[1] as string)} /><p style="font-size:15px">{x[2]}</p></div>)}</div>
     </div>
     <div>
       <div class="head"><div><div class="kicker">{T('Compétences', 'Skills')}</div><h2>{T('Ce que je sais faire.', 'What I can do.')}</h2></div></div>
-      <div class="grid" style="gap:14px">{tools.map(t => <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{t[0]}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{(t[1] as string[]).map(c => <span class="chip">{c}</span>)}</div></div>)}
+      <div class="ab-skills">{tools.map(t => <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{t[0]}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{(t[1] as string[]).map(c => <span class="chip">{c}</span>)}</div></div>)}
         <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('Diplôme & certifications', 'Degree & certifications')}</div><div style="display:flex;flex-wrap:wrap;gap:6px"><span class="chip">🎓 {degree}</span>{certs.map(c => <span class="chip">📜 {c}</span>)}</div></div>
         <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('Langues', 'Languages')}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{langs.map(l => <span class="chip">{l[0]} <span class="mute" style="font-weight:500">· {l[1]}</span></span>)}</div></div>
         <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('En dehors des données', 'Beyond data')}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{hobbies.map(h => <span class="chip">{h[0]} {h[1]}</span>)}</div></div>
       </div>
       <div class="head" style="margin-top:40px"><div><div class="kicker">{T('Façon de travailler', 'How I work')}</div><h2>{T('Trois règles.', 'Three rules.')}</h2></div></div>
-      <div class="grid" style="gap:14px">{how.map(h => <div class="card rv" style="padding:20px"><h3 style="font-size:17px;margin-bottom:6px">{h[0]}</h3><p style="font-size:14.5px">{h[1]}</p></div>)}</div>
+      <div class="ab-rules">{how.map(h => <div class="card rv" style="padding:20px"><h3 style="font-size:17px;margin-bottom:6px">{h[0]}</h3><p style="font-size:14.5px">{h[1]}</p></div>)}</div>
     </div>
   </div>
 </div></section>
