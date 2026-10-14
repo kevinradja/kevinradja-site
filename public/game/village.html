@@ -43,6 +43,7 @@ canvas{width:100%;height:100%;display:block;image-rendering:pixelated;image-rend
 .dash .b{height:12px;border-radius:4px;background:#E3E6E8;overflow:hidden}
 .dash .b i{display:block;height:100%;width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
 .hide{display:none!important}
+html.embed #snd,html.embed #theme{display:none}
 .inv{display:flex;gap:6px;justify-content:center;margin-top:10px}
 .inv span{width:38px;height:38px;border-radius:10px;border:1px dashed var(--line);display:grid;place-items:center;font-size:20px;filter:grayscale(1);opacity:.35;transition:.3s}
 .inv span.on{border-style:solid;border-color:var(--acc);filter:none;opacity:1;transform:scale(1.04)}
@@ -90,6 +91,7 @@ canvas{width:100%;height:100%;display:block;image-rendering:pixelated;image-rend
 var L=(new URLSearchParams(location.search).get('lang')||'fr').slice(0,2)==='en'?'en':'fr';
 document.documentElement.lang=L;
 var root=document.documentElement;
+if(parent!==window)root.classList.add('embed');
 try{var th=localStorage.getItem('kr-theme');if(th)root.setAttribute('data-theme',th)}catch(e){}
 try{var pt=parent!==window&&parent.document.documentElement.getAttribute('data-theme');if(pt)root.setAttribute('data-theme',pt)}catch(e){}
 function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme:dark)').matches}
