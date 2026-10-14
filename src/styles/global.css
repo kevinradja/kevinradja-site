@@ -610,3 +610,10 @@ a.card:hover{transform:translateY(-3px);border-color:var(--acc)}
 
 /* game page: frame the game like a device */
 .sec iframe[src*="village"]{border-radius:18px}
+
+/* pricing cards: price on one line, readable highlighted card */
+.pr .price{white-space:nowrap;font-size:clamp(34px,3.3vw,46px);line-height:1}
+.pr .price small{display:block;margin:0 0 6px;font-family:var(--font);font-stretch:100%;font-variation-settings:normal;font-weight:500;font-size:13px;letter-spacing:0}
+.pr.hi .k{color:#9FE0D8}
+.pr.hi li:before{background:#9FE0D8}
+.pr.hi .price small{color:rgba(244,239,228,.7)}
