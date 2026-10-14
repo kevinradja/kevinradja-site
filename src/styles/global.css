@@ -1342,3 +1342,11 @@ html::-webkit-scrollbar{width:0;height:0}
 @media(max-width:860px){.aio-g{grid-template-columns:1fr}.aio-h a{margin-left:0}}
 
 .avx-p span small{display:block;font-weight:500;font-size:.85em;opacity:.65;margin-top:2px}
+
+/* Xbox-style controller, further from the screen, shakes on A */
+.wpad{width:min(250px,52vw)!important;image-rendering:auto!important;margin-top:clamp(34px,7vh,72px);filter:drop-shadow(0 16px 22px rgba(0,0,0,.55))!important}
+.wpad path:first-of-type{fill:url(#pdb)}.wpad path:nth-of-type(2){fill:none}
+.wpad .wa,.wpad .wring{transform-origin:180px 70px!important;transform-box:view-box}
+#warp.press .wpad{animation:padshake .42s ease-out}
+@keyframes padshake{0%{transform:none}15%{transform:translate(-4px,3px) rotate(-3deg)}30%{transform:translate(4px,-2px) rotate(2.5deg)}45%{transform:translate(-3px,2px) rotate(-1.5deg)}60%{transform:translate(2px,-1px) rotate(1deg)}80%{transform:translate(-1px,1px)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){#warp.press .wpad{animation:none}}
