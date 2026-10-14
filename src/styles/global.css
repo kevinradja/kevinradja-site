@@ -1274,3 +1274,23 @@ html::-webkit-scrollbar{width:0;height:0}
 .skr-t i{font-style:normal;margin:0 8px;color:var(--acc)}
 .skr-t span.key{color:var(--acc);font-weight:800}
 @media(max-width:900px){.skr-r{grid-template-columns:44px 1fr;row-gap:8px}.skr-t{grid-column:2}}
+
+/* parcours: word sphere back, in the site's style, next to the skill rows */
+.skz{display:grid;grid-template-columns:minmax(300px,.85fr) 1.15fr;gap:clamp(24px,4vw,64px);align-items:start;margin-top:8px}
+.skz-sp{position:sticky;top:110px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.skz .sk-sphere{max-width:460px;background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--acc) 14%,transparent),transparent 68%);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc) 18%,transparent)}
+.skz .sk-sphere span{font:600 14px/1 var(--font,Archivo),system-ui,sans-serif;color:var(--mute);transition:color .25s}
+.skz .sk-sphere span.big{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:clamp(20px,2vw,28px);color:var(--acc)}
+.skz .sk-sphere[data-on] span{color:color-mix(in srgb,var(--mute) 35%,transparent)}
+.skz .sk-sphere[data-on="0"] span[data-cat="0"],.skz .sk-sphere[data-on="1"] span[data-cat="1"],.skz .sk-sphere[data-on="2"] span[data-cat="2"],.skz .sk-sphere[data-on="3"] span[data-cat="3"],.skz .sk-sphere[data-on="4"] span[data-cat="4"],.skz .sk-sphere[data-on="5"] span[data-cat="5"]{color:var(--acc);font-weight:800}
+.skz-hint{margin:0;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.skz .skr{margin-top:0}
+.skz .skr-r{grid-template-columns:44px 1fr;row-gap:8px}
+.skz .skr-t{grid-column:2}
+.skz .skr-r.on{background:color-mix(in srgb,var(--acc) 8%,transparent)}
+@media(max-width:900px){.skz{grid-template-columns:1fr}.skz-sp{position:relative;top:0}.skz .sk-sphere{max-width:340px}.skz-hint{display:none}}
+
+.skz .sk-sphere{max-width:500px}
+.skz .sk-sphere span{font-size:15px;color:color-mix(in srgb,var(--ink) 62%,transparent)}
+.skz .sk-sphere span.big{font-size:clamp(24px,2.4vw,34px);text-shadow:0 0 18px color-mix(in srgb,var(--acc) 35%,transparent)}
+@media(max-width:520px){.skz .sk-sphere span{font-size:12px}.skz .sk-sphere span.big{font-size:20px}}

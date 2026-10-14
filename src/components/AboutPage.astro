@@ -85,14 +85,19 @@ const how = [
     </div>
     <div>
       <div class="head"><div><div class="kicker">{T('Compétences', 'Skills')}</div><h2>{T('Ce que je sais faire.', 'What I can do.')}</h2></div></div>
+      <div class="skz">
+      <div class="skz-sp"><div class="sk-sphere" aria-label={T('Outils', 'Tools')}>
+        {tools.flatMap((t, ci) => (t[1] as string[]).filter(c => c.length <= 20).map(c => <span data-cat={ci} class:list={[{ big: ['Excel', 'Power BI', 'SQL', 'Python'].includes(c) }]}>{c}</span>))}
+      </div><p class="skz-hint">{T('Survolez un domaine pour voir ses outils', 'Hover a field to light up its tools')}</p></div>
       <div class="skr">
         {tools.map((t, ci) => (
-          <article class="skr-r rv">
+          <article class="skr-r rv" data-cat={ci}>
             <span class="skr-n">{String(ci + 1).padStart(2, '0')}</span>
             <div class="skr-h"><h3>{t[0]}</h3><p>{skDesc[ci]}</p></div>
             <p class="skr-t">{(skTop[ci] || (t[1] as string[]).slice(0, 5)).map((c, k) => <>{k > 0 && <i>·</i>}<span class:list={[{ key: ['Excel', 'Power BI', 'SQL', 'Python'].includes(c) }]}>{c}</span></>)}</p>
           </article>
         ))}
+      </div>
       </div>
       <div class="skx-strips">
         <div class="skx-s"><div class="kicker">{T('Diplôme & certifications', 'Degree & certifications')}</div><div class="skx-t"><span class="key">{degree}</span>{certs.map(c => <span>{c}</span>)}</div></div>
@@ -122,11 +127,11 @@ const how = [
   /* rotating 3D sphere of tools; hover a domain card to light up its tools */
   (function(){var sp=document.querySelector('.sk-sphere');if(!sp)return;var tags=[].slice.call(sp.children),n=tags.length,R=0,ax=.0035,ay=.0025,mx=0,my=0,pts=[];
     tags.forEach(function(t,i){var phi=Math.acos(-1+(2*i+1)/n),th=Math.sqrt(n*Math.PI)*phi;pts.push([Math.cos(th)*Math.sin(phi),Math.sin(th)*Math.sin(phi),Math.cos(phi)])});
-    function size(){R=sp.clientWidth*.4}size();addEventListener('resize',size);
+    function size(){R=sp.clientWidth*.42}size();addEventListener('resize',size);
     sp.addEventListener('mousemove',function(e){var r=sp.getBoundingClientRect();mx=((e.clientX-r.left)/r.width-.5);my=((e.clientY-r.top)/r.height-.5)});
     sp.addEventListener('mouseleave',function(){mx=my=0});
     function rot(a,b){var ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b);pts.forEach(function(p){var y=p[1]*ca-p[2]*sa,z=p[1]*sa+p[2]*ca;var x=p[0]*cb+z*sb;z=-p[0]*sb+z*cb;p[0]=x;p[1]=y;p[2]=z})}
     (function f(){rot(ax+my*.02,ay+mx*.02);tags.forEach(function(t,i){var p=pts[i],s=(p[2]+2)/3;t.style.transform='translate(-50%,-50%) translate3d('+(p[0]*R)+'px,'+(p[1]*R)+'px,0) scale('+s+')';t.style.opacity=String(.25+.75*(p[2]+1)/2);t.style.zIndex=String(Math.round(s*100))});requestAnimationFrame(f)})();
-    document.querySelectorAll('.sk-cat').forEach(function(c){c.addEventListener('mouseenter',function(){sp.dataset.on=c.dataset.cat;c.classList.add('on')});c.addEventListener('mouseleave',function(){delete sp.dataset.on;c.classList.remove('on')})});
+    document.querySelectorAll('.skr-r').forEach(function(c){c.addEventListener('mouseenter',function(){sp.dataset.on=c.dataset.cat;c.classList.add('on')});c.addEventListener('mouseleave',function(){delete sp.dataset.on;c.classList.remove('on')})});
   })();
 </script>
