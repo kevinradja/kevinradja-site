@@ -173,6 +173,20 @@ html.wide .dlg{font-size:12px}
 .top .dexbtn,.top .dexbtn b{color:#F4F1E6}
 .top .dexbtn b{color:#F2C14E}
 .dex-d .res{font-family:Archivo,Inter,system-ui,sans-serif!important;font-size:12.5px;font-weight:700;line-height:1.5}
+/* current mission panel */
+.quest{position:absolute;left:10px;top:10px;z-index:5;max-width:min(250px,60%);background:rgba(16,24,44,.9);color:#F4F1E6;padding:10px 12px 11px;font:600 12px/1.45 Archivo,Inter,system-ui,sans-serif;pointer-events:none}
+.quest .q-t{display:block;font:400 8px/1.6 'Press Start 2P',monospace;color:#F2C14E;margin-bottom:6px}
+.quest .q-n{display:flex;gap:6px;align-items:baseline;margin-top:4px}
+.quest .q-n span{font-weight:800}
+.quest .q-n small{color:#9FB0C4;font-weight:500}
+.quest .q-tools{display:flex;flex-wrap:wrap;gap:4px;margin:5px 0 4px}
+.quest .q-tools i{font-style:normal;font-size:11px;font-weight:700;padding:2px 6px;background:rgba(255,255,255,.1);color:#C9D3E0}
+.quest .q-tools i.ok{background:#4BC86B;color:#10182C}
+.quest .q-go{font-size:11.5px;color:#7FD1C9}
+.quest .q-go+.q-n{margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,.12)}
+@media(max-width:520px){.quest{font-size:11px;padding:8px 9px;max-width:70%}}
+/* helper lines under the game in the normal font */
+.obj,.kb,html.wide .kb{font-family:Archivo,Inter,system-ui,sans-serif!important;font-size:13px;line-height:1.5;letter-spacing:0}
 </style>
 </head>
 <body>
@@ -182,6 +196,7 @@ html.wide .dlg{font-size:12px}
     <canvas id="c" width="256" height="320"></canvas>
     <div class="dlg hide" id="dlg"><canvas class="face hide" id="face" width="20" height="20"></canvas><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
     <div class="dash hide" id="dash"></div>
+    <div class="quest hide" id="quest"></div>
     <div id="toasts"></div>
     <div class="ov" id="start">
       <div class="em"><svg viewBox="0 0 14 13" shape-rendering="crispEdges" aria-hidden="true"><rect x="10" y="0" width="1" height="1" fill="#7A7C84"/><rect x="11" y="0" width="1" height="1" fill="#7A7C84"/><rect x="6" y="1" width="1" height="1" fill="#C8402F"/><rect x="7" y="1" width="1" height="1" fill="#C8402F"/><rect x="10" y="1" width="1" height="1" fill="#7A7C84"/><rect x="11" y="1" width="1" height="1" fill="#7A7C84"/><rect x="5" y="2" width="1" height="1" fill="#C8402F"/><rect x="6" y="2" width="1" height="1" fill="#C8402F"/><rect x="7" y="2" width="1" height="1" fill="#C8402F"/><rect x="8" y="2" width="1" height="1" fill="#C8402F"/><rect x="10" y="2" width="1" height="1" fill="#7A7C84"/><rect x="11" y="2" width="1" height="1" fill="#7A7C84"/><rect x="4" y="3" width="1" height="1" fill="#C8402F"/><rect x="5" y="3" width="1" height="1" fill="#C8402F"/><rect x="6" y="3" width="1" height="1" fill="#C8402F"/><rect x="7" y="3" width="1" height="1" fill="#C8402F"/><rect x="8" y="3" width="1" height="1" fill="#C8402F"/><rect x="9" y="3" width="1" height="1" fill="#C8402F"/><rect x="10" y="3" width="1" height="1" fill="#C8402F"/><rect x="11" y="3" width="1" height="1" fill="#C8402F"/><rect x="3" y="4" width="1" height="1" fill="#C8402F"/><rect x="4" y="4" width="1" height="1" fill="#C8402F"/><rect x="5" y="4" width="1" height="1" fill="#C8402F"/><rect x="6" y="4" width="1" height="1" fill="#C8402F"/><rect x="7" y="4" width="1" height="1" fill="#C8402F"/><rect x="8" y="4" width="1" height="1" fill="#C8402F"/><rect x="9" y="4" width="1" height="1" fill="#C8402F"/><rect x="10" y="4" width="1" height="1" fill="#C8402F"/><rect x="11" y="4" width="1" height="1" fill="#C8402F"/><rect x="12" y="4" width="1" height="1" fill="#C8402F"/><rect x="2" y="5" width="1" height="1" fill="#C8402F"/><rect x="3" y="5" width="1" height="1" fill="#C8402F"/><rect x="4" y="5" width="1" height="1" fill="#C8402F"/><rect x="5" y="5" width="1" height="1" fill="#C8402F"/><rect x="6" y="5" width="1" height="1" fill="#C8402F"/><rect x="7" y="5" width="1" height="1" fill="#C8402F"/><rect x="8" y="5" width="1" height="1" fill="#C8402F"/><rect x="9" y="5" width="1" height="1" fill="#C8402F"/><rect x="10" y="5" width="1" height="1" fill="#C8402F"/><rect x="11" y="5" width="1" height="1" fill="#C8402F"/><rect x="12" y="5" width="1" height="1" fill="#C8402F"/><rect x="13" y="5" width="1" height="1" fill="#C8402F"/><rect x="1" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="2" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="3" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="4" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="5" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="6" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="7" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="8" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="9" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="10" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="11" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="12" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="13" y="6" width="1" height="1" fill="#8E2A1F"/><rect x="2" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="3" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="4" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="5" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="6" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="7" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="8" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="9" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="10" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="11" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="12" y="7" width="1" height="1" fill="#F4F1E6"/><rect x="2" y="8" width="1" height="1" fill="#F4F1E6"/><rect x="3" y="8" width="1" height="1" fill="#5DA9D6"/><rect x="4" y="8" width="1" height="1" fill="#5DA9D6"/><rect x="5" y="8" width="1" height="1" fill="#F4F1E6"/><rect x="6" y="8" width="1" height="1" fill="#F4F1E6"/><rect x="7" y="8" width="1" height="1" fill="#F4F1E6"/><rect x="8" y="8" width="1" height="1" fill="#F4F1E6"/><rect x="9" y="8" width="1" height="1" fill="#F4F1E6"/><rect x="10" y="8" width="1" height="1" fill="#5DA9D6"/><rect x="11" y="8" width="1" height="1" fill="#5DA9D6"/><rect x="12" y="8" width="1" height="1" fill="#F4F1E6"/><rect x="2" y="9" width="1" height="1" fill="#F4F1E6"/><rect x="3" y="9" width="1" height="1" fill="#5DA9D6"/><rect x="4" y="9" width="1" height="1" fill="#5DA9D6"/><rect x="5" y="9" width="1" height="1" fill="#F4F1E6"/><rect x="6" y="9" width="1" height="1" fill="#F4F1E6"/><rect x="7" y="9" width="1" height="1" fill="#8A5530"/><rect x="8" y="9" width="1" height="1" fill="#8A5530"/><rect x="9" y="9" width="1" height="1" fill="#F4F1E6"/><rect x="10" y="9" width="1" height="1" fill="#5DA9D6"/><rect x="11" y="9" width="1" height="1" fill="#5DA9D6"/><rect x="12" y="9" width="1" height="1" fill="#F4F1E6"/><rect x="2" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="3" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="4" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="5" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="6" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="7" y="10" width="1" height="1" fill="#8A5530"/><rect x="8" y="10" width="1" height="1" fill="#8A5530"/><rect x="9" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="10" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="11" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="12" y="10" width="1" height="1" fill="#F4F1E6"/><rect x="2" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="3" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="4" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="5" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="6" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="7" y="11" width="1" height="1" fill="#8A5530"/><rect x="8" y="11" width="1" height="1" fill="#8A5530"/><rect x="9" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="10" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="11" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="12" y="11" width="1" height="1" fill="#D9D2C2"/><rect x="0" y="12" width="1" height="1" fill="#5CB531"/><rect x="1" y="12" width="1" height="1" fill="#5CB531"/><rect x="2" y="12" width="1" height="1" fill="#5CB531"/><rect x="3" y="12" width="1" height="1" fill="#5CB531"/><rect x="4" y="12" width="1" height="1" fill="#5CB531"/><rect x="5" y="12" width="1" height="1" fill="#5CB531"/><rect x="6" y="12" width="1" height="1" fill="#5CB531"/><rect x="7" y="12" width="1" height="1" fill="#5CB531"/><rect x="8" y="12" width="1" height="1" fill="#5CB531"/><rect x="9" y="12" width="1" height="1" fill="#5CB531"/><rect x="10" y="12" width="1" height="1" fill="#5CB531"/><rect x="11" y="12" width="1" height="1" fill="#5CB531"/><rect x="12" y="12" width="1" height="1" fill="#5CB531"/><rect x="13" y="12" width="1" height="1" fill="#5CB531"/></svg></div>
@@ -363,7 +378,27 @@ function buildBg(){drawTile.well=0;for(var y=0;y<MH;y++)for(var x=0;x<MW;x++)dra
   B.forEach(drawBuilding)}
 buildBg();
 
-function drawPerson(c,X,Y,dir,fr,P,bobY){var o=X+2;Y=Y-3+(bobY||0);
+/* tiny face on the world sprite: blink, mouth, blush */
+function faceFx(c,o,Y,dir,P,m){var ey=Y+3;
+  if(m.blink){var sk=P.skin;if(dir==='down'){R(c,sk,o+4,ey,1,1);R(c,sk,o+7,ey,1,1);R(c,'#5a3a2a',o+4,ey+1,1,1);R(c,'#5a3a2a',o+7,ey+1,1,1)}else if(dir==='left')R(c,sk,o+4,ey,1,1);else R(c,sk,o+7,ey,1,1)}
+  var mc='#6B2A24';
+  if(dir==='left'||dir==='right'){var mx=dir==='left'?o+3:o+8,ex=dir==='left'?o+4:o+7;
+    if(m.talk)R(c,mc,mx,Y+4,1,2);else if(m.mood==='happy'||m.mood==='eager'){R(c,mc,mx,Y+5,2,1);R(c,mc,dir==='left'?mx:mx+1,Y+4,1,1)}else R(c,mc,mx,Y+5,1,1);
+    if(m.mood==='worried')R(c,'#1d1d1d',ex,ey-1,1,1);
+    if(m.mood==='happy'||m.mood==='eager')R(c,'rgba(230,90,90,.7)',dir==='left'?o+5:o+6,Y+4,1,1);return}
+  if(dir!=='down')return;
+  if(m.talk)R(c,mc,o+5,Y+4,2,2);
+  else if(m.mood==='happy'){R(c,mc,o+4,Y+4,1,1);R(c,mc,o+5,Y+5,2,1);R(c,mc,o+7,Y+4,1,1)}
+  else if(m.mood==='worried'){R(c,mc,o+5,Y+5,2,1);R(c,'#1d1d1d',o+4,ey-1,1,1);R(c,'#1d1d1d',o+7,ey-1,1,1)}
+  else if(m.mood==='eager'){R(c,mc,o+5,Y+4,2,2)}
+  else R(c,mc,o+5,Y+5,2,1);
+  if(m.mood==='happy'||m.mood==='eager'){R(c,'rgba(230,90,90,.7)',o+3,Y+4,1,1);R(c,'rgba(230,90,90,.7)',o+8,Y+4,1,1)}}
+function moodOf(n){if(n===MAYOR)return finale?'happy':(count()===6?'eager':'n');if(done[n.id])return 'happy';if(asked[n.id])return missing(n.id).length?'worried':'eager';return 'n'}
+function emote(c,x,y,mood,ph){var t=(time+ph*700)%3000;
+  if(mood==='worried'){var d=(t%1200)/1200;if(t<2400){R(c,'#7FC8F5',x+13,y-1+Math.round(d*4),2,2);R(c,'#7FC8F5',x+14,y-2+Math.round(d*4),1,1)}}
+  else if(mood==='happy'&&t<900){var k=t/900,hy=y-6-Math.round(k*8),a=1-k;c.globalAlpha=a;R(c,'#FF6B81',x+12,hy,2,1);R(c,'#FF6B81',x+15,hy,2,1);R(c,'#FF6B81',x+12,hy+1,5,1);R(c,'#FF6B81',x+13,hy+2,3,1);R(c,'#FF6B81',x+14,hy+3,1,1);c.globalAlpha=1}
+  else if(mood==='eager'&&t<1500&&Math.floor(t/250)%2===0){R(c,'#FFFFFF',x+13,y-3,2,1);R(c,'#FFFFFF',x+12,y-1,1,2);R(c,'#FFFFFF',x+15,y-1,1,2)}}
+function drawPerson(c,X,Y,dir,fr,P,bobY,m){var o=X+2;Y=Y-3+(bobY||0);
   c.fillStyle='rgba(0,0,0,.2)';c.beginPath();c.ellipse(X+8,Y+17,5,2,0,0,7);c.fill();
   var l1=fr===1?1:0,l2=fr===2?1:0;R(c,P.bot,o+3,Y+12,2,3-l1);R(c,P.bot,o+7,Y+12,2,3-l2);R(c,'#2A2320',o+3,Y+15-l1,2,1);R(c,'#2A2320',o+7,Y+15-l2,2,1);
   R(c,P.top,o+2,Y+6,8,7);R(c,'rgba(0,0,0,.12)',o+2,Y+11,8,2);
@@ -376,7 +411,7 @@ function drawPerson(c,X,Y,dir,fr,P,bobY){var o=X+2;Y=Y-3+(bobY||0);
   if(dir==='up')R(c,P.hair,o+3,Y-1,6,6);else{R(c,P.hair,o+3,Y-1,6,2);if(dir==='left')R(c,P.hair,o+7,Y,2,3);else if(dir==='right')R(c,P.hair,o+3,Y,2,3);else{R(c,P.hair,o+3,Y,1,2);R(c,P.hair,o+8,Y,1,2)}}
   if(dir!=='up'){var ey=Y+3;if(dir==='down'){R(c,'#1d1d1d',o+4,ey,1,1);R(c,'#1d1d1d',o+7,ey,1,1)}else if(dir==='left')R(c,'#1d1d1d',o+4,ey,1,1);else R(c,'#1d1d1d',o+7,ey,1,1);
     if(P.glasses){R(c,'#2A2F36',o+3,ey,3,1);R(c,'#2A2F36',o+6,ey,3,1)}
-    if(P.beard)R(c,P.hair,o+3,Y+4,6,2)}
+    if(P.beard)R(c,P.hair,o+3,Y+4,6,2);if(m)faceFx(c,o,Y,dir,P,m)}
   if(P.long&&dir!=='up'){R(c,P.hair,o+2,Y,1,8);R(c,P.hair,o+9,Y,1,8)}
   if(P.long&&dir==='up')R(c,P.hair,o+2,Y,8,8);
   if(P.hat&&!P.chef){R(c,P.hat,o+2,Y-2,8,2);R(c,P.hat,o+3,Y-4,6,2)}
@@ -436,6 +471,17 @@ function drawFace(now){var c=fcx,P=faceP;if(!P)return;var t=now-faceT0,talk=cur&
   else if(faceE==='wow'){R(c,mc,9,my,2,2)}
   else R(c,mc,8,my,4,1)}
 function shadeC(col,a){var n=parseInt(col.slice(1),16),f=function(v){return Math.max(0,Math.min(255,Math.round(v*a)))};return '#'+((1<<24)+(f(n>>16)<<16)+(f(n>>8&255)<<8)+f(n&255)).toString(16).slice(1)}
+/* current mission panel */
+var questEl=document.getElementById('quest'),questLast='';
+function questPanel(){var h='',fr=L==='fr',open=NPC.filter(function(n){return asked[n.id]&&!done[n.id]});
+  if(state!=='play'||finale){h=''}
+  else if(open.length){h='<b class="q-t">'+(fr?'Mission en cours':'Current mission')+'</b>'+open.map(function(n){var need=NEED[n.id],miss=missing(n.id);
+    return '<div class="q-n"><span>'+n.name+'</span><small>'+n.role+'</small></div><div class="q-tools">'+need.map(function(t){var ok=hasTool(t);return '<i class="'+(ok?'ok':'')+'">'+(ok?'✓ ':'')+t+'</i>'}).join('')+'</div>'+
+      '<div class="q-go">'+(miss.length?(fr?'→ Cherche dans les hautes herbes':'→ Search the tall grass'):(fr?'→ Retourne voir '+n.name:'→ Go back to '+n.name))+'</div>'}).join('')}
+  else if(count()===6){h='<b class="q-t">'+(fr?'Mission en cours':'Current mission')+'</b><div class="q-go">'+(fr?'→ Va voir la maire, au nord':'→ Visit the mayor, up north')+'</div>'}
+  else{h='<b class="q-t">'+(fr?'Mission':'Mission')+'</b><div class="q-go">'+(fr?'Parle à un habitant marqué d’un « ! »':'Talk to a villager marked “!”')+'</div>'}
+  if(h===questLast)return;questLast=h;questEl.innerHTML=h;questEl.classList.toggle('hide',!h)}
+setInterval(questPanel,300);
 function say(list,cb){Q=list.slice();onDone=cb||null;next()}
 function next(){cur=Q.shift();if(!cur){tap=null;dlg.classList.add('hide');var f=onDone;onDone=null;cur=null;if(f)f();return}
   if(cur.fn){var fn=cur.fn;cur=null;fn(next);return}
@@ -639,8 +685,8 @@ function render(){var W=VW*T,H=VH*T;
   for(var y=Math.floor(camY/T);y<=Math.min(MH-1,Math.floor((camY+H)/T));y++)for(var x=Math.floor(camX/T);x<=Math.min(MW-1,Math.floor((camX+W)/T));x++)if(M[y][x]==='w'){var o=(time/90+hash(x,y))%16|0;R(cx,'rgba(255,255,255,.35)',x*T-camX+o%12,y*T-camY+(hash(y,x)%12),3,1)}
   smoke.forEach(function(s){cx.fillStyle='rgba(220,220,225,'+s.a*.7+')';cx.fillRect(Math.round(s.x-camX),Math.round(s.y-camY),3,3)});
   var list=ALL.map(function(n){return{n:n,y:n.y*T}}).concat([{p:1,y:player.py}]).sort(function(a,b){return a.y-b.y});
-  list.forEach(function(e){if(e.p){var fr=player.moving?(player.p<.5?1:2):0;drawPerson(cx,Math.round(player.px-camX),Math.round(player.py-camY),player.dir,fr,player.P);if(M[player.y]&&M[player.y][player.x]==='h'&&!player.moving){var gx=player.x*T-camX,gy=player.y*T-camY;for(var q=0;q<5;q++){R(cx,'#3E8E2E',gx+1+q*3,gy+9,2,6);R(cx,'#8ED65F',gx+1+q*3,gy+9,2,2)}}return}
-    var n=e.n,bob=Math.sin(time/400+n.x)>.6?-1:0;drawPerson(cx,n.x*T-camX,n.y*T-camY,n.dir,0,n.P,bob);
+  list.forEach(function(e){if(e.p){var fr=player.moving?(player.p<.5?1:2):0;drawPerson(cx,Math.round(player.px-camX),Math.round(player.py-camY),player.dir,fr,player.P,0,{mood:'n',blink:(time%3800)<130});if(M[player.y]&&M[player.y][player.x]==='h'&&!player.moving){var gx=player.x*T-camX,gy=player.y*T-camY;for(var q=0;q<5;q++){R(cx,'#3E8E2E',gx+1+q*3,gy+9,2,6);R(cx,'#8ED65F',gx+1+q*3,gy+9,2,2)}}return}
+    var n=e.n,mood=moodOf(n),ph=n.x*7+n.y*3,bob=Math.sin(time/400+n.x)>.6?-1:0;if(mood==='happy'&&((time+ph*300)%2600)<220)bob=-2;if(mood==='eager')bob=Math.sin(time/120+n.x)>0?-1:0;var tk=!!(cur&&!full&&cur.w&&cur.w.indexOf(n.name)===0&&Math.floor(time/120)%2===0),bl=((time+ph*977)%3400)<130;drawPerson(cx,n.x*T-camX,n.y*T-camY,n.dir,0,n.P,bob,{mood:mood,talk:tk,blink:bl});emote(cx,n.x*T-camX,n.y*T-camY+bob,mood,ph);
     var mark=null,col='#FFD45E';if(n===MAYOR){mark=count()===6&&!finale?'!':finale?'♥':'?';col=count()===6&&!finale?'#FFD45E':finale?'#FF8FA3':'#E3E6E8'}else mark=done[n.id]?'✓':'!';if(done[n.id])col='#8ED65F';
     var bx=n.x*T-camX+4,by=n.y*T-camY-17+(Math.sin(time/250+n.x)*1.5|0);R(cx,col,bx,by,8,9);R(cx,'rgba(0,0,0,.25)',bx,by+8,8,1);cx.fillStyle='#2A2F36';cx.font='bold 8px monospace';cx.textAlign='center';cx.fillText(mark,bx+4,by+8)});
   if(isDark()){cx.fillStyle='rgba(12,20,52,.45)';cx.fillRect(0,0,W,H);cx.globalCompositeOperation='lighter';
