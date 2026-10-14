@@ -27,6 +27,7 @@
     ng.gain.setValueAtTime(0,T0);ng.gain.linearRampToValueAtTime(.05,T0+d*.8);ng.gain.exponentialRampToValueAtTime(.0001,T0+d+.1);src.buffer=b;src.connect(bf).connect(ng).connect(c.destination);src.start(T0)}
   var S={
     hover:function(){tone(1600,0,.035,'sine',.025)},
+    key:function(){noise(0,.016,.045);tone(1400+Math.random()*900,0,.014,'square',.011)},
     padA:function(){tone(660,0,.06,'square',.05);tone(990,.05,.1,'square',.045);noise(0,.03,.04)},
     warp:function(){warpSnd()},
     plouf:function(){tone(1100,0,.22,'sine',.09,180);tone(520,.06,.18,'sine',.05,140);noise(.02,.25,.06);[1568,1976,2349].forEach(function(f,i){tone(f,.18+i*.05,.08,'sine',.02)})},

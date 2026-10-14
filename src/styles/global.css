@@ -1144,3 +1144,9 @@ body{overflow-x:clip}
 :root[data-theme="dark"] .cc .btn.p:hover{background:#fff;color:#0C3A3E}
 /* hero title: sized by both width and height so it never swallows the screen */
 .c-title{font-size:clamp(44px,min(9vw,13.5vh),140px);line-height:.94}
+
+/* intro: typed answer after pressing A */
+.wq2{min-height:1.6em;margin:-6px 0 4px;font:400 clamp(10px,1.3vw,14px)/1.6 'Press Start 2P',ui-monospace,monospace;color:#7FD1C9;text-align:center}
+.wask{max-width:min(560px,90vw);margin:0 auto;line-height:1.5}
+.wask small{display:block;margin-top:8px;font-size:12px;font-weight:600;letter-spacing:.02em;color:#9FB0AE}
+.wask{bottom:clamp(14px,3.5vh,44px)}
