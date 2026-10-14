@@ -200,6 +200,12 @@ a.door:hover .go i{background:var(--acc);color:#fff}
 .tl .it:before{content:"";position:absolute;left:-26px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px var(--bg)}
 .tl .d{font-size:13px;font-weight:700;color:var(--acc);letter-spacing:.06em}
 .tl h3{margin:4px 0 6px}
+:root{--b-cf:#1F8A5C;--b-ds:#005386;--b-kp:#00338D}
+:root[data-theme="dark"]{--b-cf:#5FCB9C;--b-ds:#4AA8E8;--b-kp:#7FA6FF}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--b-cf:#5FCB9C;--b-ds:#4AA8E8;--b-kp:#7FA6FF}}
+.b-cf{color:var(--b-cf)}.b-ds{color:var(--b-ds)}.b-kp{color:var(--b-kp)}
+.tl .it.cf:before{background:var(--b-cf)}.tl .it.ds:before{background:var(--b-ds)}.tl .it.kp:before{background:var(--b-kp)}
+.tl .it.go:before{background:conic-gradient(#EA4335 0 25%,#FBBC05 0 50%,#34A853 0 75%,#4285F4 0)}
 
 .faq details{border-top:1px solid var(--line);padding:16px 0}
 .faq details:last-child{border-bottom:1px solid var(--line)}

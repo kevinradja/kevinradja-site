@@ -10,6 +10,15 @@ const tl = [
   ['2023', T('Corporate Strategic Planning · Dassault Systèmes', 'Corporate Strategic Planning · Dassault Systèmes'), T('Pipelines Python et cubes IBM TM1 du Global Analytics Model : 12 industries, 6 marques, données IDC, Gartner, Omdia, Oxford Economics. Traitement 100 h → quelques heures.', 'Python pipelines and IBM TM1 cubes for the Global Analytics Model: 12 industries, 6 brands, IDC, Gartner, Omdia and Oxford Economics data. Processing 100 h → a few hours.')],
   ['2022', T('Équipe Web · KPMG France & KPMG Avocats', 'Web team · KPMG France & KPMG Avocats'), T('Content Factory sur Adobe Experience Manager, SEO, lancement du site KPMG Avocats avec près de 300 articles migrés.', 'Content Factory on Adobe Experience Manager, SEO, launch of the KPMG Avocats site with close to 300 migrated articles.')],
 ];
+// Company names in the timeline take their brand colour (the automotive group stays neutral: anonymised).
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const G = ['#4285F4', '#EA4335', '#FBBC05', '#4285F4', '#34A853', '#EA4335'];
+const brand = (s: string) => esc(s)
+  .replace('Google', [...'Google'].map((c, i) => `<span style="color:${G[i]}">${c}</span>`).join(''))
+  .replace('Coface', '<span class="b-cf">Coface</span>')
+  .replace('Dassault Systèmes', '<span class="b-ds">Dassault Systèmes</span>')
+  .replace(/KPMG/g, '<span class="b-kp">KPMG</span>');
+const dot = (s: string) => /Coface/.test(s) ? 'cf' : /Google/.test(s) ? 'go' : /Dassault/.test(s) ? 'ds' : /KPMG/.test(s) ? 'kp' : '';
 const tools = [
   [T('Visualisation', 'Visualisation'), ['Power BI', 'DAX / M', 'Excel', 'Google Sheets', 'Looker Studio']],
   [T('Données', 'Data'), ['SQL Server', 'BigQuery', 'Oracle SQL', 'Power Query', 'IBM TM1']],
@@ -37,7 +46,7 @@ const how = [
   <div class="grid g2" style="gap:48px;align-items:start">
     <div>
       <div class="head"><div><div class="kicker">{T('Chronologie', 'Timeline')}</div><h2>{T('Quatre maisons, cinq ans.', 'Four houses, five years.')}</h2></div></div>
-      <div class="tl">{tl.map(x => <div class="it rv"><div class="d">{x[0]}</div><h3>{x[1]}</h3><p style="font-size:15px">{x[2]}</p></div>)}</div>
+      <div class="tl">{tl.map(x => <div class:list={['it rv', dot(x[1] as string)]}><div class="d">{x[0]}</div><h3 set:html={brand(x[1] as string)} /><p style="font-size:15px">{x[2]}</p></div>)}</div>
     </div>
     <div>
       <div class="head"><div><div class="kicker">{T('Outils', 'Tools')}</div><h2>{T('Ce que je manie au quotidien.', 'What I use every day.')}</h2></div></div>
