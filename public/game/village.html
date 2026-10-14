@@ -7,6 +7,8 @@
 <link rel="preload" href="/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:'Press Start 2P';font-display:block;src:url(/fonts/press-start-2p.woff2) format('woff2')}.ch-bot{display:flex;align-items:center;gap:14px;margin:10px 0}.ch-robot{font-size:40px;line-height:1;filter:grayscale(1);transition:.3s}.ch-robot.on{filter:none;animation:chb .6s ease 2}
 @keyframes chb{50%{transform:translateY(-6px) rotate(-6deg)}}.ch-slots{display:flex;flex-wrap:wrap;gap:6px}.ch-slots span{font-size:12px;padding:5px 8px;border:2px dashed #9AA4AE;border-radius:4px;opacity:.7}.ch-slots span.ok{border-style:solid;border-color:#3E9A3A;background:#E3F5DD;opacity:1}
 .ch-step{font-weight:700;margin:6px 0}.ch-chat p{margin:6px 0;padding:7px 10px;border-radius:8px;font-size:14px}.ch-chat .u{background:#3D8FD1;color:#fff;margin-left:30%}.ch-chat .b{background:#EEF3F6;color:#1d1d1d;margin-right:15%}
+#endc{display:block;width:min(100%,512px);height:auto;image-rendering:pixelated;border:3px solid #0B0D10;box-shadow:0 6px 0 rgba(0,0,0,.35);margin-bottom:18px}
+@media(max-width:520px){#endc{margin-bottom:8px}}
 </style>
 <style>
 :root{--bg:#F7F7F5;--card:#fff;--ink:#0E1116;--mute:#6B7480;--line:#E3E6E8;--acc:#1AA7B0;--gold:#E0A030}
@@ -664,10 +666,31 @@ function showDash(cont){var d=document.getElementById('dash');
   var go=function(){d.classList.add('hide');d.removeEventListener('click',go);stage.removeEventListener('keyact',go);cont()};
   setTimeout(function(){d.addEventListener('click',go);dashWait=go},700)}
 var dashWait=null,stage=document.getElementById('stage');
+/* retro title card for the ending: wings, ring, the whole cast, ribbon */
+function endCard(){var cv=document.getElementById('endc');if(!cv)return;var c=cv.getContext('2d'),W=256,pc=document.createElement('canvas');pc.width=16;pc.height=24;var p=pc.getContext('2d');
+  var cast=NPC.concat([MAYOR]),T1=L==='fr'?'MERCI D’AVOIR JOUÉ !':'THANKS FOR PLAYING!',T2=L==='fr'?'VILLAGE DES DONNÉES':'DATA VILLAGE',SKY=['#1E3FA8','#2549B8','#2C55C8','#3462D6','#3D6FE2','#4A7FEE','#4A7FEE'];
+  function spr(P,x,y,s,bob,m){p.clearRect(0,0,16,24);drawPerson(p,0,6,'down',0,P,0,m);c.drawImage(pc,0,0,16,24,x,y+bob*s,16*s,24*s)}
+  function wing(d){for(var k=0;k<5;k++){var w=40-k*4,y=26+k*7,x=d<0?128-30-k*3-w:128+30+k*3;R(c,'#FFFFFF',x,y,w,6);R(c,'#C9D3E0',x,y+5,w,1);R(c,'#1B2340',d<0?x:x+w-1,y,1,6)}}
+  function frame(now){var e=document.getElementById('end');if(!document.getElementById('endc')||e.classList.contains('hide'))return;c.imageSmoothingEnabled=false;var t=now||0;
+    SKY.forEach(function(col,i){R(c,col,0,i*18,W,18)});
+    [[20,14],[200,24],[140,6]].forEach(function(q){var x=(q[0]+t/120)%290-30;R(c,'#FFFFFF',x,q[1],22,4);R(c,'#FFFFFF',x+5,q[1]-3,12,3);R(c,'#DCE6F7',x,q[1]+3,22,1)});
+    R(c,'#2F9E44',0,112,W,10);for(var x=0;x<W;x+=14){R(c,'#3FB653',x,106+(x/14%2)*3,11,8);R(c,'#6CC24A',x+2,106+(x/14%2)*3,4,2)}
+    R(c,'#2E6FD0',0,120,W,30);for(var y=123;y<150;y+=4)for(var k=0;k<6;k++)R(c,'#7FB2F2',(k*47+y*13+Math.floor(t/90)*(y%8?1:-1)*2+600)%W,y,7,1);
+    wing(-1);wing(1);
+    c.fillStyle='#8E5E12';c.beginPath();c.arc(128,56,33,0,7);c.fill();c.fillStyle='#F2C14E';c.beginPath();c.arc(128,56,31,0,7);c.fill();c.fillStyle='#1AA7B0';c.beginPath();c.arc(128,56,24,0,7);c.fill();c.fillStyle='#3FD3DC';c.beginPath();c.arc(128,52,18,0,7);c.fill();
+    for(var a=0;a<8;a++){var an=a/8*Math.PI*2-Math.PI/2,sx=Math.round(128+Math.cos(an)*27.5),sy=Math.round(56+Math.sin(an)*27.5),on=Math.floor(t/250+a)%4;R(c,on?'#FFFFFF':'#FFF4D6',sx-1,sy,3,1);R(c,on?'#FFFFFF':'#FFF4D6',sx,sy-1,1,3)}
+    cast.forEach(function(n,i){var left=i<4,j=left?i:i-4,x=left?96-j*20:144+j*20,y=58-(j%2)*4,bob=Math.sin(t/180+i*1.3)>.4?-2:0;spr(n.P,x,y,1,bob,{mood:'happy',blink:((t+i*700)%3000)<120})});
+    spr(player.P,112,12,2,Math.sin(t/220)>.5?-1:0,{mood:'happy',blink:(t%3400)<120});
+    R(c,'#9E1F2B',22,90,20,14);R(c,'#FFFFFF',24,94,16,2);R(c,'#9E1F2B',214,90,20,14);R(c,'#FFFFFF',216,94,16,2);R(c,'#5E0F18',36,100,6,4);R(c,'#5E0F18',214,100,6,4);
+    R(c,'#D7263D',36,82,184,20);R(c,'#F05A6B',36,82,184,3);R(c,'#8E1A28',36,99,184,3);
+    c.font='8px "Press Start 2P",monospace';c.textAlign='center';c.textBaseline='alphabetic';c.fillStyle='#1B2340';c.fillText(T1,129,96);c.fillStyle='#FFF4D6';c.fillText(T1,128,95);
+    R(c,'#1B2340',47,104,162,13);R(c,'#F4F1E6',48,105,160,11);c.fillStyle='#1B2340';c.fillText(T2,128,114);
+    requestAnimationFrame(frame)}
+  requestAnimationFrame(frame)}
 function showEnd(){var s=Math.round((performance.now()-t0)/1000),best=0;try{best=+localStorage.getItem('kr-village-best')||0}catch(e){}if(!best||s<best){best=s;try{localStorage.setItem('kr-village-best',s)}catch(e){}}
   function f(v){return Math.floor(v/60)+':'+('0'+v%60).slice(-2)}
-  var e=document.getElementById('end');e.innerHTML='<div class="em">🎉</div><h2>'+TX.endT+'</h2><p>'+TX.endP+'</p><div class="st"><div><b>'+lvl+'</b>'+TX.stLv+'</div><div><b>'+steps+'</b>'+TX.stSteps+'</div><div><b>'+f(s)+'</b>'+TX.stTime+'</div><div><b>'+f(best)+'</b>'+TX.best+'</div></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="go" id="share" target="_blank" rel="noopener" style="text-decoration:none;background:#0A66C2;color:#fff">'+(L==='fr'?'Partager sur LinkedIn':'Share on LinkedIn')+'</a><button class="go" id="again">'+TX.again+'</button></div>';
-  e.classList.remove('hide');state='end';var dn=Object.keys(dexData).length,msg=(L==='fr'?'🏡 J’ai sauvé le Village des Données en '+f(s)+' (niveau '+lvl+', Datadex '+dn+'/'+MONS.length+') ! Le petit RPG data de Kevin Radja, à tester ici : ':'🏡 I saved Data Village in '+f(s)+' (level '+lvl+', Datadex '+dn+'/'+MONS.length+')! Kevin Radja’s little data RPG, try it here: ')+'https://kevinradja-site.vercel.app'+(L==='fr'?'/jeu/':'/en/game/');
+  var e=document.getElementById('end');e.innerHTML='<canvas id="endc" width="256" height="150"></canvas><h2>'+TX.endT+'</h2><p>'+TX.endP+'</p><div class="st"><div><b>'+lvl+'</b>'+TX.stLv+'</div><div><b>'+steps+'</b>'+TX.stSteps+'</div><div><b>'+f(s)+'</b>'+TX.stTime+'</div><div><b>'+f(best)+'</b>'+TX.best+'</div></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="go" id="share" target="_blank" rel="noopener" style="text-decoration:none;background:#0A66C2;color:#fff">'+(L==='fr'?'Partager sur LinkedIn':'Share on LinkedIn')+'</a><button class="go" id="again">'+TX.again+'</button></div>';
+  e.classList.remove('hide');state='end';endCard();var dn=Object.keys(dexData).length,msg=(L==='fr'?'🏡 J’ai sauvé le Village des Données en '+f(s)+' (niveau '+lvl+', Datadex '+dn+'/'+MONS.length+') ! Le petit RPG data de Kevin Radja, à tester ici : ':'🏡 I saved Data Village in '+f(s)+' (level '+lvl+', Datadex '+dn+'/'+MONS.length+')! Kevin Radja’s little data RPG, try it here: ')+'https://kevinradja-site.vercel.app'+(L==='fr'?'/jeu/':'/en/game/');
   document.getElementById('share').href='https://www.linkedin.com/feed/?shareActive=true&text='+encodeURIComponent(msg);
   document.getElementById('again').onclick=reset}
 function reset(){done={};xp=0;lvl=1;steps=0;finale=false;party=false;sparks=[];player.x=15;player.y=23;player.px=15*T;player.py=23*T;player.dir='up';player.moving=false;
