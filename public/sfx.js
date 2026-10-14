@@ -1,8 +1,8 @@
 /* Tiny synthesised sound effects (no audio files). KR.sfx.play(name) */
 (function(){
-  var ctx=null,muted=false;
+  var ctx=null,muted=false,unlocked=false;
   try{muted=localStorage.getItem('kr-sound')==='off'}catch(e){}
-  function ac(){if(!ctx){var A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ctx=new A()}if(ctx.state==='suspended')ctx.resume();return ctx}
+  function ac(){if(!unlocked)return null;if(!ctx){var A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ctx=new A()}if(ctx.state==='suspended')ctx.resume();return ctx}
   function tone(f,t,dur,type,vol,slide){var c=ac();if(!c||muted||c.state!=='running')return;var o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,c.currentTime+t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,c.currentTime+t+dur);g.gain.setValueAtTime(0,c.currentTime+t);g.gain.linearRampToValueAtTime(vol||.08,c.currentTime+t+.006);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+t+dur);o.connect(g).connect(c.destination);o.start(c.currentTime+t);o.stop(c.currentTime+t+dur+.02)}
   function noise(t,dur,vol){var c=ac();if(!c||muted||c.state!=='running')return;var n=c.sampleRate*dur,b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);var s=c.createBufferSource(),g=c.createGain(),f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;s.buffer=b;g.gain.value=vol||.12;s.connect(f).connect(g).connect(c.destination);s.start(c.currentTime+t)}
   function air(m,v){m=m||1;v=v||1;var c=ac();if(!c||muted||c.state!=='running')return;var d=.45,n=c.sampleRate*d,b=c.createBuffer(1,n,c.sampleRate),x=b.getChannelData(0);for(var i=0;i<n;i++)x[i]=(Math.random()*2-1);
@@ -27,7 +27,14 @@
     stage2:function(){[392,523,659,784,988].forEach(function(f,i){tone(f,i*.05,.07,'square',.03)})},
     stage3:function(){[523,659,784,1047].forEach(function(f,k){tone(f,k*.08,.09,'square',.03)});[988,1047].forEach(function(f,k){tone(f,.42+k*.1,.12,'square',.03)});[262,330,392,523].forEach(function(f,k){tone(f,.62+k*.03,.6,'triangle',.045)});tone(1319,.66,.5,'sine',.02)}
   };
-  ['pointerdown','keydown','touchend'].forEach(function(ev){document.addEventListener(ev,function(){ac()},{capture:true,passive:true})});
+  function unlock(){if(unlocked)return;unlocked=true;ac();var h=document.getElementById('kr-snd-hint');if(h){h.classList.add('bye');setTimeout(function(){h.remove()},400)}}
+  ['pointerdown','keydown','touchend'].forEach(function(ev){document.addEventListener(ev,unlock,{capture:true,passive:true})});
+  /* small hint while the browser keeps sound locked */
+  function hint(){if(unlocked||muted||document.getElementById('kr-snd-hint')||!document.body)return;var fr=(document.documentElement.lang||'fr').indexOf('en')!==0;
+    var b=document.createElement('button');b.id='kr-snd-hint';b.type='button';b.setAttribute('data-silent','');b.textContent=fr?'🔊 Cliquez pour activer le son':'🔊 Click to turn sound on';
+    var st=document.createElement('style');st.textContent='#kr-snd-hint{position:fixed;left:16px;bottom:16px;z-index:60;border:1px solid rgba(12,58,62,.18);background:#FAF7F0;color:#0C3A3E;font:600 13px/1 Archivo,system-ui,sans-serif;padding:10px 14px;border-radius:999px;box-shadow:0 10px 24px -12px rgba(12,58,62,.45);cursor:pointer;animation:krh .5s 1.2s both;transition:opacity .35s,transform .35s}#kr-snd-hint.bye{opacity:0;transform:translateY(10px)}@keyframes krh{from{opacity:0;transform:translateY(10px)}}';
+    document.head.appendChild(st);document.body.appendChild(b)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hint);else hint();
   window.KR=window.KR||{};
   window.KR.sfx={play:function(n,a,b){try{S[n]&&S[n](a,b)}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};
   /* UI sounds on the site. Nav links each get their own note of a pentatonic scale,
