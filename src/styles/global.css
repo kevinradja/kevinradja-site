@@ -1177,3 +1177,5 @@ body{overflow-x:clip}
 .pj-kpi{display:inline-flex;align-items:baseline;gap:12px;flex-wrap:wrap;justify-content:center;margin:clamp(20px,2.4vw,32px) auto 0;padding:12px 22px;border-radius:999px;background:color-mix(in srgb,var(--acc) 12%,transparent);border:1px solid color-mix(in srgb,var(--acc) 30%,transparent)}
 .pj-kpi b{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:clamp(26px,3.2vw,40px);line-height:1;color:var(--acc);white-space:nowrap}
 .pj-kpi span{font-size:15px;font-weight:600;color:var(--ink)}
+/* phones: long single words in page titles must fit */
+@media(max-width:520px){.pg-title{font-size:clamp(22px,7vw,40px);max-width:100%}}
