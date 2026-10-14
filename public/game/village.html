@@ -211,6 +211,20 @@ html.wide .dlg{font-size:12px}
 .ch-in.shake{animation:chsh .35s}
 @keyframes chsh{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
 @media(max-width:520px){.ov{padding:18px 16px}.ov .em{margin-bottom:10px}.ov .em svg{width:48px}.ov h2{font-size:13px;margin-bottom:12px}.ov p{font-size:13px;line-height:1.55}.ov .go{margin-top:16px;padding:12px 20px}.ov .hint{margin-top:14px;font-size:8px}}
+/* hands-on cases */
+.ch-clean th{text-align:left;font:800 10px/1.4 Archivo,Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#6B7480;padding:6px 10px}
+.ch-clean tr[data-i]{cursor:pointer}
+.ch-clean tr[data-i]:hover td,.ch-clean tr.sel td{background:#F2C14E}
+.ch-clean tr.fixed td{background:#CFEFD8;color:#1F6B3A;font-weight:700;cursor:default}
+.ch-clean td+td{text-align:left}
+.ch-count{margin:-4px 0 0;font:700 12px/1.4 Archivo,Inter,system-ui,sans-serif;color:#6B7480}
+.ch-res{min-height:54px;margin:0 0 10px;padding:10px 12px;background:#10182C;color:#F4F1E6;font:600 13px/1.6 Archivo,Inter,system-ui,sans-serif}
+.ch-res.code,.ch-o.code button{font-family:ui-monospace,Menlo,Consolas,monospace!important}
+.ch-res em{font-style:normal;color:#9FB0C4}
+.ch-res div:before{content:"> ";color:#7FD1C9}
+.ch-o button.used{opacity:.35;cursor:default}
+.ch-clean tr:last-child td{font-weight:400;background:#E8E2D4}
+.ch-clean tr.fixed:last-child td{background:#CFEFD8;font-weight:700}
 </style>
 </head>
 <body>
@@ -512,34 +526,47 @@ var CHART={bar:'<svg viewBox="0 0 30 22"><rect x="3" y="10" width="5" height="10
   line:'<svg viewBox="0 0 30 22"><polyline points="2,17 8,14 13,15 18,8 23,10 28,4" fill="none" stroke="#3D8FD1" stroke-width="2.5"/></svg>',
   pie:'<svg viewBox="0 0 30 22"><circle cx="15" cy="11" r="9" fill="#3D8FD1"/><path d="M15 11V2a9 9 0 0 1 8.5 12z" fill="#F2C14E"/></svg>'};
 var CH={
- ines:{fr:{q:'Mes trois greniers donnent trois chiffres différents pour le même mois. Par quoi on commence ?',o:['Faire la moyenne des trois','Rapprocher les sources et nettoyer les doublons','Garder le chiffre le plus élevé'],ok:1,why:'D’abord une source unique et propre. Sinon on calcule juste sur du faux, comme les registres de KPMG en 2022.'},
-       en:{q:'My three attics give three different numbers for the same month. Where do we start?',o:['Average the three','Reconcile the sources and remove duplicates','Keep the highest number'],ok:1,why:'One clean source first. Otherwise you compute on wrong data, like the KPMG registers in 2022.'}},
- gaspard:{fr:{q:'La forge perd 100 heures par mois en calculs. Qu’est-ce qu’on automatise en premier ?',o:['La tâche la plus répétitive et la plus longue','Le rapport annuel','Rien, on embauche'],ok:0,why:'On attaque ce qui revient le plus souvent : c’est là que Python et SQL ont fait passer 100 h à 3 h chez Dassault Systèmes.'},
-          en:{q:'The forge loses 100 hours a month on calculations. What do we automate first?',o:['The most repetitive, longest task','The annual report','Nothing, we hire'],ok:0,why:'Start with what repeats most: that is how Python and SQL took 100 h down to 3 h at Dassault Systèmes.'}},
+ ines:{fr:{type:'clean',q:'Nettoie l’export CSV des registres : clique sur les 3 lignes à corriger.',h:['Client','Date','Montant'],r:[[['Dupont SA','12/03/2024','1 200 €']],[['DUPONT sa','12/03/2024','1 200 €'],'Doublon supprimé'],[['Martin & Fils','14/03/2024','#N/A'],'Montant retrouvé : 640 €'],[['Leroy','03-18-2024','980 €'],'Date remise au format : 18/03/2024'],[['Bernard','15/03/2024','2 400 €']]],why:'Doublons, cellules vides, dates dans tous les formats : on nettoie d’abord, on calcule ensuite. Sinon le tableau de bord ment.'},
+       en:{type:'clean',q:'Clean the registers’ CSV export: click the 3 rows that need fixing.',h:['Client','Date','Amount'],r:[[['Dupont SA','03/12/2024','€1,200']],[['DUPONT sa','03/12/2024','€1,200'],'Duplicate removed'],[['Martin & Fils','03/14/2024','#N/A'],'Amount found: €640'],[['Leroy','18-03-2024','€980'],'Date fixed: 03/18/2024'],[['Bernard','03/15/2024','€2,400']]],why:'Duplicates, empty cells, dates in every format: clean first, compute second. Otherwise the dashboard lies.'}},
+ gaspard:{fr:{type:'order',q:'Remets la requête SQL dans l’ordre pour obtenir le total des ventes par client.',code:1,items:['SELECT client, SUM(montant)','FROM ventes','WHERE annee = 2024','GROUP BY client'],show:[2,0,3,1],why:'Une fois écrite, la requête se relance toute seule chaque mois. C’est ce genre d’automatisation (SQL, Python) qui a fait passer 100 h de traitement à 3 h chez Dassault Systèmes.'},
+          en:{type:'order',q:'Put the SQL query back in order to get total sales per client.',code:1,items:['SELECT client, SUM(amount)','FROM sales','WHERE year = 2024','GROUP BY client'],show:[2,0,3,1],why:'Once written, the query reruns by itself every month. This kind of automation (SQL, Python) took 100 h of processing down to 3 h at Dassault Systèmes.'}},
  lina:{fr:{q:'Pour voir l’eau du puits baisser jour après jour, quel graphique ?',o:[CHART.bar+'Barres',CHART.line+'Courbe',CHART.pie+'Camembert'],ok:1,why:'Une évolution dans le temps se lit avec une courbe. Le camembert ne montre qu’une répartition.'},
        en:{q:'To see the well level drop day after day, which chart?',o:[CHART.bar+'Bars',CHART.line+'Line',CHART.pie+'Pie'],ok:1,why:'A change over time reads best as a line. A pie only shows a split.'}},
- bertrand:{fr:{q:'Quel indicateur suivre pour savoir si mes loyers rentrent bien ?',o:['Le nombre de locataires','Le taux d’impayés (impayés ÷ loyers dus)','La somme de tous les loyers'],ok:1,why:'Un ratio se compare d’un mois à l’autre. C’est le genre de mesure DAX qu’on a mise dans Power BI chez Coface.'},
-           en:{q:'Which indicator tells me if rents are coming in?',o:['Number of tenants','Unpaid rate (unpaid ÷ rent due)','Total of all rents'],ok:1,why:'A ratio compares month to month. That is the kind of DAX measure we put in Power BI at Coface.'}},
+ bertrand:{fr:{q:'Quel est le taux d’impayés de ce mois ?',t:[['Loyers dus','4 000 €'],['Loyers payés','3 400 €'],['Impayés','600 €']],o:['15 %','85 %','600 €'],ok:0,why:'Taux d’impayés = impayés ÷ loyers dus = 600 ÷ 4 000 = 15 %. Dans Power BI, c’est une mesure DAX : DIVIDE([Impayés], [Loyers dus]). Un taux se compare d’un mois à l’autre, un montant non.'},
+           en:{q:'What is this month’s unpaid rate?',t:[['Rent due','€4,000'],['Rent paid','€3,400'],['Unpaid','€600']],o:['15%','85%','€600'],ok:0,why:'Unpaid rate = unpaid ÷ rent due = 600 ÷ 4,000 = 15%. In Power BI it is a DAX measure: DIVIDE([Unpaid], [Rent due]). A rate compares month to month, an amount does not.'}},
  margot:{fr:{q:'Une ligne de mes ventes est fausse. Laquelle ?',t:[['Janvier','1 200 €'],['Février','1 350 €'],['Mars','1 100 €'],['Total','3 950 €']],o:['Janvier','Mars','Total'],ok:2,why:'1 200 + 1 350 + 1 100 = 3 650 €. Un total tapé à la main finit toujours par mentir : Power Query le recalcule tout seul.'},
          en:{q:'One line of my sales is wrong. Which one?',t:[['January','€1,200'],['February','€1,350'],['March','€1,100'],['Total','€3,950']],o:['January','March','Total'],ok:2,why:'1,200 + 1,350 + 1,100 = 3,650. A hand-typed total always ends up lying: Power Query recalculates it.'}},
- jo:{fr:{q:'Au dojo comme en data, quel rythme rend un suivi fiable ?',o:['Un gros bilan une fois par an','Un point court, chaque semaine, toujours le même','Seulement quand il y a un problème'],ok:1,why:'La régularité bat l’intensité. Un tableau mis à jour chaque semaine vaut mieux qu’un énorme bilan oublié.'},
-     en:{q:'In the dojo as in data, what rhythm makes tracking reliable?',o:['One big review a year','A short check, every week, always the same','Only when something breaks'],ok:1,why:'Consistency beats intensity. A sheet updated weekly beats a huge forgotten review.'}}};
+ jo:{fr:{type:'order',q:'Trie mes séances par date, de la plus ancienne à la plus récente, comme un tri dans Google Sheets.',items:['Lun. 3 mars · Kata','Mer. 5 mars · Kihon','Ven. 7 mars · Kumite','Lun. 10 mars · Kata'],show:[3,1,0,2],why:'Une ligne par séance, toujours au même format, triée par date : c’est la base d’un suivi régulier. La régularité bat l’intensité.'},
+     en:{type:'order',q:'Sort my sessions by date, oldest to newest, like a sort in Google Sheets.',items:['Mon Mar 3 · Kata','Wed Mar 5 · Kihon','Fri Mar 7 · Kumite','Mon Mar 10 · Kata'],show:[3,1,0,2],why:'One row per session, always in the same format, sorted by date: the basis of steady tracking. Consistency beats intensity.'}}};
 var chEl=document.getElementById('ch'),chDone=null,chSel=0;
 function challenge(n,cb){var c=(CH[n.id]||{})[L];if(!c){cb();return}
-  state='quiz';var tries=0;chSel=0;chEl.classList.remove('hide');
-  function paint(msg,ok){chEl.innerHTML='<div class="bt-in ch-in"><div class="ch-who"><canvas width="20" height="20" class="ch-face"></canvas><b>'+n.name+'</b><span>'+(L==='fr'?'Défi':'Challenge')+'</span></div>'+
-    '<h3>'+c.q+'</h3>'+(c.t?'<table class="ch-t">'+c.t.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('')+'</table>':'')+
-    '<div class="ch-o'+(c.o[0].indexOf('<svg')===0?' ch-g':'')+'">'+c.o.map(function(o,i){return '<button data-i="'+i+'" class="'+(i===chSel?'sel ':'')+(ok&&i===c.ok?'good':'')+'"><kbd>'+(i+1)+'</kbd>'+o+'</button>'}).join('')+'</div>'+
-    '<p class="ch-msg'+(ok?' ok':'')+'">'+(msg||'')+'</p>'+(ok?'<button class="ch-next">'+(L==='fr'?'Continuer':'Continue')+' &gt;</button>':'')+'</div>';
-    var fc=chEl.querySelector('.ch-face');if(fc){var keep=[fcx,faceP,faceE];fcx=fc.getContext('2d');faceP=n.P;faceE=ok?'h':(msg?'sad':'n');faceT0=performance.now();var sc=cur;cur=null;drawFace(faceT0);cur=sc;fcx=keep[0];faceP=keep[1];faceE=keep[2]}
-    chEl.querySelectorAll('.ch-o button').forEach(function(b){b.onclick=function(){pick(+b.dataset.i)}});
+  state='quiz';var tries=0,miss=0;chSel=0;var type=c.type||'choice',found={},picked=[];chEl.classList.remove('hide');
+  var nOpt=type==='clean'?c.r.length:type==='order'?c.items.length:c.o.length;
+  function body(ok){
+    if(type==='clean'){var nb=c.r.filter(function(r){return r[1]}).length,nf=Object.keys(found).length;
+      return '<table class="ch-t ch-clean"><tr>'+c.h.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr>'+c.r.map(function(r,k){var f=found[k];
+        return '<tr data-i="'+k+'" class="'+(f?'fixed ':'')+(k===chSel&&!ok?'sel':'')+'">'+(f?'<td colspan="3">✓ '+r[1]+'</td>':r[0].map(function(x){return '<td>'+x+'</td>'}).join(''))+'</tr>'}).join('')+'</table>'+
+        '<p class="ch-count">'+nf+' / '+nb+' '+(L==='fr'?'corrigée'+(nf>1?'s':''):'fixed')+'</p>'}
+    if(type==='order'){return '<div class="ch-res'+(c.code?' code':'')+'">'+(picked.length?picked.map(function(k){return '<div>'+c.items[k]+'</div>'}).join(''):'<em>'+(L==='fr'?'Clique sur les morceaux dans le bon ordre…':'Click the pieces in the right order…')+'</em>')+'</div>'+
+        '<div class="ch-o'+(c.code?' code':'')+'">'+c.show.map(function(k,pos){var used=picked.indexOf(k)>=0;return '<button data-i="'+pos+'" class="'+(pos===chSel?'sel ':'')+(used?'used':'')+'"'+(used?' disabled':'')+'><kbd>'+(pos+1)+'</kbd>'+c.items[k]+'</button>'}).join('')+'</div>'}
+    return (c.t?'<table class="ch-t">'+c.t.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('')+'</table>':'')+
+      '<div class="ch-o'+(c.o[0].indexOf('<svg')===0?' ch-g':'')+'">'+c.o.map(function(o,k){return '<button data-i="'+k+'" class="'+(k===chSel?'sel ':'')+(ok&&k===c.ok?'good':'')+'"><kbd>'+(k+1)+'</kbd>'+o+'</button>'}).join('')+'</div>'}
+  function paint(msg,ok,good){chEl.innerHTML='<div class="bt-in ch-in"><div class="ch-who"><canvas width="20" height="20" class="ch-face"></canvas><b>'+n.name+'</b><span>'+(L==='fr'?'Cas pratique':'Hands-on')+'</span></div>'+
+    '<h3>'+c.q+'</h3>'+body(ok)+'<p class="ch-msg'+(ok||good?' ok':'')+'">'+(msg||'')+'</p>'+(ok?'<button class="ch-next">'+(L==='fr'?'Continuer':'Continue')+' &gt;</button>':'')+'</div>';
+    var fc=chEl.querySelector('.ch-face');if(fc){var keep=[fcx,faceP,faceE];fcx=fc.getContext('2d');faceP=n.P;faceE=ok||good?'h':(msg?'sad':'n');faceT0=performance.now();var sc=cur;cur=null;drawFace(faceT0);cur=sc;fcx=keep[0];faceP=keep[1];faceE=keep[2]}
+    chEl.querySelectorAll('.ch-o button,.ch-clean tr[data-i]').forEach(function(b){b.onclick=function(){act(+b.dataset.i)}});
     var nx=chEl.querySelector('.ch-next');if(nx){nx.onclick=finish;chDone=finish}else chDone=null}
-  function pick(i){if(chDone)return;chSel=i;tries++;
-    if(i===c.ok){fx('heal');var bonus=tries===1?15:5;xp+=bonus;pop('+'+bonus+' XP','#FFD45E',14);hud();paint((tries===1?(L==='fr'?'Bravo, du premier coup ! ':'First try! '):(L==='fr'?'C’est ça ! ':'That’s it! '))+c.why,true)}
-    else{fx('bump');var b=chEl.querySelector('.ch-in');paint(L==='fr'?'Pas tout à fait… relis bien la question et réessaie.':'Not quite… read the question again and retry.',false);b=chEl.querySelector('.ch-in');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}}
+  function shake(msg){fx('bump');miss++;paint(msg,false);var b=chEl.querySelector('.ch-in');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}
+  function win(){fx('heal');var bonus=miss===0?15:5;xp+=bonus;pop('+'+bonus+' XP','#FFD45E',14);hud();paint((miss===0?(L==='fr'?'Parfait, sans faute ! ':'Flawless! '):(L==='fr'?'C’est réglé ! ':'Sorted! '))+c.why,true)}
+  function act(k){if(chDone)return;chSel=k;
+    if(type==='clean'){var r=c.r[k];if(!r||found[k])return;if(r[1]){found[k]=1;fx('item');if(Object.keys(found).length===c.r.filter(function(x){return x[1]}).length)win();else paint(L==='fr'?'Bien vu ! Continue.':'Good catch! Keep going.',false,true)}
+      else shake(L==='fr'?'Cette ligne est correcte. Cherche un doublon, une cellule vide ou une date bizarre.':'This row is fine. Look for a duplicate, an empty cell or an odd date.');return}
+    if(type==='order'){var it=c.show[k];if(it===undefined||picked.indexOf(it)>=0)return;if(it===picked.length){picked.push(it);fx('blip');if(picked.length===c.items.length)win();else paint('',false)}
+      else shake(L==='fr'?'Pas encore : quel morceau vient juste après ?':'Not yet: which piece comes right after?');return}
+    tries++;if(k===c.ok)win();else shake(L==='fr'?'Pas tout à fait… relis bien et réessaie.':'Not quite… read again and retry.')}
   function finish(){chDone=null;chEl.classList.add('hide');chEl.innerHTML='';state='play';cb()}
-  chKey=function(k){if(chDone){if(k==='enter'||k===' ')chDone();return}if(k>='1'&&k<='3'){pick(+k-1);return}
-    if(k==='arrowdown'||k==='arrowright'||k==='s'||k==='d'){chSel=(chSel+1)%c.o.length;paint()}else if(k==='arrowup'||k==='arrowleft'||k==='z'||k==='w'||k==='q'||k==='a'){chSel=(chSel+c.o.length-1)%c.o.length;paint()}else if(k==='enter'||k===' '||k==='e')pick(chSel)};
+  chKey=function(k){if(chDone){if(k==='enter'||k===' ')chDone();return}if(k>='1'&&k<='9'){act(+k-1);return}
+    if(k==='arrowdown'||k==='arrowright'||k==='s'||k==='d'){chSel=(chSel+1)%nOpt;paint()}else if(k==='arrowup'||k==='arrowleft'||k==='z'||k==='w'||k==='q'||k==='a'){chSel=(chSel+nOpt-1)%nOpt;paint()}else if(k==='enter'||k===' '||k==='e')act(chSel)};
   paint()}
 var chKey=null;
 function say(list,cb){Q=list.slice();onDone=cb||null;next()}
