@@ -80,6 +80,7 @@ a.card:hover{transform:translateY(-3px);border-color:var(--line2)}
 .nav .li:hover{border-color:#0A66C2}
 .nav .li svg{width:16px;height:16px}
 :root[data-theme="dark"] .nav .li{color:#4c9be8}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .nav .li{color:#4c9be8}}
 @media(max-width:1100px){.nav .li{width:38px;padding:0;justify-content:center}.nav .li span{display:none}}
 @media(max-width:860px){.nav .links{display:none}.nav.open .links{display:flex;flex-direction:column;position:absolute;left:0;right:0;top:64px;background:var(--bg);border-bottom:1px solid var(--line);padding:12px var(--pad) 18px;gap:4px}.burger{display:grid}.nav .cta{display:none}}
 
@@ -99,7 +100,9 @@ a.card:hover{transform:translateY(-3px);border-color:var(--line2)}
 .logos{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;margin-top:30px}
 .logos img{height:22px;width:auto;transition:transform .2s}
 .logos img:hover{transform:translateY(-2px)}
-:root[data-theme="dark"] .logos img{background:#fff;padding:7px 12px;border-radius:10px;box-sizing:content-box}
+.logos img{border-radius:10px;box-sizing:content-box}
+:root[data-theme="dark"] .logos img{background:#fff;padding:7px 12px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .logos img{background:#fff;padding:7px 12px}}
 .logos span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:700;width:100%}
 .avail{display:inline-flex;align-items:center;gap:10px;margin-top:26px;font-size:14px;color:var(--ink2)}
 
