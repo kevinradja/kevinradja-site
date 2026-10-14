@@ -10,12 +10,12 @@
     g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05*v,t+.12);g.gain.exponentialRampToValueAtTime(.0001,t+d);src.buffer=b;src.connect(f).connect(g).connect(c.destination);src.start(t);tone(1568*m,.05,.25,'sine',.006*v)}
   /* continuous soft 8-bit 'cloud' hum while dragging the carousel */
   var cl=null;
-  function cloudStart(){return;var c=ac();if(!c||muted||c.state!=='running'||cl)return;var t=c.currentTime,o=c.createOscillator(),o2=c.createOscillator(),lfo=c.createOscillator(),ld=c.createGain(),f=c.createBiquadFilter(),g=c.createGain();
+  function cloudStart(){var c=ac();if(!c||muted||c.state!=='running'||cl)return;var t=c.currentTime,o=c.createOscillator(),o2=c.createOscillator(),lfo=c.createOscillator(),ld=c.createGain(),f=c.createBiquadFilter(),g=c.createGain();
     o.type='triangle';o2.type='square';o.frequency.value=392;o2.frequency.value=784;lfo.frequency.value=5.2;ld.gain.value=7;lfo.connect(ld);ld.connect(o.frequency);ld.connect(o2.frequency);
-    f.type='lowpass';f.frequency.value=1100;var g2=c.createGain();g2.gain.value=.12;o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(c.destination);
-    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.022,t+.18);o.start(t);o2.start(t);lfo.start(t);cl={o:o,o2:o2,lfo:lfo,g:g,c:c}}
-  function cloudSet(m){if(!cl)return;var t=cl.c.currentTime;cl.o.frequency.setTargetAtTime(392*m,t,.12);cl.o2.frequency.setTargetAtTime(784*m,t,.12)}
-  function cloudStop(){if(!cl)return;var x=cl,t=x.c.currentTime;cl=null;x.g.gain.cancelScheduledValues(t);x.g.gain.setTargetAtTime(0,t,.09);setTimeout(function(){try{x.o.stop();x.o2.stop();x.lfo.stop()}catch(e){}},600)}
+    f.type='lowpass';f.frequency.value=1100;var g2=c.createGain();g2.gain.value=.07;o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(c.destination);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.02,t+.32);o.start(t);o2.start(t);lfo.start(t);cl={o:o,o2:o2,lfo:lfo,g:g,c:c}}
+  function cloudSet(m){if(!cl)return;var t=cl.c.currentTime;cl.o.frequency.setTargetAtTime(392*m,t,.2);cl.o2.frequency.setTargetAtTime(784*m,t,.2)}
+  function cloudStop(){if(!cl)return;var x=cl,t=x.c.currentTime;cl=null;x.g.gain.cancelScheduledValues(t);x.g.gain.setTargetAtTime(0,t,.16);setTimeout(function(){try{x.o.stop();x.o2.stop();x.lfo.stop()}catch(e){}},600)}
   function warpSnd(){var c=ac();if(!c||muted||c.state!=='running')return;var T0=c.currentTime,d=2.1;
     var o=c.createOscillator(),o2=c.createOscillator(),f=c.createBiquadFilter(),g=c.createGain();o.type='sawtooth';o2.type='square';
     o.frequency.setValueAtTime(70,T0);o.frequency.exponentialRampToValueAtTime(520,T0+d);o2.frequency.setValueAtTime(140,T0);o2.frequency.exponentialRampToValueAtTime(1040,T0+d);

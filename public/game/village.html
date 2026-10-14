@@ -187,6 +187,29 @@ html.wide .dlg{font-size:12px}
 @media(max-width:520px){.quest{font-size:11px;padding:8px 9px;max-width:70%}}
 /* helper lines under the game in the normal font */
 .obj,.kb,html.wide .kb{font-family:Archivo,Inter,system-ui,sans-serif!important;font-size:13px;line-height:1.5;letter-spacing:0}
+/* mini-challenge */
+.ch-in{text-align:left;width:min(460px,100%)}
+.ch-who{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ch-face{width:44px;height:44px;image-rendering:pixelated}
+.ch-who b{font:400 10px/1.4 'Press Start 2P',monospace}
+.ch-who span{margin-left:auto;background:#F2C14E;color:#10182C;font:400 8px/1 'Press Start 2P',monospace;padding:6px 8px}
+.ch-in h3{font:700 15px/1.45 Archivo,Inter,system-ui,sans-serif!important;margin:0 0 12px}
+.ch-t{width:100%;border-collapse:collapse;margin:0 0 12px;font:600 13px/1.4 Archivo,Inter,system-ui,sans-serif}
+.ch-t td{padding:6px 10px;background:#E8E2D4}.ch-t tr:nth-child(2n) td{background:#EFEADF}.ch-t td+td{text-align:right}
+.ch-t tr:last-child td{font-weight:800;background:#DCD3C0}
+.ch-o{display:grid;gap:8px}
+.ch-o.ch-g{grid-template-columns:repeat(3,1fr)}
+.ch-o button{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:11px 12px;background:#E8E2D4;color:#10182C;font:600 13.5px/1.35 Archivo,Inter,system-ui,sans-serif;box-shadow:0 3px 0 #C9C2B6}
+.ch-o.ch-g button{flex-direction:column;gap:6px;text-align:center;padding:12px 6px}
+.ch-o button svg{width:54px;height:40px}
+.ch-o button kbd{font:400 8px/1 'Press Start 2P',monospace;background:#10182C;color:#F4F1E6;padding:4px 5px}
+.ch-o button:hover,.ch-o button.sel{background:#F2C14E}
+.ch-o button.good{background:#4BC86B;box-shadow:0 3px 0 #2E8A47}
+.ch-msg{min-height:20px;margin:12px 0 0;font:600 13px/1.5 Archivo,Inter,system-ui,sans-serif;color:#B5432F}
+.ch-msg.ok{color:#1F6B3A}
+.ch-next{all:unset;cursor:pointer;display:inline-block;margin-top:12px;background:#10182C;color:#F4F1E6;font:400 10px/1 'Press Start 2P',monospace;padding:11px 14px;box-shadow:0 4px 0 #000}
+.ch-in.shake{animation:chsh .35s}
+@keyframes chsh{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
 </style>
 </head>
 <body>
@@ -207,6 +230,7 @@ html.wide .dlg{font-size:12px}
     </div>
     <div class="ov hide" id="end"></div>
     <div class="bt hide" id="bt"></div>
+    <div class="bt hide" id="ch"></div>
     <div class="dex hide" id="dex"></div>
   </div>
   <div class="inv" id="inv"></div>
@@ -482,6 +506,41 @@ function questPanel(){var h='',fr=L==='fr',open=NPC.filter(function(n){return as
   else{h='<b class="q-t">'+(fr?'Mission':'Mission')+'</b><div class="q-go">'+(fr?'Parle à un habitant marqué d’un « ! »':'Talk to a villager marked “!”')+'</div>'}
   if(h===questLast)return;questLast=h;questEl.innerHTML=h;questEl.classList.toggle('hide',!h)}
 setInterval(questPanel,300);
+/* ---------- one mini-challenge per villager ---------- */
+var CHART={bar:'<svg viewBox="0 0 30 22"><rect x="3" y="10" width="5" height="10" fill="#3D8FD1"/><rect x="11" y="4" width="5" height="16" fill="#3D8FD1"/><rect x="19" y="13" width="5" height="7" fill="#3D8FD1"/></svg>',
+  line:'<svg viewBox="0 0 30 22"><polyline points="2,17 8,14 13,15 18,8 23,10 28,4" fill="none" stroke="#3D8FD1" stroke-width="2.5"/></svg>',
+  pie:'<svg viewBox="0 0 30 22"><circle cx="15" cy="11" r="9" fill="#3D8FD1"/><path d="M15 11V2a9 9 0 0 1 8.5 12z" fill="#F2C14E"/></svg>'};
+var CH={
+ ines:{fr:{q:'Mes trois greniers donnent trois chiffres différents pour le même mois. Par quoi on commence ?',o:['Faire la moyenne des trois','Rapprocher les sources et nettoyer les doublons','Garder le chiffre le plus élevé'],ok:1,why:'D’abord une source unique et propre. Sinon on calcule juste sur du faux, comme les registres de KPMG en 2022.'},
+       en:{q:'My three attics give three different numbers for the same month. Where do we start?',o:['Average the three','Reconcile the sources and remove duplicates','Keep the highest number'],ok:1,why:'One clean source first. Otherwise you compute on wrong data, like the KPMG registers in 2022.'}},
+ gaspard:{fr:{q:'La forge perd 100 heures par mois en calculs. Qu’est-ce qu’on automatise en premier ?',o:['La tâche la plus répétitive et la plus longue','Le rapport annuel','Rien, on embauche'],ok:0,why:'On attaque ce qui revient le plus souvent : c’est là que Python et SQL ont fait passer 100 h à 3 h chez Dassault Systèmes.'},
+          en:{q:'The forge loses 100 hours a month on calculations. What do we automate first?',o:['The most repetitive, longest task','The annual report','Nothing, we hire'],ok:0,why:'Start with what repeats most: that is how Python and SQL took 100 h down to 3 h at Dassault Systèmes.'}},
+ lina:{fr:{q:'Pour voir l’eau du puits baisser jour après jour, quel graphique ?',o:[CHART.bar+'Barres',CHART.line+'Courbe',CHART.pie+'Camembert'],ok:1,why:'Une évolution dans le temps se lit avec une courbe. Le camembert ne montre qu’une répartition.'},
+       en:{q:'To see the well level drop day after day, which chart?',o:[CHART.bar+'Bars',CHART.line+'Line',CHART.pie+'Pie'],ok:1,why:'A change over time reads best as a line. A pie only shows a split.'}},
+ bertrand:{fr:{q:'Quel indicateur suivre pour savoir si mes loyers rentrent bien ?',o:['Le nombre de locataires','Le taux d’impayés (impayés ÷ loyers dus)','La somme de tous les loyers'],ok:1,why:'Un ratio se compare d’un mois à l’autre. C’est le genre de mesure DAX qu’on a mise dans Power BI chez Coface.'},
+           en:{q:'Which indicator tells me if rents are coming in?',o:['Number of tenants','Unpaid rate (unpaid ÷ rent due)','Total of all rents'],ok:1,why:'A ratio compares month to month. That is the kind of DAX measure we put in Power BI at Coface.'}},
+ margot:{fr:{q:'Une ligne de mes ventes est fausse. Laquelle ?',t:[['Janvier','1 200 €'],['Février','1 350 €'],['Mars','1 100 €'],['Total','3 950 €']],o:['Janvier','Mars','Total'],ok:2,why:'1 200 + 1 350 + 1 100 = 3 650 €. Un total tapé à la main finit toujours par mentir : Power Query le recalcule tout seul.'},
+         en:{q:'One line of my sales is wrong. Which one?',t:[['January','€1,200'],['February','€1,350'],['March','€1,100'],['Total','€3,950']],o:['January','March','Total'],ok:2,why:'1,200 + 1,350 + 1,100 = 3,650. A hand-typed total always ends up lying: Power Query recalculates it.'}},
+ jo:{fr:{q:'Au dojo comme en data, quel rythme rend un suivi fiable ?',o:['Un gros bilan une fois par an','Un point court, chaque semaine, toujours le même','Seulement quand il y a un problème'],ok:1,why:'La régularité bat l’intensité. Un tableau mis à jour chaque semaine vaut mieux qu’un énorme bilan oublié.'},
+     en:{q:'In the dojo as in data, what rhythm makes tracking reliable?',o:['One big review a year','A short check, every week, always the same','Only when something breaks'],ok:1,why:'Consistency beats intensity. A sheet updated weekly beats a huge forgotten review.'}}};
+var chEl=document.getElementById('ch'),chDone=null,chSel=0;
+function challenge(n,cb){var c=(CH[n.id]||{})[L];if(!c){cb();return}
+  state='quiz';var tries=0;chSel=0;chEl.classList.remove('hide');
+  function paint(msg,ok){chEl.innerHTML='<div class="bt-in ch-in"><div class="ch-who"><canvas width="20" height="20" class="ch-face"></canvas><b>'+n.name+'</b><span>'+(L==='fr'?'Défi':'Challenge')+'</span></div>'+
+    '<h3>'+c.q+'</h3>'+(c.t?'<table class="ch-t">'+c.t.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('')+'</table>':'')+
+    '<div class="ch-o'+(c.o[0].indexOf('<svg')===0?' ch-g':'')+'">'+c.o.map(function(o,i){return '<button data-i="'+i+'" class="'+(i===chSel?'sel ':'')+(ok&&i===c.ok?'good':'')+'"><kbd>'+(i+1)+'</kbd>'+o+'</button>'}).join('')+'</div>'+
+    '<p class="ch-msg'+(ok?' ok':'')+'">'+(msg||'')+'</p>'+(ok?'<button class="ch-next">'+(L==='fr'?'Continuer':'Continue')+' &gt;</button>':'')+'</div>';
+    var fc=chEl.querySelector('.ch-face');if(fc){var keep=[fcx,faceP,faceE];fcx=fc.getContext('2d');faceP=n.P;faceE=ok?'h':(msg?'sad':'n');faceT0=performance.now();var sc=cur;cur=null;drawFace(faceT0);cur=sc;fcx=keep[0];faceP=keep[1];faceE=keep[2]}
+    chEl.querySelectorAll('.ch-o button').forEach(function(b){b.onclick=function(){pick(+b.dataset.i)}});
+    var nx=chEl.querySelector('.ch-next');if(nx){nx.onclick=finish;chDone=finish}else chDone=null}
+  function pick(i){if(chDone)return;chSel=i;tries++;
+    if(i===c.ok){fx('heal');var bonus=tries===1?15:5;xp+=bonus;pop('+'+bonus+' XP','#FFD45E',14);hud();paint((tries===1?(L==='fr'?'Bravo, du premier coup ! ':'First try! '):(L==='fr'?'C’est ça ! ':'That’s it! '))+c.why,true)}
+    else{fx('bump');var b=chEl.querySelector('.ch-in');paint(L==='fr'?'Pas tout à fait… relis bien la question et réessaie.':'Not quite… read the question again and retry.',false);b=chEl.querySelector('.ch-in');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}}
+  function finish(){chDone=null;chEl.classList.add('hide');chEl.innerHTML='';state='play';cb()}
+  chKey=function(k){if(chDone){if(k==='enter'||k===' ')chDone();return}if(k>='1'&&k<='3'){pick(+k-1);return}
+    if(k==='arrowdown'||k==='arrowright'||k==='s'||k==='d'){chSel=(chSel+1)%c.o.length;paint()}else if(k==='arrowup'||k==='arrowleft'||k==='z'||k==='w'||k==='q'||k==='a'){chSel=(chSel+c.o.length-1)%c.o.length;paint()}else if(k==='enter'||k===' '||k==='e')pick(chSel)};
+  paint()}
+var chKey=null;
 function say(list,cb){Q=list.slice();onDone=cb||null;next()}
 function next(){cur=Q.shift();if(!cur){tap=null;dlg.classList.add('hide');var f=onDone;onDone=null;cur=null;if(f)f();return}
   if(cur.fn){var fn=cur.fn;cur=null;fn(next);return}
@@ -508,7 +567,9 @@ function talk(n){n.dir={up:'down',down:'up',left:'right',right:'left'}[player.di
     return say((first?[lines[0]]:[]).concat([
       {k:'npc',w:nm,f:FACE[n.id],t:L==='fr'?'Pour régler ça, il nous faudrait '+andList(miss)+'… On dit que ces outils traînent dans les hautes herbes du village.':'To fix this, we’d need '+andList(miss)+'… They say these tools roam the tall grass around the village.'},
       {k:'nar',w:TX.narr,t:L==='fr'?'Objectif : capture '+andList(miss)+' dans les hautes herbes, puis reviens voir '+n.name+'.':'Goal: catch '+andList(miss)+' in the tall grass, then come back to '+n.name+'.'}]))}
-  lines.splice(1,0,{k:'nar',w:TX.narr,t:L==='fr'?'Kevin sort '+tool+' de son Datadex. Les outils se mettent au travail !':'Kevin takes '+tool+' out of the Datadex. The tools get to work!'});
+  lines.splice(1,0,{k:'nar',w:TX.narr,t:L==='fr'?'Kevin sort '+tool+' de son Datadex. Les outils se mettent au travail !':'Kevin takes '+tool+' out of the Datadex. The tools get to work!'},
+    {k:'npc',w:nm,f:FACE[n.id],e:'wow',t:L==='fr'?'Attends ! Avant de valider, un petit défi…':'Wait! Before we wrap up, a little challenge…'},
+    {fn:function(cb){challenge(n,cb)}});
   say(lines,function(){done[n.id]=1;xp+=25;document.getElementById('i-'+n.id).classList.add('on');fx('item');setTimeout(function(){fx('heal')},280);pop('+1 ♥','#FF5A6E');pop('+25 XP','#FFD45E',14);toast(n.item[0]+' '+n.item[1]+' '+TX.got+' · +25 XP');hud()})}
 function talkMayor(){var n=count(),M_=MAYOR.name;
   if(finale)return say([{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Le village n’a jamais été aussi bien tenu. Profite de la fête !':'The village has never been better run. Enjoy the festival!'}]);
@@ -545,7 +606,7 @@ function reset(){done={};xp=0;lvl=1;steps=0;finale=false;party=false;sparks=[];p
 /* ---------- input ---------- */
 var held=[],tap=null;var KEYS={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'up',z:'up',s:'down',a:'left',q:'left',d:'right'};
 function press(d){if(held.indexOf(d)<0)held.push(d);tap=d}function release(d){held=held.filter(function(x){return x!==d})}
-addEventListener('keydown',function(e){var k=KEYS[e.key]||KEYS[e.key.toLowerCase&&e.key.toLowerCase()];
+addEventListener('keydown',function(e){if(state==='quiz'&&chKey){e.preventDefault();if(!e.repeat)chKey((e.key||'').toLowerCase());return}var k=KEYS[e.key]||KEYS[e.key.toLowerCase&&e.key.toLowerCase()];
   if(k){e.preventDefault();press(k);return}
   if(e.key==='i'||e.key==='I'||e.key==='Tab'){e.preventDefault();if(state==='dex')closeDex();else openDex();return}
   if(e.key==='Escape'&&state==='dex'){closeDex();return}
@@ -556,7 +617,7 @@ document.querySelectorAll('.dp button').forEach(function(b){var d=b.dataset.d;
   b.addEventListener('pointerdown',function(e){e.preventDefault();startAudio();b.classList.add('dn');press(d);try{b.setPointerCapture(e.pointerId)}catch(_){}});
   ['pointerup','pointercancel','lostpointercapture'].forEach(function(ev){b.addEventListener(ev,function(){b.classList.remove('dn');release(d)})})});
 document.getElementById('act').addEventListener('pointerdown',function(e){e.preventDefault();startAudio();action()});
-function action(){if(state==='title'){begin();return}if(state==='battle'){throwCap();return}if(state==='dex'){closeDex();return}if(state!=='play')return;
+function action(){if(state==='quiz'){chKey&&chKey('enter');return}if(state==='title'){begin();return}if(state==='battle'){throwCap();return}if(state==='dex'){closeDex();return}if(state!=='play')return;
   if(dashWait){var w=dashWait;dashWait=null;w();return}
   if(cur){advance();return}
   var f=front();var n=npcAt(f[0],f[1])||ALL.filter(function(n){return Math.abs(n.x-player.x)+Math.abs(n.y-player.y)===1})[0];if(n&&!player.moving)talk(n)}
