@@ -5,8 +5,12 @@
   function ac(){if(!ctx){var A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ctx=new A()}if(ctx.state==='suspended')ctx.resume();return ctx}
   function tone(f,t,dur,type,vol,slide){var c=ac();if(!c||muted)return;var o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,c.currentTime+t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,c.currentTime+t+dur);g.gain.setValueAtTime(0,c.currentTime+t);g.gain.linearRampToValueAtTime(vol||.08,c.currentTime+t+.006);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+t+dur);o.connect(g).connect(c.destination);o.start(c.currentTime+t);o.stop(c.currentTime+t+dur+.02)}
   function noise(t,dur,vol){var c=ac();if(!c||muted)return;var n=c.sampleRate*dur,b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);var s=c.createBufferSource(),g=c.createGain(),f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;s.buffer=b;g.gain.value=vol||.12;s.connect(f).connect(g).connect(c.destination);s.start(c.currentTime+t)}
+  function air(){var c=ac();if(!c||muted)return;var d=.45,n=c.sampleRate*d,b=c.createBuffer(1,n,c.sampleRate),x=b.getChannelData(0);for(var i=0;i<n;i++)x[i]=(Math.random()*2-1);
+    var src=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain(),t=c.currentTime;f.type='bandpass';f.Q.value=.8;f.frequency.setValueAtTime(350,t);f.frequency.exponentialRampToValueAtTime(1400,t+d*.6);f.frequency.exponentialRampToValueAtTime(700,t+d);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05,t+.12);g.gain.exponentialRampToValueAtTime(.0001,t+d);src.buffer=b;src.connect(f).connect(g).connect(c.destination);src.start(t);tone(1568,.05,.25,'sine',.006)}
   var S={
     hover:function(){tone(1600,0,.035,'sine',.025)},
+    air:function(){air()},
     click:function(){tone(520,0,.06,'triangle',.07);tone(1040,.02,.05,'sine',.04)},
     toggle:function(){tone(400,0,.08,'sine',.06,760)},
     jump:function(){tone(330,0,.12,'square',.05,660)},
@@ -39,5 +43,6 @@
   document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('a,button');if(!el||el.dataset.silent!=null||el.closest('.foot,[data-silent]'))return;uiClick(el)},true);
   /* Hover sounds only on the top menu, never while the page is scrolling (it fired by itself under the cursor). */
   var lastScroll=0;window.addEventListener('scroll',function(){lastScroll=Date.now()},{passive:true});
+  document.addEventListener('mouseover',function(e){if(Date.now()-lastScroll<500)return;var cd=e.target.closest&&e.target.closest('.pr,.sk-cat,.pc,.c-aud-l button,.c-game-in');if(cd&&!cd._a&&!(e.relatedTarget&&cd.contains(e.relatedTarget))){cd._a=1;setTimeout(function(){cd._a=0},600);air()}},true);
   document.addEventListener('mouseover',function(e){if(Date.now()-lastScroll<500)return;var el=e.target.closest&&e.target.closest('.nav a.l,.nav .li');if(!el||el._h)return;el._h=1;setTimeout(function(){el._h=0},300);var i=navIdx(el);if(i>-1)navNote(i,true);else tone(rnd(1450,1750),0,.035,'sine',.02)},true);
 })();
