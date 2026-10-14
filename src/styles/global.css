@@ -86,13 +86,10 @@ html.warp-in main{animation:plouf .7s cubic-bezier(.2,1.5,.4,1)}
 .nav .in{display:flex;align-items:stretch;height:60px;gap:0}
 .logo{display:flex;align-items:center;font-weight:800;font-size:19px;letter-spacing:-.04em;margin-right:auto;padding-right:16px}
 .logo i{font-style:normal;color:var(--acc)}
-/* menu links styled as spreadsheet column headers: A Réalisations, B Offres... */
 .nav .links{display:flex;counter-reset:col;border-left:1px solid var(--line)}
 .nav a.l{position:relative;display:flex;align-items:center;gap:8px;padding:0 16px;border-right:1px solid var(--line);font-size:14.5px;font-weight:600;color:var(--ink2);transition:background .15s,color .15s}
-.nav a.l:before{counter-increment:col;content:counter(col,upper-alpha);font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--mute);border:1px solid var(--line2);border-radius:4px;padding:3px 4px}
 .nav a.l:hover{background:var(--bg2);color:var(--ink)}
 .nav a.l.on{color:var(--ink);background:color-mix(in srgb,var(--acc) 9%,transparent);box-shadow:inset 0 -2px 0 var(--acc)}
-.nav a.l.on:before{color:var(--acc);border-color:var(--acc)}
 .nav .tools{display:flex;align-items:center;gap:2px;padding:0 10px}
 .nav .tools .ic{border:0;background:transparent;width:34px;height:34px;border-radius:8px}
 .nav .tools .ic:hover{background:var(--bg2)}
@@ -164,10 +161,9 @@ a.door:hover .go i{background:var(--acc);color:#fff}
 
 /* result cards */
 .sheet{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden}
-.res{position:relative;padding:34px 24px 24px;border-right:1px solid var(--line);container-type:inline-size;transition:background .2s}
+.res{position:relative;padding:26px 24px 24px;border-right:1px solid var(--line);container-type:inline-size;transition:background .2s}
 .res:last-child{border-right:0}
 .res:hover{background:color-mix(in srgb,var(--acc) 5%,transparent)}
-.res .ref{position:absolute;top:10px;left:12px;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--mute)}
 .res .v{font-size:clamp(34px,4vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1;margin:6px 0 8px;white-space:nowrap}
 .res .v.sm{font-size:min(clamp(34px,4vw,44px),16cqi)}
 .res .l{color:var(--ink2);font-size:15px}
