@@ -10,7 +10,7 @@
     g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05*v,t+.12);g.gain.exponentialRampToValueAtTime(.0001,t+d);src.buffer=b;src.connect(f).connect(g).connect(c.destination);src.start(t);tone(1568*m,.05,.25,'sine',.006*v)}
   /* continuous soft 8-bit 'cloud' hum while dragging the carousel */
   var cl=null;
-  function cloudStart(){var c=ac();if(!c||muted||c.state!=='running'||cl)return;var t=c.currentTime,o=c.createOscillator(),o2=c.createOscillator(),lfo=c.createOscillator(),ld=c.createGain(),f=c.createBiquadFilter(),g=c.createGain();
+  function cloudStart(){return;var c=ac();if(!c||muted||c.state!=='running'||cl)return;var t=c.currentTime,o=c.createOscillator(),o2=c.createOscillator(),lfo=c.createOscillator(),ld=c.createGain(),f=c.createBiquadFilter(),g=c.createGain();
     o.type='triangle';o2.type='square';o.frequency.value=392;o2.frequency.value=784;lfo.frequency.value=5.2;ld.gain.value=7;lfo.connect(ld);ld.connect(o.frequency);ld.connect(o2.frequency);
     f.type='lowpass';f.frequency.value=1100;var g2=c.createGain();g2.gain.value=.12;o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(c.destination);
     g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.022,t+.18);o.start(t);o2.start(t);lfo.start(t);cl={o:o,o2:o2,lfo:lfo,g:g,c:c}}
@@ -62,6 +62,6 @@
   document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('a,button');if(!el||el.dataset.silent!=null||el.closest('.foot,[data-silent]'))return;uiClick(el)},true);
   /* Hover sounds only on the top menu, never while the page is scrolling (it fired by itself under the cursor). */
   var lastScroll=0;window.addEventListener('scroll',function(){lastScroll=Date.now()},{passive:true});
-  document.addEventListener('mouseover',function(e){if(Date.now()-lastScroll<500)return;var cd=e.target.closest&&e.target.closest('.pr,.sk-cat,.c-aud-l button,.c-game-in');if(cd&&!cd._a&&!(e.relatedTarget&&cd.contains(e.relatedTarget))){cd._a=1;setTimeout(function(){cd._a=0},600);if(cd.classList.contains('c-game-in')){tone(988,0,.07,'square',.03);tone(1319,.07,.22,'square',.028)}else air()}},true);
+  document.addEventListener('mouseover',function(e){if(Date.now()-lastScroll<500)return;var cd=e.target.closest&&e.target.closest('.c-game-in');if(cd&&!cd._a&&!(e.relatedTarget&&cd.contains(e.relatedTarget))){cd._a=1;setTimeout(function(){cd._a=0},600);tone(988,0,.07,'square',.03);tone(1319,.07,.22,'square',.028)}},true);
   document.addEventListener('mouseover',function(e){if(Date.now()-lastScroll<500)return;var el=e.target.closest&&e.target.closest('.nav a.l,.nav .li');if(!el||el._h)return;el._h=1;setTimeout(function(){el._h=0},300);var i=navIdx(el);if(i>-1)navNote(i,true);else tone(rnd(1450,1750),0,.035,'sine',.02)},true);
 })();
