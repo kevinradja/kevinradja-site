@@ -705,3 +705,36 @@ a.card:hover{transform:translateY(-3px);border-color:var(--acc)}
   75%{transform:translate(-1px,0) rotate(-.3deg)}
   100%{transform:none}}
 @media(prefers-reduced-motion:reduce){.device.shake{animation-duration:.35s}}
+
+/* dashboard with tabs inside the story device */
+.stage[data-step="3"] .ly3{pointer-events:auto}
+.db{display:flex;flex-direction:column;height:100%}
+.db-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.db-tabs button{border:0;background:transparent;font:inherit;font-size:12px;font-weight:700;color:var(--mute);padding:6px 10px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.db-tabs button.on{color:var(--acc);border-bottom-color:var(--acc)}
+.db-p{display:none;flex:1}
+.db-p.on{display:block;animation:pk .35s ease-out}
+.c-story-dev .dg .t b{white-space:nowrap;font-size:clamp(16px,1.9vw,26px)}
+.db-bars{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px;font-size:12.5px}
+.db-bars li{display:grid;grid-template-columns:90px 1fr 62px;align-items:center;gap:8px}
+.db-bars i{height:12px;border-radius:3px;background:var(--acc);width:var(--w)}
+.db-bars li:nth-child(even) i{background:var(--acc2)}
+.db-bars b{text-align:right;font-weight:700}
+.db-note{font-size:12px;margin-top:12px;color:var(--mute)}
+.db-dec{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;font-size:12.5px;text-align:left}
+.db-dec li{display:flex;gap:8px;align-items:flex-start;color:var(--ink)}
+.db-dec em{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:11px}
+.db-dec em.w{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.db-dec em.g{background:var(--okbg);color:var(--ok)}
+.db-cta{margin-top:12px;font-size:12.5px;font-weight:700;color:var(--acc);text-align:left;border-left:3px solid var(--acc);padding-left:10px}
+
+/* giant words fit on mid-size screens */
+.c-giant{font-size:clamp(28px,6.6vw,140px)}
+
+/* results: company logo on the dark panel */
+.c-slide{flex-direction:column;align-items:stretch;justify-content:center;gap:24px}
+.c-logo{align-self:flex-start;display:inline-flex;align-items:center;background:#FAF7F0;border-radius:10px;padding:10px 16px;height:52px}
+.c-logo img{height:28px;width:auto}
+.c-logo b{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--deep)}
+.c-viz{width:100%}
+.c-viz svg{width:100%;height:auto;overflow:visible}

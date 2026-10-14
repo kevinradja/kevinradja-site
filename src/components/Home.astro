@@ -16,10 +16,10 @@ const audiences = [
 ];
 
 const results = [
-  { v: '−30 %', t: T('de temps de reporting', 'less reporting time'), p: T('Des tableaux de bord Power BI pour piloter la performance commerciale, déployés auprès de plus de 500 utilisateurs.', 'Power BI dashboards to steer sales performance, rolled out to 500+ users.'), c: 'Coface · 12 ' + T('pays', 'countries') },
-  { v: '68,7 %', t: T('d’adoption GA4', 'GA4 adoption'), p: T('Un cockpit de mesure pour suivre 180 grands comptes, objectifs dépassés dès novembre 2023.', 'A measurement cockpit tracking 180 key accounts, goals beaten by November 2023.'), c: 'Google France' },
-  { v: '100 h → 3 h', t: T('de traitement', 'of processing'), p: T('Des pipelines Python qui ont automatisé la préparation des modèles financiers pour le comité de direction.', 'Python pipelines that automated the financial models prepared for the executive committee.'), c: 'Dassault Systèmes' },
-  { v: '−40 %', t: T('de délai de mise en ligne', 'faster time-to-market'), p: T('Un outil partagé entre RH et data pour publier les formations plus vite, sans perdre le fil.', 'A tool shared by HR and data to publish training faster, without losing track.'), c: T('Grand groupe automobile', 'Major automotive group') },
+  { v: '−30 %', t: T('de temps de reporting', 'less reporting time'), p: T('Des tableaux de bord Power BI pour piloter la performance commerciale, déployés auprès de plus de 500 utilisateurs.', 'Power BI dashboards to steer sales performance, rolled out to 500+ users.'), c: 'Coface · 12 ' + T('pays', 'countries'), logo: '/logos/coface.svg' },
+  { v: '68,7 %', t: T('d’adoption GA4', 'GA4 adoption'), p: T('Un cockpit de mesure pour suivre 180 grands comptes, objectifs dépassés dès novembre 2023.', 'A measurement cockpit tracking 180 key accounts, goals beaten by November 2023.'), c: 'Google France', logo: '/logos/google.svg' },
+  { v: '100 h → 3 h', t: T('de traitement', 'of processing'), p: T('Des pipelines Python qui ont automatisé la préparation des modèles financiers pour le comité de direction.', 'Python pipelines that automated the financial models prepared for the executive committee.'), c: 'Dassault Systèmes', logo: '/logos/dassault.svg' },
+  { v: '−40 %', t: T('de délai de mise en ligne', 'faster time-to-market'), p: T('Un outil partagé entre RH et data pour publier les formations plus vite, sans perdre le fil.', 'A tool shared by HR and data to publish training faster, without losing track.'), c: T('Grand groupe automobile', 'Major automotive group'), logo: '' },
 ];
 const viz = [
   `<svg viewBox="0 0 200 110" preserveAspectRatio="none"><line x1="0" y1="18" x2="200" y2="18" stroke="var(--line2)" stroke-dasharray="4 5" /><polyline class="draw" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" points="0,18 30,22 60,20 90,38 120,56 150,72 175,80 200,84" /><circle class="fade" cx="200" cy="84" r="6" fill="var(--acc)" /></svg>`,
@@ -92,13 +92,38 @@ const featured = [projects[3], projects[4], projects[5]];
             <div class="bars"><i style="--h:42%"><span>{T('Janv', 'Jan')}</span></i><i style="--h:55%"><span>{T('Févr', 'Feb')}</span></i><i style="--h:48%"><span>{T('Mars', 'Mar')}</span></i><i style="--h:66%"><span>{T('Avr', 'Apr')}</span></i><i style="--h:74%"><span>{T('Mai', 'May')}</span></i><i style="--h:88%"><span>{T('Juin', 'Jun')}</span></i></div>
           </div>
           <div class="ly ly3">
-            <div class="dg">
-              <h4>{T('Tableau de bord · lundi 8 h', 'Dashboard · Monday 8 am')}</h4>
-              <div class="t"><small>{T('CA du mois', 'Revenue')}</small><b>48,2 k€</b><em>▲ 12 %</em></div>
-              <div class="t"><small>Clients</small><b>128</b><em>▲ 9</em></div>
-              <div class="t"><small>{T('Panier moyen', 'Avg. basket')}</small><b>376 €</b><em>▲ 4 %</em></div>
-              <div class="w"><svg viewBox="0 0 200 60"><polyline fill="none" stroke="var(--acc)" stroke-width="2.5" points="0,48 25,44 50,46 75,36 100,38 125,28 150,24 175,16 200,10" /><polyline fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="4 4" points="0,40 200,40" /></svg></div>
-              <div class="d"><svg viewBox="0 0 42 42" width="84" height="84"><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--line)" stroke-width="6" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc)" stroke-width="6" stroke-dasharray="64 36" transform="rotate(-90 21 21)" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc2)" stroke-width="6" stroke-dasharray="22 78" stroke-dashoffset="-64" transform="rotate(-90 21 21)" /></svg></div>
+            <div class="db">
+              <div class="db-tabs" role="tablist">
+                <button type="button" class="on" data-t="0">{T('Vue d’ensemble', 'Overview')}</button>
+                <button type="button" data-t="1">Clients</button>
+                <button type="button" data-t="2">{T('Décisions', 'Decisions')}</button>
+              </div>
+              <div class="db-p on" data-t="0">
+                <div class="dg">
+                  <div class="t"><small>{T('CA du mois', 'Revenue')}</small><b>48,2 k€</b><em>▲ 12 %</em></div>
+                  <div class="t"><small>Clients</small><b>128</b><em>▲ 9</em></div>
+                  <div class="t"><small>{T('Panier moyen', 'Avg. basket')}</small><b>376 €</b><em>▲ 4 %</em></div>
+                  <div class="w"><svg viewBox="0 0 200 60"><polyline fill="none" stroke="var(--acc)" stroke-width="2.5" points="0,48 25,44 50,46 75,36 100,38 125,28 150,24 175,16 200,10" /><polyline fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="4 4" points="0,40 200,40" /></svg></div>
+                  <div class="d"><svg viewBox="0 0 42 42" width="70" height="70"><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--line)" stroke-width="6" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc)" stroke-width="6" stroke-dasharray="64 36" transform="rotate(-90 21 21)" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc2)" stroke-width="6" stroke-dasharray="22 78" stroke-dashoffset="-64" transform="rotate(-90 21 21)" /></svg></div>
+                </div>
+              </div>
+              <div class="db-p" data-t="1">
+                <ul class="db-bars">
+                  <li><span>Leroy</span><i style="--w:92%"></i><b>2 400 €</b></li>
+                  <li><span>Bernard</span><i style="--w:64%"></i><b>1 650 €</b></li>
+                  <li><span>Dupont SA</span><i style="--w:47%"></i><b>1 200 €</b></li>
+                  <li><span>Martin &amp; Fils</span><i style="--w:38%"></i><b>980 €</b></li>
+                </ul>
+                <p class="db-note">{T('4 clients font 61 % du chiffre du mois.', '4 clients make 61% of this month’s revenue.')}</p>
+              </div>
+              <div class="db-p" data-t="2">
+                <ul class="db-dec">
+                  <li><em class="w">!</em>{T('Relancer 14 clients sans commande depuis 60 jours', 'Follow up 14 clients with no order in 60 days')}</li>
+                  <li><em class="w">!</em>{T('Marge en baisse sur la gamme B : revoir les prix', 'Margin falling on range B: review prices')}</li>
+                  <li><em class="g">✓</em>{T('Stock suffisant pour juin, pas de commande urgente', 'Enough stock for June, no urgent order')}</li>
+                </ul>
+                <p class="db-cta">{T('Un tableau de bord ne sert à rien s’il ne fait pas décider. Et sur vos chiffres, qu’est-ce qu’il dirait ?', 'A dashboard is useless if it does not drive decisions. What would it say about your numbers?')}{!vitrine && <span> {T('Un audit de 2 h suffit pour le savoir.', 'A 2-hour audit is enough to find out.')}</span>}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -151,7 +176,7 @@ const featured = [projects[3], projects[4], projects[5]];
         <div class="c-arrows"><button type="button" class="prev" aria-label={T('Précédent', 'Previous')}>←</button><button type="button" class="next" aria-label={T('Suivant', 'Next')}>→</button></div>
       </div>
       <div class="c-sl-r">
-        {results.map((_, i) => <div class:list={['c-slide', { on: i === 0 }]} data-i={i} set:html={viz[i]} />)}
+        {results.map((x, i) => <div class:list={['c-slide', { on: i === 0 }]} data-i={i}><span class="c-logo">{x.logo ? <img src={x.logo} alt={x.c} /> : <b>{x.c}</b>}</span><div class="c-viz" set:html={viz[i]} /></div>)}
       </div>
     </div>
   </div>
@@ -234,6 +259,9 @@ const featured = [projects[3], projects[4], projects[5]];
     // hero: title zooms and fades, device comes forward while scrolling
     var ht=document.querySelector('.c-title'),hd=document.querySelector('.c-hero-dev');
     if(ht&&hd){var hz=function(){var p=Math.min(1,Math.max(0,scrollY/(innerHeight*.8)));ht.style.transform='scale('+(1+p*.35)+')';ht.style.opacity=String(1-p*.85);hd.style.setProperty('--hp',p.toFixed(3))};addEventListener('scroll',hz,{passive:true});hz()}
+    // dashboard tabs inside the story device
+    document.querySelectorAll('.db').forEach(function(d){var bs=d.querySelectorAll('.db-tabs button'),ps=d.querySelectorAll('.db-p');
+      bs.forEach(function(b){b.addEventListener('click',function(){bs.forEach(function(x){x.classList.toggle('on',x===b)});ps.forEach(function(q){q.classList.toggle('on',q.dataset.t===b.dataset.t)})})})});
     // results slider
     document.querySelectorAll('.c-slider').forEach(function(s){var n=s.querySelectorAll('.c-slide').length,i=0,t;
       function go(k){i=(k+n)%n;['.c-slide','.c-slide-txt','.c-dots button'].forEach(function(q){s.querySelectorAll(q).forEach(function(e,j){e.classList.toggle('on',j===i)})})}
