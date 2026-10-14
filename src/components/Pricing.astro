@@ -1,9 +1,11 @@
 ---
 import type { Lang } from '../data/projects';
-import { r, calendly } from '../i18n';
+import { r, calendly, links } from '../i18n';
 const { lang, compact = false } = Astro.props as { lang: Lang; compact?: boolean };
 const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
 const contact = r('contact', lang);
+const mail = (subject: string, body: string) => `${links.mail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const body = (offer: string) => T(`Bonjour Kevin,\n\nJe suis intéressé(e) par l’offre ${offer}.\n\nMon entreprise :\nMon besoin en quelques mots :\nMes outils actuels (Excel, Power BI, SQL…) :\nDélai souhaité :\n\nMerci !`, `Hi Kevin,\n\nI’m interested in the ${offer} offer.\n\nMy company:\nMy need in a few words:\nMy current tools (Excel, Power BI, SQL…):\nDesired timeline:\n\nThanks!`);
 const packs = [
   { k: T('Quick-Win', 'Quick-Win'), t: T('Un livrable, vite.', 'One deliverable, fast.'), p: '690 €', li: [T('Nettoyage des données (Power Query)', 'Data cleanup (Power Query)'), T('Au choix : dashboard 1 page, Excel propre, rapport DAX/M corrigé ou script Python', 'Your pick: 1-page dashboard, clean Excel, fixed DAX/M report or Python script'), T('Guide de prise en main', 'Handover guide')], b: T('Choisir Quick-Win', 'Choose Quick-Win') },
   { k: T('Le plus demandé', 'Most popular'), t: T('Pack PME', 'SME Pack'), p: '1 500 €', hi: true, li: [T('Modèle de données + dashboard multi-pages', 'Data model + multi-page dashboard'), T('Modules : Marketing & Ads, Finance & Compta, Tech & SaaS, Commerce & Ops', 'Modules: Marketing & Ads, Finance & Accounting, Tech & SaaS, Commerce & Ops'), T('Actualisation planifiée', 'Scheduled refresh'), T('Formation de vos équipes', 'Team training')], b: T('Choisir le pack PME', 'Choose the SME pack') },
@@ -23,7 +25,7 @@ const opts = [
       <h3>{p.t}</h3>
       <div class="price"><small>{T('à partir de', 'from')}</small>{p.p}</div>
       <ul>{p.li.map(l => <li>{l}</li>)}</ul>
-      <a class:list={['btn', p.hi ? 'p' : 's']} href={p.hi ? calendly : contact} target={p.hi ? '_blank' : undefined} rel="noopener">{p.b}</a>
+      <a class:list={['btn', p.hi ? 'p' : 's']} href={mail(T(`Offre ${p.k === 'Quick-Win' ? 'Quick-Win' : p.t} (${p.p}) : demande`, `${p.k === 'Quick-Win' ? 'Quick-Win' : p.t} offer (${p.p}): enquiry`), body(`${p.k === 'Quick-Win' ? 'Quick-Win' : p.t} (${p.p})`))}>{p.b}</a>
     </div>
   ))}
 </div>

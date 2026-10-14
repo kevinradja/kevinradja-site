@@ -19,6 +19,8 @@
     over:function(){tone(440,0,.18,'triangle',.08,330);tone(330,.18,.2,'triangle',.08,220);tone(220,.38,.4,'triangle',.08,110)},
     record:function(){[523,659,784,1047].forEach(function(f,i){tone(f,i*.09,.16,'triangle',.08)})},
     heal:function(){[659,784,988,1319,1568].forEach(function(f,i){tone(f,i*.045,.09,'square',.03)});tone(1976,.24,.22,'triangle',.05);tone(2637,.3,.18,'sine',.03)},
+    hurt:function(){tone(196,0,.18,'square',.05,98);tone(131,.12,.3,'square',.05,65);noise(.02,.18,.06)},
+    ouch:function(){tone(330,0,.1,'square',.04,220);tone(247,.08,.14,'triangle',.05,160)},
     stage0:function(){noise(0,.12,.08);tone(220,0,.09,'square',.04,140);tone(180,.08,.1,'square',.035,110)},
     stage1:function(){[523,659,784].forEach(function(f,i){tone(f,i*.06,.08,'square',.035)})},
     stage2:function(){[392,523,659,784,988].forEach(function(f,i){tone(f,i*.05,.07,'square',.03)})},

@@ -995,3 +995,7 @@ body{line-height:1.65}
 .c-marquee{cursor:grab;touch-action:pan-y}
 .c-marquee.drag{cursor:grabbing}
 .c-marquee.drag a{pointer-events:none}
+
+.heal.hurt{background:#1d2430!important;border:3px solid #F4EFE4!important;padding:4px 10px!important;animation:hurt 1.2s ease-in both}
+.heal.hurt i{color:#6b7280}
+@keyframes hurt{0%{opacity:0;transform:translateY(-10px)}15%{opacity:1;transform:none}25%{transform:translateX(-4px)}35%{transform:translateX(4px)}45%{transform:none}100%{opacity:0;transform:translateY(60px)}}
