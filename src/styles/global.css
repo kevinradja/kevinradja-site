@@ -738,3 +738,36 @@ a.card:hover{transform:translateY(-3px);border-color:var(--acc)}
 .c-logo b{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--deep)}
 .c-viz{width:100%}
 .c-viz svg{width:100%;height:auto;overflow:visible}
+
+/* ===== work: sideways track ===== */
+.c-work{position:relative;padding-top:clamp(60px,8vw,110px)}
+.c-work-pin{position:sticky;top:76px;min-height:calc(100vh - 90px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.c-track{display:flex;gap:18px;padding:0 var(--pad) 20px;will-change:transform;align-items:stretch}
+.c-track .pc{flex:none;width:clamp(300px,30vw,420px)}
+.c-track .rv{opacity:1;transform:none}
+.pc img{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.pc:hover img{transform:scale(1.035)}
+.c-track-end{flex:none;width:clamp(220px,20vw,280px);border-radius:var(--r);background:var(--deep);color:#F4EFE4;display:flex;flex-direction:column;justify-content:space-between;padding:28px;transition:background .25s}
+.c-track-end span{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;text-transform:uppercase;font-size:28px;line-height:.95}
+.c-track-end b{font-size:40px;align-self:flex-end;transition:transform .25s}
+.c-track-end:hover{background:var(--acc)}.c-track-end:hover b{transform:translateX(6px)}
+@media(max-width:759px){.c-work-pin{position:static;min-height:0}.c-track{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}.c-track>*{scroll-snap-align:start}.c-track .pc{width:82vw}}
+
+/* ===== pricing: the avatar deals three cards ===== */
+.deal{position:relative}
+.deal-av{position:relative;width:clamp(150px,17vw,230px);margin:0 auto 34px;animation:bob 3.4s ease-in-out infinite}
+.deal-av img{width:100%;height:auto;border-radius:50%;box-shadow:0 30px 60px -30px rgba(12,58,62,.6)}
+.deal-bubble{position:absolute;left:84%;top:6%;white-space:nowrap;background:var(--card);border:2px solid var(--ink);border-radius:14px 14px 14px 4px;padding:8px 14px;font-weight:800;font-size:14px;color:var(--ink);opacity:0;transform:scale(.6);transform-origin:left bottom;transition:opacity .4s 1.5s,transform .4s cubic-bezier(.2,1.6,.4,1) 1.5s}
+.deal.in .deal-bubble{opacity:1;transform:none}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.deal .grid.g3{perspective:1200px}
+.deal .pr.rv,.deal .pr.rv.in{opacity:0;transform:translate(var(--dx),-300px) rotate(var(--r0)) scale(.45);transition:transform .95s cubic-bezier(.2,.9,.25,1.15) var(--d),opacity .35s var(--d)}
+.deal .pr:nth-child(1){--dx:105%;--r0:-24deg;--r1:-2.5deg;--d:.15s}
+.deal .pr:nth-child(2){--dx:0%;--r0:8deg;--r1:0deg;--d:.45s}
+.deal .pr:nth-child(3){--dx:-105%;--r0:26deg;--r1:2.5deg;--d:.75s}
+.deal.in .pr.rv{opacity:1;transform:rotate(var(--r1))}
+.deal.in .pr.rv:hover{transform:translateY(-8px) rotate(0)}
+.deal .pr:before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:3;pointer-events:none;background:var(--deep) repeating-linear-gradient(45deg,rgba(159,224,216,.12) 0 10px,transparent 10px 20px);border:6px solid #F4EFE4;opacity:1;transition:opacity .35s calc(var(--d) + .7s)}
+.deal.in .pr:before{opacity:0}
+@media(max-width:900px){.deal .pr:nth-child(n){--dx:0%}}
+@media(prefers-reduced-motion:reduce){.deal-av{animation:none}}

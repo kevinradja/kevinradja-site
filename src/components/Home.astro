@@ -192,7 +192,7 @@ const featured = [projects[3], projects[4], projects[5]];
       <span>{T('lisibles, fiables', 'readable, reliable')}</span>
       <span>{T('et utiles.', 'and useful.')}</span>
     </h2>
-    <p>{T('Plus de 5 ans chez Google France, Coface, Dassault Systèmes et KPMG. Aujourd’hui Manager Data & Digital dans un grand groupe automobile, et freelance à temps partiel pour les PME et les équipes de grands groupes.', '5+ years at Google France, Coface, Dassault Systèmes and KPMG. Today Data & Digital Manager at a major automotive group, and part-time freelancer for SMEs and large-company teams.')}</p>
+    <p>{T('Pas de jargon, pas d’usine à gaz. Des chiffres que toute l’équipe comprend, qui se mettent à jour tout seuls, et qui servent à décider.', 'No jargon, no overbuilt systems. Numbers the whole team understands, that update themselves, and that help you decide.')}</p>
   </div>
 </section>
 
@@ -216,12 +216,13 @@ const featured = [projects[3], projects[4], projects[5]];
 </section>
 )}
 
-<!-- 6. WORK -->
-<section class="sec" id="work">
-  <div class="wrap">
-    <div class="c-head"><div class="kicker">{T('Réalisations', 'Work')}</div><h2>{T('Des études de cas, avec les dashboards à tester.', 'Case studies, with live dashboards to try.')}</h2>{!vitrine && <a class="btn s" href={r('work', lang)}>{T('Toutes les réalisations', 'All case studies')} →</a>}</div>
-    <div class="grid g3">
-      {(vitrine ? projects : featured).map(p => <ProjectCard p={p} lang={lang} vitrine={vitrine} />)}
+<!-- 6. WORK : cards slide sideways while scrolling -->
+<section class="c-work" id="work">
+  <div class="c-work-pin">
+    <div class="c-head"><div class="kicker">{T('Réalisations', 'Work')}</div><h2>{T('Des études de cas, avec les dashboards à tester.', 'Case studies, with live dashboards to try.')}</h2></div>
+    <div class="c-track">
+      {(vitrine ? projects : projects.slice(3).concat(projects.slice(0, 3))).map(p => <ProjectCard p={p} lang={lang} vitrine={vitrine} />)}
+      {!vitrine && <a class="c-track-end" href={r('work', lang)}><span>{T('Toutes les réalisations', 'All case studies')}</span><b>→</b></a>}
     </div>
   </div>
 </section>
@@ -230,7 +231,10 @@ const featured = [projects[3], projects[4], projects[5]];
 <section class="sec">
   <div class="wrap">
     <div class="c-head"><div class="kicker">{T('Offres', 'Pricing')}</div><h2>{T('Trois façons de travailler ensemble.', 'Three ways to work together.')}</h2></div>
-    <Pricing lang={lang} compact />
+    <div class="deal" id="deal">
+      <div class="deal-av"><img src="/avatar.svg" alt="" width="400" height="400" /><span class="deal-bubble">{T('Choisissez une carte !', 'Pick a card!')}</span></div>
+      <Pricing lang={lang} compact />
+    </div>
     <div style="margin-top:18px;text-align:center"><a class="btn s" href={r('pricing', lang)}>{T('Options, déroulé et questions fréquentes', 'Options, process and FAQ')} →</a></div>
   </div>
 </section>
@@ -262,6 +266,14 @@ const featured = [projects[3], projects[4], projects[5]];
     // dashboard tabs inside the story device
     document.querySelectorAll('.db').forEach(function(d){var bs=d.querySelectorAll('.db-tabs button'),ps=d.querySelectorAll('.db-p');
       bs.forEach(function(b){b.addEventListener('click',function(){bs.forEach(function(x){x.classList.toggle('on',x===b)});ps.forEach(function(q){q.classList.toggle('on',q.dataset.t===b.dataset.t)})})})});
+    // work: horizontal track driven by vertical scroll (desktop only)
+    var wk=document.querySelector('.c-work'),tr=wk&&wk.querySelector('.c-track'),pin=wk&&wk.querySelector('.c-work-pin');
+    if(wk&&tr){var over=0;var size=function(){if(innerWidth<760){wk.style.height='';tr.style.transform='';over=0;return}over=Math.max(0,tr.scrollWidth-pin.clientWidth+40);wk.style.height=(pin.offsetHeight+over)+'px';mv()};
+      var mv=function(){if(!over)return;var r=wk.getBoundingClientRect(),h=wk.offsetHeight-pin.offsetHeight,p=h>0?Math.min(1,Math.max(0,-r.top/h)):0;tr.style.transform='translate3d('+(-p*over)+'px,0,0)'};
+      addEventListener('scroll',mv,{passive:true});addEventListener('resize',size);addEventListener('load',size);size()}
+    // pricing: deal the cards when the section shows up
+    var dl=document.getElementById('deal');
+    if(dl){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){dl.classList.add('in');io.disconnect()}})},{threshold:.25});io.observe(dl)}
     // results slider
     document.querySelectorAll('.c-slider').forEach(function(s){var n=s.querySelectorAll('.c-slide').length,i=0,t;
       function go(k){i=(k+n)%n;['.c-slide','.c-slide-txt','.c-dots button'].forEach(function(q){s.querySelectorAll(q).forEach(function(e,j){e.classList.toggle('on',j===i)})})}
