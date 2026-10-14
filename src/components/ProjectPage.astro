@@ -15,7 +15,7 @@ const C = ui.common;
     <h1 class="pg-title">{p.title[lang]}</h1>
     <p class="lead">{p.intro[lang]}</p>
     <div class="meta">{p.tags[lang].map(t => <span class="chip">{t}</span>)}<span class="chip a">{p.sector[lang]}</span></div>
-    <div class="device pj-dev"><div class="scr"><img src={p.thumb} alt={p.title[lang]} width="1920" height="1080" /></div></div>
+    <div class="device pj-dev" data-zoom><div class="scr"><img src={p.thumb} alt={p.title[lang]} width="1920" height="1080" /></div></div>
   </div>
 </section>
 <section class="sec">

@@ -13,7 +13,11 @@
     bonus:function(){tone(660,0,.09,'triangle',.07);tone(880,.08,.09,'triangle',.07);tone(1320,.16,.14,'triangle',.08)},
     break:function(){noise(0,.14,.14);tone(180,0,.12,'sawtooth',.05,80)},
     over:function(){tone(440,0,.18,'triangle',.08,330);tone(330,.18,.2,'triangle',.08,220);tone(220,.38,.4,'triangle',.08,110)},
-    record:function(){[523,659,784,1047].forEach(function(f,i){tone(f,i*.09,.16,'triangle',.08)})}
+    record:function(){[523,659,784,1047].forEach(function(f,i){tone(f,i*.09,.16,'triangle',.08)})},
+    stage0:function(){noise(0,.12,.08);tone(220,0,.09,'square',.04,140);tone(180,.08,.1,'square',.035,110)},
+    stage1:function(){[523,659,784].forEach(function(f,i){tone(f,i*.06,.08,'square',.035)})},
+    stage2:function(){[392,523,659,784,988].forEach(function(f,i){tone(f,i*.05,.07,'square',.03)})},
+    stage3:function(){[523,659,784,1047].forEach(function(f,i){tone(f,i*.07,.1,'square',.035)});tone(1047,.3,.28,'triangle',.06);tone(784,.3,.28,'square',.025)}
   };
   window.KR=window.KR||{};
   window.KR.sfx={play:function(n){try{S[n]&&S[n]()}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};

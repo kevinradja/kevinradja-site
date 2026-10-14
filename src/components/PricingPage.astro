@@ -21,7 +21,10 @@ const faq = [
 ---
 <section class="sec" style="padding-top:clamp(36px,5vw,64px)"><div class="wrap">
   <div class="head"><div><div class="kicker">{T('Offres', 'Pricing')}</div><h1 class="pg-title">{T('Trois façons de travailler ensemble.', 'Three ways to work together.')}</h1></div><p class="mute">{T('Des forfaits clairs, un prix annoncé d’avance, un livrable que vous gardez.', 'Clear packs, an upfront price, a deliverable you keep.')}</p></div>
-  <Pricing lang={lang} />
+  <div class="deal" id="deal">
+    <div class="deal-av"><img src="/avatar.svg" alt="" width="400" height="400" /><span class="deal-bubble">{T('Choisissez une carte !', 'Pick a card!')}</span></div>
+    <Pricing lang={lang} />
+  </div>
 </div></section>
 <section class="sec"><div class="wrap">
   <div class="head"><div><div class="kicker">{T('Déroulé', 'Process')}</div><h2>{T('Comment ça se passe.', 'How it works.')}</h2></div></div>
