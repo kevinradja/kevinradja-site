@@ -56,7 +56,7 @@
     document.head.appendChild(st);document.body.appendChild(b)}
 
   window.KR=window.KR||{};
-  window.KR.sfx={cloud:{start:cloudStart,set:cloudSet,stop:cloudStop},play:function(n,a,b){try{S[n]&&S[n](a,b)}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};
+  window.KR.sfx={playSoon:function(n){var c=ac();if(!c||muted)return;var go=function(){try{S[n]&&S[n]()}catch(e){}};if(c.state==='running')go();else c.resume().then(go)},cloud:{start:cloudStart,set:cloudSet,stop:cloudStop},play:function(n,a,b){try{S[n]&&S[n](a,b)}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};
   /* UI sounds on the site. Nav links each get their own note of a pentatonic scale,
      so clicking through the menu plays a small melody; other clicks vary slightly. */
   var SCALE=[523.25,587.33,659.25,783.99,880,1046.5,1174.66,1318.51];
