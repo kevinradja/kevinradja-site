@@ -248,7 +248,7 @@ html.wide .dlg{font-size:12px}
   <div class="top"><span><b id="lv">Niv. 1</b></span><div class="xp"><i id="xpb"></i></div><span id="xpt">0 XP</span><button class="dexbtn" id="dexb">📘 Datadex <b id="dexn">0</b> <kbd>I</kbd></button><button id="snd" aria-label="sound">🔊</button><button id="theme" aria-label="theme">◐</button></div>
   <div class="stage" id="stage">
     <canvas id="c" width="256" height="320"></canvas>
-    <div class="briefbg hide" id="brief"><canvas id="briefc" width="240" height="180"></canvas></div><div class="keysbox" id="keysbox" aria-hidden="true"></div><div class="dlg hide" id="dlg"><canvas class="face hide" id="face" width="20" height="20"></canvas><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
+    <div class="briefbg hide" id="brief"><canvas id="briefc" width="320" height="240"></canvas></div><div class="keysbox" id="keysbox" aria-hidden="true"></div><div class="dlg hide" id="dlg"><canvas class="face hide" id="face" width="20" height="20"></canvas><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
     <div class="dash hide" id="dash"></div>
     <div class="quest hide" id="quest"></div>
     <div id="toasts"></div>
@@ -731,7 +731,7 @@ function action(){if(state==='quiz'){chKey&&chKey('enter');return}if(state==='ti
   var f=front();var n=npcAt(f[0],f[1])||ALL.filter(function(n){return Math.abs(n.x-player.x)+Math.abs(n.y-player.y)===1})[0];if(n&&!player.moving)talk(n)}
 var BRI=['brief-a.svg','brief-b.svg'].map(function(u){var i=new Image();i.src=u;return i});
 function briefLoop(){var cv=document.getElementById('briefc'),c=cv.getContext('2d'),bf=document.getElementById('brief');
-  (function f(t){if(bf.classList.contains('hide'))return;var talk=cur&&!full&&Math.floor(t/120)%2===0,im=BRI[talk?1:0];c.imageSmoothingEnabled=true;if(im.complete&&im.naturalWidth)c.drawImage(im,0,Math.sin(t/500)>0.6?1:0,240,180);requestAnimationFrame(f)})(0)}
+  (function f(t){if(bf.classList.contains('hide'))return;var talk=cur&&!full&&Math.floor(t/120)%2===0,im=BRI[talk?1:0];c.imageSmoothingEnabled=true;if(im.complete&&im.naturalWidth)c.drawImage(im,0,Math.sin(t/500)>0.6?1:0,320,240);requestAnimationFrame(f)})(0)}
 function begin(){document.getElementById('start').classList.add('hide');state='play';t0=performance.now();startAudio();hud();
   var K=function(t,e){return {k:'mem',w:'Kevin',t:t,e:e}},fr=L==='fr',bf=document.getElementById('brief');bf.classList.remove('hide');dlg.classList.add('brief');briefLoop();
   say(fr?[K('Salut ! Moi, c’est Kevin, consultant Data & BI. Bienvenue dans mon petit RPG !','h'),K('Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Sept habitants ont besoin d’un coup de main.','sad'),K('Pour aider chacun, il me faut d’abord le bon outil : Excel, SQL, Power BI… Ils se cachent dans les hautes herbes. À capturer !','wow'),K('Chaque habitant cache une étape de mon parcours. Récupère leurs objets, puis va voir la maire, au nord.','n'),K('Flèches, ZQSD ou WASD pour marcher, Espace ou Entrée pour parler. C’est parti !','w')]
