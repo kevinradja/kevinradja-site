@@ -3,9 +3,9 @@
   var ctx=null,muted=false;
   try{muted=localStorage.getItem('kr-sound')==='off'}catch(e){}
   function ac(){if(!ctx){var A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ctx=new A()}if(ctx.state==='suspended')ctx.resume();return ctx}
-  function tone(f,t,dur,type,vol,slide){var c=ac();if(!c||muted)return;var o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,c.currentTime+t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,c.currentTime+t+dur);g.gain.setValueAtTime(0,c.currentTime+t);g.gain.linearRampToValueAtTime(vol||.08,c.currentTime+t+.006);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+t+dur);o.connect(g).connect(c.destination);o.start(c.currentTime+t);o.stop(c.currentTime+t+dur+.02)}
-  function noise(t,dur,vol){var c=ac();if(!c||muted)return;var n=c.sampleRate*dur,b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);var s=c.createBufferSource(),g=c.createGain(),f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;s.buffer=b;g.gain.value=vol||.12;s.connect(f).connect(g).connect(c.destination);s.start(c.currentTime+t)}
-  function air(){var c=ac();if(!c||muted)return;var d=.45,n=c.sampleRate*d,b=c.createBuffer(1,n,c.sampleRate),x=b.getChannelData(0);for(var i=0;i<n;i++)x[i]=(Math.random()*2-1);
+  function tone(f,t,dur,type,vol,slide){var c=ac();if(!c||muted||c.state!=='running')return;var o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,c.currentTime+t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,c.currentTime+t+dur);g.gain.setValueAtTime(0,c.currentTime+t);g.gain.linearRampToValueAtTime(vol||.08,c.currentTime+t+.006);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+t+dur);o.connect(g).connect(c.destination);o.start(c.currentTime+t);o.stop(c.currentTime+t+dur+.02)}
+  function noise(t,dur,vol){var c=ac();if(!c||muted||c.state!=='running')return;var n=c.sampleRate*dur,b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);var s=c.createBufferSource(),g=c.createGain(),f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;s.buffer=b;g.gain.value=vol||.12;s.connect(f).connect(g).connect(c.destination);s.start(c.currentTime+t)}
+  function air(){var c=ac();if(!c||muted||c.state!=='running')return;var d=.45,n=c.sampleRate*d,b=c.createBuffer(1,n,c.sampleRate),x=b.getChannelData(0);for(var i=0;i<n;i++)x[i]=(Math.random()*2-1);
     var src=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain(),t=c.currentTime;f.type='bandpass';f.Q.value=.8;f.frequency.setValueAtTime(350,t);f.frequency.exponentialRampToValueAtTime(1400,t+d*.6);f.frequency.exponentialRampToValueAtTime(700,t+d);
     g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05,t+.12);g.gain.exponentialRampToValueAtTime(.0001,t+d);src.buffer=b;src.connect(f).connect(g).connect(c.destination);src.start(t);tone(1568,.05,.25,'sine',.006)}
   var S={
@@ -19,13 +19,14 @@
     over:function(){tone(440,0,.18,'triangle',.08,330);tone(330,.18,.2,'triangle',.08,220);tone(220,.38,.4,'triangle',.08,110)},
     record:function(){[523,659,784,1047].forEach(function(f,i){tone(f,i*.09,.16,'triangle',.08)})},
     heal:function(){[659,784,988,1319,1568].forEach(function(f,i){tone(f,i*.045,.09,'square',.03)});tone(1976,.24,.22,'triangle',.05);tone(2637,.3,.18,'sine',.03)},
-    hurt:function(){tone(196,0,.18,'square',.05,98);tone(131,.12,.3,'square',.05,65);noise(.02,.18,.06)},
+    hurt:function(){[523,466,392,349].forEach(function(f,k){tone(f/2,k*.11,.16,'square',.035)});[175,147,131].forEach(function(f,k){tone(f,.5+k*.04,.7,'triangle',.06)});tone(98,.52,.8,'sine',.05)},
     ouch:function(){tone(330,0,.1,'square',.04,220);tone(247,.08,.14,'triangle',.05,160)},
     stage0:function(){noise(0,.12,.08);tone(220,0,.09,'square',.04,140);tone(180,.08,.1,'square',.035,110)},
     stage1:function(){[523,659,784].forEach(function(f,i){tone(f,i*.06,.08,'square',.035)})},
     stage2:function(){[392,523,659,784,988].forEach(function(f,i){tone(f,i*.05,.07,'square',.03)})},
     stage3:function(){[523,659,784,1047].forEach(function(f,k){tone(f,k*.08,.09,'square',.03)});[988,1047].forEach(function(f,k){tone(f,.42+k*.1,.12,'square',.03)});[262,330,392,523].forEach(function(f,k){tone(f,.62+k*.03,.6,'triangle',.045)});tone(1319,.66,.5,'sine',.02)}
   };
+  ['pointerdown','keydown','touchend'].forEach(function(ev){document.addEventListener(ev,function(){ac()},{capture:true,passive:true})});
   window.KR=window.KR||{};
   window.KR.sfx={play:function(n){try{S[n]&&S[n]()}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};
   /* UI sounds on the site. Nav links each get their own note of a pentatonic scale,
