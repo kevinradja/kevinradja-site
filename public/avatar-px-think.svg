@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Avatar de Kevin Radja">
-  <defs><filter id="px" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" x="0" y="0" width="400" height="400"><feFlood x="3" y="3" width="1" height="1"/><feComposite width="6" height="6"/><feTile result="t"/><feComposite in="SourceGraphic" in2="t" operator="in"/><feMorphology operator="dilate" radius="3"/></filter>
+  <defs><filter id="px" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" x="0" y="0" width="400" height="400"><feFlood x="2" y="2" width="1" height="1"/><feComposite width="4" height="4"/><feTile result="t"/><feComposite in="SourceGraphic" in2="t" operator="in"/><feMorphology operator="dilate" radius="2"/></filter>
     <clipPath id="c"><circle cx="200" cy="200" r="200"/></clipPath>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E5257"/><stop offset="1" stop-color="#0A3A3E"/></linearGradient>
   </defs>
