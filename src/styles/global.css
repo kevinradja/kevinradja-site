@@ -82,7 +82,7 @@ html.warp body{overflow:hidden}
 #warp .wl{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:clamp(34px,6vw,64px);letter-spacing:-.04em;color:#fff;opacity:0;animation:wl 1.5s ease-in forwards}
 #warp .wl i{font-style:normal;color:#3FD3DC}
 @keyframes wl{0%{opacity:0;transform:scale(.6)}55%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(2.4);filter:blur(4px)}}
-html.warp-in main{animation:plouf .7s cubic-bezier(.2,1.5,.4,1)}
+/* reveal bounce removed: the circular plouf already reveals the page */
 @keyframes plouf{0%{transform:scale(.94);opacity:.4}100%{transform:none;opacity:1}}
 
 /* nav */
