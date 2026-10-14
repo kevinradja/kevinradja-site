@@ -29,8 +29,8 @@ const nav = [
   <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_GB'} />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin />
+  {intro && <link rel="preload" href="/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin />}
   {intro && <script is:inline>
     /* Entry animation (home only): once per browser session, skipped for reduced motion. */
     (function(){try{var force=/[?&]intro(=|&|$)/.test(location.search);if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
