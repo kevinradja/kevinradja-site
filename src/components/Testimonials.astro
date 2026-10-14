@@ -20,7 +20,7 @@ const slugOf = (n: string) => n.split(' ')[0].toLowerCase();
               <figcaption><b>{t.name}</b><span>{t.role[lang]}</span><em>{t.company[lang]}</em></figcaption>
             </div>
             <blockquote>« {t.quote[lang]} »</blockquote>
-            {p && <a class="avx-p" href={base + p.slug + '/'}><strong>{p.kpi.v}</strong><span>{p.title[lang]}</span><i>→</i></a>}
+            {p && <a class="avx-p" href={base + p.slug + '/'}><strong>{p.kpi.v}</strong><span>{p.kpi.l[lang]}<small>{p.title[lang]}</small></span><i>→</i></a>}
           </figure>
         );
       })}

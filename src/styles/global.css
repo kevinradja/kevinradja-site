@@ -1340,3 +1340,5 @@ html::-webkit-scrollbar{width:0;height:0}
 .aio-c small strong{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:20px;color:var(--acc)}
 .aio-c p{margin:4px 0 0;font-size:14px;line-height:1.55;color:var(--mute)}
 @media(max-width:860px){.aio-g{grid-template-columns:1fr}.aio-h a{margin-left:0}}
+
+.avx-p span small{display:block;font-weight:500;font-size:.85em;opacity:.65;margin-top:2px}
