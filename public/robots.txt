@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /portfolio/
+Disallow: /en/portfolio/
+
+Sitemap: https://kevinradja-site.vercel.app/sitemap-index.xml
