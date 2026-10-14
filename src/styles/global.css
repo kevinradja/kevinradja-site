@@ -46,6 +46,8 @@ a.card:hover{transform:translateY(-3px);border-color:var(--line2)}
 .btn.p:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
 .btn.s{background:var(--card);color:var(--ink);border-color:var(--line2)}
 .btn.s:hover{border-color:var(--ink)}
+.btn.lk{background:#0A66C2;color:#fff}
+.btn.lk:hover{background:#004182}
 .btn.sm{padding:9px 16px;font-size:14px}
 .btn svg{width:18px;height:18px}
 
@@ -97,8 +99,8 @@ a.card:hover{transform:translateY(-3px);border-color:var(--line2)}
 .stats{display:flex;gap:clamp(20px,4vw,48px);flex-wrap:wrap;margin-top:34px}
 .stats b{display:block;font-size:30px;font-weight:800;letter-spacing:-.03em}
 .stats span{font-size:13.5px;color:var(--mute);max-width:200px;display:block}
-.logos{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;margin-top:30px}
-.logos img{height:22px;width:auto;transition:transform .2s}
+.logos{display:flex;flex-wrap:wrap;gap:16px 40px;align-items:center;margin-top:30px}
+.logos img{height:32px;width:auto;transition:transform .2s}
 .logos img:hover{transform:translateY(-2px)}
 .logos img.dk{display:none}
 :root[data-theme="dark"] .logos img.dk{display:inline}
