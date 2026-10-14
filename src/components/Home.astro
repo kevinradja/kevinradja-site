@@ -10,7 +10,7 @@ const { lang, vitrine = false } = Astro.props as { lang: Lang; vitrine?: boolean
 const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
 
 const audiences = [
-  { w: T('PME', 'SMEs'), img: '/thumbs/05.png', h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Un reporting mensuel qui tourne seul, un tableau de bord que vous ouvrez le lundi matin, un prix annoncé d’avance.', 'A monthly report that runs itself, a dashboard you open on Monday morning, an upfront price.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
+  { w: T('PME', 'SMEs'), img: '', h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Un reporting mensuel qui tourne seul, un tableau de bord que vous ouvrez le lundi matin, un prix annoncé d’avance.', 'A monthly report that runs itself, a dashboard you open on Monday morning, an upfront price.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
   { w: T('Équipes data', 'Data teams'), img: '/thumbs/04.png', h: T('Un renfort qui connaît les grands groupes.', 'Extra hands who know large organisations.'), p: T('Power BI, SQL, Python, clôtures et qualité de données : j’ai livré chez Google, Coface, Dassault Systèmes et KPMG.', 'Power BI, SQL, Python, closes and data quality: delivered at Google, Coface, Dassault Systèmes and KPMG.'), to: r('work', lang), c: T('Voir les réalisations', 'See the work') },
   { w: T('Recruteurs', 'Recruiters'), img: '/kevin.jpg', h: T('L’essentiel, en trente secondes.', 'The essentials, in thirty seconds.'), p: T('Parcours, compétences, certifications et disponibilité : tout ce qu’il faut pour décider d’un premier appel.', 'Background, skills, certifications and availability: everything you need to decide on a first call.'), to: r('about', lang), c: T('Voir le parcours', 'See the background') },
 ];
@@ -168,7 +168,7 @@ const featured = [projects[3], projects[4], projects[5]];
     <div class="c-aud-r">
       {audiences.map((a, i) => (
         <div class:list={['c-aud-p', { on: i === 0 }]} data-i={i} role="tabpanel">
-          <img src={a.img} alt="" loading="lazy" />
+          {a.img ? <img src={a.img} alt="" loading="lazy" /> : <div class="c-aud-dev"><div class="device"><div class="scr"><div class="dg mini"><div class="t"><small>{T('Trésorerie', 'Cash')}</small><b>62 k€</b><em>▲ 8 %</em></div><div class="t"><small>{T('Marge', 'Margin')}</small><b>31 %</b><em>▲ 2 pts</em></div><div class="t"><small>{T('Factures', 'Invoices')}</small><b>14</b><em>{T('à relancer', 'to chase')}</em></div><div class="w"><svg viewBox="0 0 200 60"><polyline fill="none" stroke="var(--acc)" stroke-width="3" points="0,40 25,42 50,34 75,36 100,26 125,30 150,20 175,18 200,12" /></svg></div><div class="d"><svg viewBox="0 0 42 42" width="64" height="64"><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--line)" stroke-width="6" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc)" stroke-width="6" stroke-dasharray="72 28" transform="rotate(-90 21 21)" /></svg></div></div></div></div></div>}
           <div class="c-aud-card"><h3>{a.h}</h3><p>{a.p}</p><a class="btn p sm" href={a.to}>{a.c} →</a></div>
         </div>
       ))}
