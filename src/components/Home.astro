@@ -9,9 +9,9 @@ import ContactCard from './ContactCard.astro';
 const { lang, vitrine = false } = Astro.props as { lang: Lang; vitrine?: boolean };
 const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
 const doors = [
-  { k: T('Je dirige une PME', 'I run an SME'), h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Un reporting mensuel qui tourne seul, un dashboard que vous ouvrez le lundi matin, un prix annoncé d’avance.', 'A monthly report that runs itself, a dashboard you open on Monday morning, an upfront price.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
-  { k: T('Je suis une équipe data ou finance', 'I’m a data or finance team'), h: T('Un renfort qui connaît les grands groupes.', 'Extra hands who know large organisations.'), p: T('Power BI, SQL, Python, clôtures et qualité de données : j’ai livré chez Google, Coface, Dassault Systèmes et KPMG.', 'Power BI, SQL, Python, closes and data quality: delivered at Google, Coface, Dassault Systèmes and KPMG.'), to: r('work', lang), c: T('Voir les réalisations', 'See the work') },
-  { k: T('Je cherche un freelance', 'I’m hiring a freelancer'), h: T('L’essentiel, en trente secondes.', 'The essentials, in thirty seconds.'), p: T('Parcours, outils, façon de travailler et disponibilité : tout ce qu’il faut pour décider d’un premier appel.', 'Background, tools, ways of working and availability: all you need to decide on a first call.'), to: r('about', lang), c: T('Voir le parcours', 'See the background') },
+  { e: '🏪', s: T('À la tête d’une PME', 'Running an SME'), k: T('Je dirige une PME', 'I run an SME'), h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Un reporting mensuel qui tourne seul, un dashboard que vous ouvrez le lundi matin, un prix annoncé d’avance.', 'A monthly report that runs itself, a dashboard you open on Monday morning, an upfront price.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
+  { e: '📊', s: T('Une équipe data ou finance', 'A data or finance team'), k: T('Je suis une équipe data ou finance', 'I’m a data or finance team'), h: T('Un renfort qui connaît les grands groupes.', 'Extra hands who know large organisations.'), p: T('Power BI, SQL, Python, clôtures et qualité de données : j’ai livré chez Google, Coface, Dassault Systèmes et KPMG.', 'Power BI, SQL, Python, closes and data quality: delivered at Google, Coface, Dassault Systèmes and KPMG.'), to: r('work', lang), c: T('Voir les réalisations', 'See the work') },
+  { e: '🤝', s: T('En recherche d’un freelance', 'Hiring a freelancer'), k: T('Je cherche un freelance', 'I’m hiring a freelancer'), h: T('L’essentiel, en trente secondes.', 'The essentials, in thirty seconds.'), p: T('Parcours, outils, façon de travailler et disponibilité : tout ce qu’il faut pour décider d’un premier appel.', 'Background, tools, ways of working and availability: all you need to decide on a first call.'), to: r('about', lang), c: T('Voir le parcours', 'See the background') },
 ];
 const results = [
   { v: '−30 %', l: T('de temps de production du reporting', 'reporting production time'), c: 'Coface · 12 ' + T('pays', 'countries') + ' · 500+ ' + T('utilisateurs', 'users') },
@@ -61,12 +61,19 @@ const featured = [projects[3], projects[4], projects[5]];
 {!vitrine && (
 <section class="sec">
   <div class="wrap">
-    <div class="head"><div><div class="kicker">{T('Trois portes', 'Three doors')}</div><h2>{T('Selon ce qui vous amène.', 'Depending on what brings you here.')}</h2></div><p class="mute">{T('Chaque porte ouvre la page faite pour vous.', 'Each door opens the page made for you.')}</p></div>
-    <div class="grid g3">
-      {doors.map(d => <a class="card door rv" href={d.to}><div class="k">{d.k}</div><h3>{d.h}</h3><p>{d.p}</p><div class="go"><span>{d.c}</span><i>→</i></div></a>)}
+    <div class="pick rv">
+      <div class="pick-top">
+        <p class="pick-q">{T('Vous êtes…', 'You are…')}</p>
+        <div class="pick-tabs" role="tablist">{doors.map((d, i) => <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-i={i}><span aria-hidden="true">{d.e}</span>{d.s}</button>)}</div>
+      </div>
+      {doors.map((d, i) => <div class:list={['pick-p', { on: i === 0 }]} data-i={i} role="tabpanel"><div><h3>{d.h}</h3><p class="mute">{d.p}</p></div><a class="btn p" href={d.to}>{d.c} →</a></div>)}
     </div>
   </div>
 </section>
+<script is:inline>
+  document.querySelectorAll('.pick').forEach(function(pk){var bs=pk.querySelectorAll('.pick-tabs button'),ps=pk.querySelectorAll('.pick-p');
+    bs.forEach(function(b){b.addEventListener('click',function(){bs.forEach(function(x){x.setAttribute('aria-selected',x===b?'true':'false')});ps.forEach(function(p){p.classList.toggle('on',p.dataset.i===b.dataset.i)})})})});
+</script>
 )}
 
 <section class="sec">
