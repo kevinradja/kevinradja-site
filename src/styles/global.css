@@ -1354,3 +1354,6 @@ html::-webkit-scrollbar{width:0;height:0}
 /* hero: keep the dashboard below the title */
 @media(min-width:901px){.c-hero-row{margin-top:clamp(18px,2.5vw,36px)!important}}
 
+
+/* pixel avatars: small PNGs scaled up crisp */
+img[src*="avatar-px"]{image-rendering:pixelated}
