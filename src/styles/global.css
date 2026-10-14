@@ -617,3 +617,5 @@ a.card:hover{transform:translateY(-3px);border-color:var(--acc)}
 .pr.hi .k{color:#9FE0D8}
 .pr.hi li:before{background:#9FE0D8}
 .pr.hi .price small{color:rgba(244,239,228,.7)}
+
+.c-aud-p img.avatar{object-fit:contain;background:var(--deep);padding:40px}
