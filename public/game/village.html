@@ -9,7 +9,7 @@
 .ch-step{font-weight:700;margin:6px 0}.ch-chat p{margin:6px 0;padding:7px 10px;border-radius:8px;font-size:14px}.ch-chat .u{background:#3D8FD1;color:#fff;margin-left:30%}.ch-chat .b{background:#EEF3F6;color:#1d1d1d;margin-right:15%}
 #startc,#endc{display:block;width:min(100%,512px);height:auto;image-rendering:pixelated;border:3px solid #0B0D10;box-shadow:0 6px 0 rgba(0,0,0,.35);margin-bottom:18px}
 @media(max-width:520px){#startc,#endc{margin-bottom:8px}}
-#start{overflow:auto;justify-content:safe center;padding:14px 24px!important;scrollbar-width:none}#start::-webkit-scrollbar{display:none}#start .hint{margin-top:12px!important}#startc{width:min(100%,400px);margin-bottom:12px}#start p{margin-top:0}#start .go{margin-top:18px}
+#start{padding:0!important;background:#1E3FA8!important;cursor:pointer}#start>*:not(#startc){position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0);margin:0!important;padding:0!important;border:0!important}#startc{width:100%!important;height:100%!important;object-fit:contain;margin:0!important;border:0!important;box-shadow:none!important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 <style>
@@ -689,6 +689,7 @@ function endCard(cid,oid,t1,t2){cid=cid||'endc';oid=oid||'end';var cv=document.g
     R(c,'#D7263D',36,82,184,20);R(c,'#F05A6B',36,82,184,3);R(c,'#8E1A28',36,99,184,3);
     c.font='8px "Press Start 2P",monospace';c.textAlign='center';c.textBaseline='alphabetic';c.fillStyle='#1B2340';c.fillText(T1,129,96);c.fillStyle='#FFF4D6';c.fillText(T1,128,95);
     R(c,'#1B2340',47,104,162,13);R(c,'#F4F1E6',48,105,160,11);c.fillStyle='#1B2340';c.fillText(T2,128,114);
+    if(cid==='startc'&&Math.floor(t/550)%2===0){var pr=L==='fr'?'APPUIE SUR ENTRÉE':'PRESS ENTER';c.fillStyle='#0B2A2C';c.fillText(pr,129,141);c.fillStyle='#FFFFFF';c.fillText(pr,128,140)}
     requestAnimationFrame(frame)}
   requestAnimationFrame(frame)}
 endCard('startc','start',L==='fr'?'LE VILLAGE DES DONNÉES':'DATA VILLAGE',L==='fr'?'UN RPG DATA 8-BIT':'A DATA 8-BIT RPG');
@@ -720,8 +721,8 @@ function action(){if(state==='quiz'){chKey&&chKey('enter');return}if(state==='ti
   if(cur){advance();return}
   var f=front();var n=npcAt(f[0],f[1])||ALL.filter(function(n){return Math.abs(n.x-player.x)+Math.abs(n.y-player.y)===1})[0];if(n&&!player.moving)talk(n)}
 function begin(){document.getElementById('start').classList.add('hide');state='play';t0=performance.now();startAudio();hud();
-  say([{k:'nar',w:TX.narr,t:L==='fr'?'Kevin arrive au Village des Données. Au nord, la mairie. Partout, des habitants qui ont besoin d’un coup de main…':'Kevin arrives in Data Village. Up north, the town hall. Everywhere, villagers who could use a hand…'}])}
-document.getElementById('play').onclick=begin;
+  say([{k:'nar',w:TX.narr,t:TX.intro},{k:'nar',w:TX.narr,t:TX.keys},{k:'nar',w:TX.narr,t:L==='fr'?'Kevin arrive au Village des Données. Au nord, la mairie. Partout, des habitants qui ont besoin d’un coup de main…':'Kevin arrives in Data Village. Up north, the town hall. Everywhere, villagers who could use a hand…'}])}
+document.getElementById('play').onclick=begin;document.getElementById('start').addEventListener('click',function(){if(state==='title')begin()});
 var DIRS={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
 function front(){var d=DIRS[player.dir];return[player.x+d[0],player.y+d[1]]}
 function npcAt(x,y){for(var i=0;i<ALL.length;i++)if(ALL[i].x===x&&ALL[i].y===y)return ALL[i];return null}
