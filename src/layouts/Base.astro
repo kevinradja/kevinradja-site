@@ -33,7 +33,7 @@ const nav = [
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   {intro && <script is:inline>
     /* Entry animation (home only): once per browser session, skipped for reduced motion. */
-    (function(){try{var force=/[?&]intro/.test(location.search);if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
+    (function(){try{var force=/[?&]intro(=|&|$)/.test(location.search);if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
   </script>}
   <script is:inline>
     (function(){try{var t=localStorage.getItem('kr-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
