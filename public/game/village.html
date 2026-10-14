@@ -11,6 +11,15 @@
 @media(max-width:520px){#startc,#endc{margin-bottom:8px}}
 #start{padding:0!important;background:#1E3FA8!important;cursor:pointer}#start>*:not(#startc){position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0);margin:0!important;padding:0!important;border:0!important}#startc{width:100%!important;height:100%!important;object-fit:contain;margin:0!important;border:0!important;box-shadow:none!important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.briefbg{position:absolute;inset:0;z-index:20;background:radial-gradient(circle at 50% 38%,#2C55C8,#10182C 75%);}
+.briefbg:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1.5px);background-size:46px 46px;opacity:.25}
+.dlg.brief{z-index:21;overflow:visible}
+.dlg.brief .face{position:absolute!important;left:50%!important;top:auto!important;bottom:calc(100% + 6px)!important;transform:translateX(-50%);width:min(250px,56vw)!important;height:min(250px,56vw)!important;image-rendering:pixelated;border:4px solid #F4F1E6!important;box-shadow:0 0 0 4px #10182C,0 12px 0 rgba(0,0,0,.35)}
+.dlg.brief.hasface{padding-left:18px}
+.keysbox{position:absolute;top:10px;right:10px;z-index:4;display:flex;flex-direction:column;gap:4px;padding:9px 11px;background:rgba(16,24,44,.62);color:#F4F1E6;border-radius:8px;box-shadow:inset 0 0 0 2px rgba(244,241,230,.25);font-size:11px;line-height:1.3;pointer-events:none;backdrop-filter:blur(2px)}
+.keysbox b{font-family:'Press Start 2P',monospace;font-weight:400;font-size:8px;color:#F2C14E;letter-spacing:.06em}
+.keysbox kbd{font:inherit;font-weight:700;background:rgba(244,241,230,.16);border-radius:3px;padding:0 4px}
+@media(max-width:560px){.keysbox{display:none}}
 </style>
 <style>
 :root{--bg:#F7F7F5;--card:#fff;--ink:#0E1116;--mute:#6B7480;--line:#E3E6E8;--acc:#1AA7B0;--gold:#E0A030}
@@ -239,7 +248,7 @@ html.wide .dlg{font-size:12px}
   <div class="top"><span><b id="lv">Niv. 1</b></span><div class="xp"><i id="xpb"></i></div><span id="xpt">0 XP</span><button class="dexbtn" id="dexb">📘 Datadex <b id="dexn">0</b> <kbd>I</kbd></button><button id="snd" aria-label="sound">🔊</button><button id="theme" aria-label="theme">◐</button></div>
   <div class="stage" id="stage">
     <canvas id="c" width="256" height="320"></canvas>
-    <div class="dlg hide" id="dlg"><canvas class="face hide" id="face" width="20" height="20"></canvas><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
+    <div class="briefbg hide" id="brief"></div><div class="keysbox" id="keysbox" aria-hidden="true"></div><div class="dlg hide" id="dlg"><canvas class="face hide" id="face" width="20" height="20"></canvas><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
     <div class="dash hide" id="dash"></div>
     <div class="quest hide" id="quest"></div>
     <div id="toasts"></div>
@@ -721,7 +730,11 @@ function action(){if(state==='quiz'){chKey&&chKey('enter');return}if(state==='ti
   if(cur){advance();return}
   var f=front();var n=npcAt(f[0],f[1])||ALL.filter(function(n){return Math.abs(n.x-player.x)+Math.abs(n.y-player.y)===1})[0];if(n&&!player.moving)talk(n)}
 function begin(){document.getElementById('start').classList.add('hide');state='play';t0=performance.now();startAudio();hud();
-  say([{k:'nar',w:TX.narr,t:TX.intro},{k:'nar',w:TX.narr,t:TX.keys},{k:'nar',w:TX.narr,t:L==='fr'?'Kevin arrive au Village des Données. Au nord, la mairie. Partout, des habitants qui ont besoin d’un coup de main…':'Kevin arrives in Data Village. Up north, the town hall. Everywhere, villagers who could use a hand…'}])}
+  var K=function(t,e){return {k:'mem',w:'Kevin',f:'/avatar.svg',t:t,e:e}},fr=L==='fr',bf=document.getElementById('brief');bf.classList.remove('hide');dlg.classList.add('brief');
+  say(fr?[K('Salut ! Moi, c’est Kevin, consultant Data & BI. Bienvenue dans mon petit RPG !','h'),K('Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Sept habitants ont besoin d’un coup de main.','sad'),K('Pour aider chacun, il me faut d’abord le bon outil : Excel, SQL, Power BI… Ils se cachent dans les hautes herbes. À capturer !','wow'),K('Chaque habitant cache une étape de mon parcours. Récupère leurs objets, puis va voir la maire, au nord.','n'),K('Flèches, ZQSD ou WASD pour marcher, Espace ou Entrée pour parler. C’est parti !','w')]
+    :[K('Hi! I’m Kevin, a Data & BI consultant. Welcome to my little RPG!','h'),K('The village no longer knows where its water, rents and spending go. Seven villagers need a hand.','sad'),K('To help each one, I first need the right tool: Excel, SQL, Power BI… They hide in the tall grass. Let’s catch them!','wow'),K('Each villager hides a step of my career. Collect their items, then visit the mayor up north.','n'),K('Arrows or WASD to walk, Space or Enter to talk. Let’s go!','w')],
+    function(){bf.classList.add('hide');dlg.classList.remove('brief');say([{k:'nar',w:TX.narr,t:L==='fr'?'Kevin arrive au Village des Données. Au nord, la mairie. Partout, des habitants qui ont besoin d’un coup de main…':'Kevin arrives in Data Village. Up north, the town hall. Everywhere, villagers who could use a hand…'}])})}
+document.getElementById('keysbox').innerHTML=L==='fr'?'<b>Commandes</b><span><kbd>←↑↓→</kbd> ou <kbd>ZQSD</kbd> marcher</span><span><kbd>Espace</kbd> <kbd>Entrée</kbd> parler</span><span><kbd>I</kbd> Datadex</span>':'<b>Controls</b><span><kbd>←↑↓→</kbd> or <kbd>WASD</kbd> walk</span><span><kbd>Space</kbd> <kbd>Enter</kbd> talk</span><span><kbd>I</kbd> Datadex</span>';
 document.getElementById('play').onclick=begin;document.getElementById('start').addEventListener('click',function(){if(state==='title')begin()});
 var DIRS={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
 function front(){var d=DIRS[player.dir];return[player.x+d[0],player.y+d[1]]}
