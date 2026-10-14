@@ -886,3 +886,9 @@ body{line-height:1.65}
 .foot{padding-top:clamp(70px,8vw,110px)}
 .steps .step{padding:28px}
 .faq details{padding:22px 0}
+
+/* +1 heart when a step repairs the data */
+.heal{position:absolute;bottom:40%;z-index:5;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:clamp(18px,2vw,26px);color:#F4EFE4;background:#0E5257;border:3px solid #F4EFE4;border-radius:8px;padding:4px 10px;box-shadow:0 4px 0 rgba(0,0,0,.25);pointer-events:none;animation:heal 1.3s cubic-bezier(.2,.8,.2,1) both;image-rendering:pixelated}
+.heal i{font-style:normal;color:#FF5A6E}
+.heal:not(:first-of-type){background:transparent;border:0;box-shadow:none;padding:0;font-size:clamp(20px,2.4vw,30px)}
+@keyframes heal{0%{opacity:0;transform:translateY(20px) scale(.6)}20%{opacity:1;transform:translateY(0) scale(1.15)}35%{transform:scale(1)}100%{opacity:0;transform:translateY(-90px)}}
