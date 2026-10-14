@@ -8,6 +8,14 @@
   function air(m,v){m=m||1;v=v||1;var c=ac();if(!c||muted||c.state!=='running')return;var d=.45,n=c.sampleRate*d,b=c.createBuffer(1,n,c.sampleRate),x=b.getChannelData(0);for(var i=0;i<n;i++)x[i]=(Math.random()*2-1);
     var src=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain(),t=c.currentTime;f.type='bandpass';f.Q.value=.8;f.frequency.setValueAtTime(350*m,t);f.frequency.exponentialRampToValueAtTime(1400*m,t+d*.6);f.frequency.exponentialRampToValueAtTime(700*m,t+d);
     g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05*v,t+.12);g.gain.exponentialRampToValueAtTime(.0001,t+d);src.buffer=b;src.connect(f).connect(g).connect(c.destination);src.start(t);tone(1568*m,.05,.25,'sine',.006*v)}
+  /* continuous soft 8-bit 'cloud' hum while dragging the carousel */
+  var cl=null;
+  function cloudStart(){var c=ac();if(!c||muted||c.state!=='running'||cl)return;var t=c.currentTime,o=c.createOscillator(),o2=c.createOscillator(),lfo=c.createOscillator(),ld=c.createGain(),f=c.createBiquadFilter(),g=c.createGain();
+    o.type='triangle';o2.type='square';o.frequency.value=392;o2.frequency.value=784;lfo.frequency.value=5.2;ld.gain.value=7;lfo.connect(ld);ld.connect(o.frequency);ld.connect(o2.frequency);
+    f.type='lowpass';f.frequency.value=1100;var g2=c.createGain();g2.gain.value=.12;o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(c.destination);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.022,t+.18);o.start(t);o2.start(t);lfo.start(t);cl={o:o,o2:o2,lfo:lfo,g:g,c:c}}
+  function cloudSet(m){if(!cl)return;var t=cl.c.currentTime;cl.o.frequency.setTargetAtTime(392*m,t,.12);cl.o2.frequency.setTargetAtTime(784*m,t,.12)}
+  function cloudStop(){if(!cl)return;var x=cl,t=x.c.currentTime;cl=null;x.g.gain.cancelScheduledValues(t);x.g.gain.setTargetAtTime(0,t,.09);setTimeout(function(){try{x.o.stop();x.o2.stop();x.lfo.stop()}catch(e){}},600)}
   var S={
     hover:function(){tone(1600,0,.035,'sine',.025)},
     air:function(){air()},
@@ -36,7 +44,7 @@
     document.head.appendChild(st);document.body.appendChild(b)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hint);else hint();
   window.KR=window.KR||{};
-  window.KR.sfx={play:function(n,a,b){try{S[n]&&S[n](a,b)}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};
+  window.KR.sfx={cloud:{start:cloudStart,set:cloudSet,stop:cloudStop},play:function(n,a,b){try{S[n]&&S[n](a,b)}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};
   /* UI sounds on the site. Nav links each get their own note of a pentatonic scale,
      so clicking through the menu plays a small melody; other clicks vary slightly. */
   var SCALE=[523.25,587.33,659.25,783.99,880,1046.5,1174.66,1318.51];
