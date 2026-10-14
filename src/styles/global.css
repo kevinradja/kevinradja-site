@@ -1355,3 +1355,11 @@ html::-webkit-scrollbar{width:0;height:0}
 @media(min-width:901px){.c-hero-row{margin-top:clamp(18px,2.5vw,36px)!important}}
 
 
+/* AI offer: chrome highlight — rotating metallic border + shiny title */
+@property --aia{syntax:'<angle>';inherits:false;initial-value:0deg}
+.aio{position:relative;border:2px solid transparent!important;background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 12%,var(--card)),var(--card)) padding-box,conic-gradient(from var(--aia),#9FE0D8,#E8EEF2,#7A8A99,#FFFFFF,#1AA7B0,#C9D3E0,#9FE0D8) border-box!important;animation:aiospin 6s linear infinite;box-shadow:0 18px 50px -24px color-mix(in srgb,var(--acc) 70%,transparent)}
+@keyframes aiospin{to{--aia:360deg}}
+.aio-h h3{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 38%,#9FE0D8 48%,#FFFFFF 50%,#9FE0D8 52%,var(--ink) 62%,var(--ink) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aioshine 4.5s ease-in-out infinite}
+@keyframes aioshine{0%,30%{background-position:100% 0}70%,100%{background-position:0 0}}
+.aio-new{background:linear-gradient(120deg,#C9D3E0,#FFFFFF,#9FE0D8,#7A8A99);color:#0B2A2C;box-shadow:0 0 0 1px rgba(255,255,255,.4) inset}
+@media(prefers-reduced-motion:reduce){.aio,.aio-h h3{animation:none}}
