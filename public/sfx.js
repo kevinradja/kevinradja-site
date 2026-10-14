@@ -16,8 +16,20 @@
     g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.022,t+.18);o.start(t);o2.start(t);lfo.start(t);cl={o:o,o2:o2,lfo:lfo,g:g,c:c}}
   function cloudSet(m){if(!cl)return;var t=cl.c.currentTime;cl.o.frequency.setTargetAtTime(392*m,t,.12);cl.o2.frequency.setTargetAtTime(784*m,t,.12)}
   function cloudStop(){if(!cl)return;var x=cl,t=x.c.currentTime;cl=null;x.g.gain.cancelScheduledValues(t);x.g.gain.setTargetAtTime(0,t,.09);setTimeout(function(){try{x.o.stop();x.o2.stop();x.lfo.stop()}catch(e){}},600)}
+  function warpSnd(){var c=ac();if(!c||muted||c.state!=='running')return;var T0=c.currentTime,d=2.1;
+    var o=c.createOscillator(),o2=c.createOscillator(),f=c.createBiquadFilter(),g=c.createGain();o.type='sawtooth';o2.type='square';
+    o.frequency.setValueAtTime(70,T0);o.frequency.exponentialRampToValueAtTime(520,T0+d);o2.frequency.setValueAtTime(140,T0);o2.frequency.exponentialRampToValueAtTime(1040,T0+d);
+    f.type='lowpass';f.frequency.setValueAtTime(300,T0);f.frequency.exponentialRampToValueAtTime(3200,T0+d);
+    g.gain.setValueAtTime(0,T0);g.gain.linearRampToValueAtTime(.05,T0+.5);g.gain.linearRampToValueAtTime(.07,T0+d-.2);g.gain.exponentialRampToValueAtTime(.0001,T0+d+.15);
+    o.connect(f);o2.connect(f);f.connect(g);g.connect(c.destination);o.start(T0);o2.start(T0);o.stop(T0+d+.2);o2.stop(T0+d+.2);
+    var n=c.sampleRate*d,b=c.createBuffer(1,n,c.sampleRate),x=b.getChannelData(0);for(var i=0;i<n;i++)x[i]=Math.random()*2-1;
+    var src=c.createBufferSource(),bf=c.createBiquadFilter(),ng=c.createGain();bf.type='bandpass';bf.Q.value=1.2;bf.frequency.setValueAtTime(400,T0);bf.frequency.exponentialRampToValueAtTime(5000,T0+d);
+    ng.gain.setValueAtTime(0,T0);ng.gain.linearRampToValueAtTime(.05,T0+d*.8);ng.gain.exponentialRampToValueAtTime(.0001,T0+d+.1);src.buffer=b;src.connect(bf).connect(ng).connect(c.destination);src.start(T0)}
   var S={
     hover:function(){tone(1600,0,.035,'sine',.025)},
+    padA:function(){tone(660,0,.06,'square',.05);tone(990,.05,.1,'square',.045);noise(0,.03,.04)},
+    warp:function(){warpSnd()},
+    plouf:function(){tone(1100,0,.22,'sine',.09,180);tone(520,.06,.18,'sine',.05,140);noise(.02,.25,.06);[1568,1976,2349].forEach(function(f,i){tone(f,.18+i*.05,.08,'sine',.02)})},
     air:function(){air()},
     airAt:function(m,v){air(m,v)},
     click:function(){tone(520,0,.06,'triangle',.07);tone(1040,.02,.05,'sine',.04)},
