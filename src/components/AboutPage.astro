@@ -68,18 +68,20 @@ const how = [
     </div>
     <div>
       <div class="head"><div><div class="kicker">{T('Compétences', 'Skills')}</div><h2>{T('Ce que je sais faire.', 'What I can do.')}</h2></div></div>
-      <div class="sk">
-        <div class="sk-sphere" aria-label={T('Outils', 'Tools')}>
-          {tools.flatMap((t, ci) => (t[1] as string[]).map(c => <span data-cat={ci} class:list={[{ big: ['Excel', 'Power BI', 'SQL', 'Python'].includes(c) }]}>{c}</span>))}
-        </div>
-        <div class="sk-cats">
-          {tools.map((t, ci) => <div class="sk-cat" data-cat={ci}><b>{skIcons[ci]}</b><h3>{t[0]}</h3><p>{skDesc[ci]}</p></div>)}
-        </div>
+      <div class="skx">
+        {tools.map((t, ci) => (
+          <article class="skx-c rv">
+            <span class="skx-n">{String(ci + 1).padStart(2, '0')}</span>
+            <h3>{t[0]}</h3>
+            <p>{skDesc[ci]}</p>
+            <div class="skx-t">{(t[1] as string[]).map(c => <span class:list={[{ key: ['Excel', 'Power BI', 'SQL', 'Python'].includes(c) }]}>{c}</span>)}</div>
+          </article>
+        ))}
       </div>
-      <div class="sk-strips">
-        <div class="sk-strip"><div class="kicker">{T('Diplôme & certifications', 'Degree & certifications')}</div><div class="sk-badges"><span><i>🎓</i>{degree}</span>{certs.map(c => <span><i>✓</i>{c}</span>)}</div></div>
-        <div class="sk-strip"><div class="kicker">{T('Langues', 'Languages')}</div><div class="sk-langs">{langs.map(l => <span>{l[0]}<em data-l={l[1]}><i></i><i></i><i></i></em></span>)}</div></div>
-        <div class="sk-strip"><div class="kicker">{T('En dehors des données', 'Beyond data')}</div><div class="sk-hob">{hobbies.map(h => <span><i>{h[0]}</i>{h[1]}</span>)}</div></div>
+      <div class="skx-strips">
+        <div class="skx-s"><div class="kicker">{T('Diplôme & certifications', 'Degree & certifications')}</div><div class="skx-t"><span class="key">{degree}</span>{certs.map(c => <span>{c}</span>)}</div></div>
+        <div class="skx-s"><div class="kicker">{T('Langues', 'Languages')}</div><div class="skx-t">{langs.map(l => <span>{l[0]}</span>)}</div></div>
+        <div class="skx-s"><div class="kicker">{T('En dehors des données', 'Beyond data')}</div><div class="skx-t">{hobbies.map(h => <span>{h[1]}</span>)}</div></div>
       </div>
       <div class="head" style="margin-top:40px"><div><div class="kicker">{T('Façon de travailler', 'How I work')}</div><h2>{T('Trois règles.', 'Three rules.')}</h2></div></div>
       <div class="ab-rules">{how.map(h => <div class="card rv" style="padding:20px"><h3 style="font-size:17px;margin-bottom:6px">{h[0]}</h3><p style="font-size:14.5px">{h[1]}</p></div>)}</div>
