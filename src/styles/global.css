@@ -1116,3 +1116,26 @@ html.warp #warp{background:#05100F}
 .wmess .wt b{font-size:9px}
 .wmess .wnote{font-size:6px;padding:6px 5px}
 }
+/* no sideways scroll: the nav call-to-action shrinks on mid-size screens */
+body{overflow-x:clip}
+.nav .bar{min-width:0}
+.nav .cta{flex-shrink:0;white-space:nowrap}
+@media(max-width:1100px){.nav .cta{gap:10px;padding:0 16px;font-size:14px}}
+/* game band: Play button stays readable in dark mode */
+.c-game .c-game-txt .btn.p,:root[data-theme="dark"] .c-game .c-game-txt .btn.p{background:#0E5257;color:#FAF7F0}
+/* carousel: show it can be dragged, never select text while dragging */
+.c-marquee,.c-marquee *{-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+.c-marquee img{pointer-events:none}
+.c-drag-hint{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 14px;width:max-content;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:color-mix(in srgb,var(--acc) 10%,transparent);color:var(--acc);font-size:13px;font-weight:700;letter-spacing:.04em;transition:opacity .4s,transform .4s}
+.c-drag-hint svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.c-drag-hint .l{animation:nudgeL 1.3s ease-in-out infinite}
+.c-drag-hint .r{animation:nudgeR 1.3s ease-in-out infinite}
+@keyframes nudgeL{50%{transform:translateX(-5px)}}
+@keyframes nudgeR{50%{transform:translateX(5px)}}
+.c-drag-hint.bye{opacity:0;transform:translateY(-6px)}
+/* less empty space between pricing and contact */
+.sec:has(+ .c-final){padding-bottom:clamp(24px,3vw,40px)}
+.c-final{padding-top:clamp(40px,5vw,72px)}
+/* contact card: main call button in white on the dark theme */
+:root[data-theme="dark"] .cc .btn.p{background:#F4EFE4;color:#0C3A3E;border-color:#F4EFE4}
+:root[data-theme="dark"] .cc .btn.p:hover{background:#fff;color:#0C3A3E}

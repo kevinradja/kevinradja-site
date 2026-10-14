@@ -234,6 +234,7 @@ const featured = [projects[3], projects[4], projects[5]];
 <section class="c-work" id="work">
   <div class="c-work-pin">
     <div class="c-head"><div class="kicker">{T('Réalisations', 'Work')}</div><h2>{T('Des études de cas, avec les dashboards à tester.', 'Case studies, with live dashboards to try.')}</h2></div>
+    <p class="c-drag-hint" aria-hidden="true"><svg viewBox="0 0 24 24" class="l"><path d="M15 6l-6 6 6 6"/></svg><span>{T('Glissez pour explorer', 'Drag to explore')}</span><svg viewBox="0 0 24 24" class="r"><path d="M9 6l6 6-6 6"/></svg></p>
     <div class="c-marquee">
       <div class="c-track">
         {[0, 1].map(k => (vitrine ? projects : projects.slice(3).concat(projects.slice(0, 3))).map(p => <div class="c-slot" aria-hidden={k === 1 ? 'true' : undefined}><ProjectCard p={p} lang={lang} vitrine={vitrine} /></div>))}
@@ -284,6 +285,7 @@ const featured = [projects[3], projects[4], projects[5]];
       bs.forEach(function(b){b.addEventListener('click',function(){bs.forEach(function(x){x.classList.toggle('on',x===b)});ps.forEach(function(q){q.classList.toggle('on',q.dataset.t===b.dataset.t)})})})});
     // work carousel: auto-scroll, drag with the mouse, swipe or trackpad
     var mq=document.querySelector('.c-marquee'),tk=mq&&mq.querySelector('.c-track');
+    if(mq){var dh=document.querySelector('.c-drag-hint');['pointerdown','wheel','touchstart'].forEach(function(ev){mq.addEventListener(ev,function(){dh&&dh.classList.add('bye')},{once:true,passive:true})})}
     if(mq&&tk){var x=0,half=0,drag=false,sx=0,ox=0,moved=0,hover=false,idle=0;
       var wt=0,cs=function(){return window.KR&&KR.sfx&&KR.sfx.cloud},whoosh=function(dx){var C=cs();if(!C)return;C.start();var pos=half?((-x)%half)/half:0;C.set(Math.max(.75,Math.min(1.5,(dx>0?1.12:.9)*(.9+pos*.3)+Math.min(.2,Math.abs(dx)/120))));clearTimeout(wt);if(!drag)wt=setTimeout(function(){C.stop()},220)};
       var meas=function(){half=tk.scrollWidth/2};meas();addEventListener('resize',meas);addEventListener('load',meas);
