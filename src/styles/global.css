@@ -1172,3 +1172,8 @@ body{overflow-x:clip}
 .wskip{position:absolute;top:18px;right:20px;z-index:5;border:0;background:transparent;color:#9FB0AE;font:600 13px/1 Archivo,system-ui,sans-serif;letter-spacing:.04em;padding:8px 10px;cursor:pointer;opacity:.8}
 .wskip:hover{color:#F4EFE4;opacity:1}
 #warp.launch .wskip{opacity:0;pointer-events:none}
+
+/* project page: the key figure right under the title */
+.pj-kpi{display:inline-flex;align-items:baseline;gap:12px;flex-wrap:wrap;justify-content:center;margin:clamp(20px,2.4vw,32px) auto 0;padding:12px 22px;border-radius:999px;background:color-mix(in srgb,var(--acc) 12%,transparent);border:1px solid color-mix(in srgb,var(--acc) 30%,transparent)}
+.pj-kpi b{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:clamp(26px,3.2vw,40px);line-height:1;color:var(--acc);white-space:nowrap}
+.pj-kpi span{font-size:15px;font-weight:600;color:var(--ink)}

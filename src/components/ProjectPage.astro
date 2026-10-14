@@ -14,6 +14,7 @@ const npc = (i % 4) + 1;
     <a class="btn s sm vitrine-back" href={r('portfolio', lang)} style="display:none;margin-bottom:22px">{C.back[lang]}</a>
     <div class="kicker">{C.caseStudy[lang]} · {p.client[lang]} · {p.year}</div>
     <h1 class="pg-title">{p.title[lang]}</h1>
+    <p class="pj-kpi"><b>{p.kpi.v}</b><span>{p.kpi.l[lang]}</span></p>
     <p class="lead">{p.intro[lang]}</p>
     <div class="meta">{p.tags[lang].map(t => <span class="chip">{t}</span>)}<span class="chip a">{p.sector[lang]}</span></div>
     <div class="device pj-dev" data-zoom><div class="scr"><img src={p.thumb} alt={p.title[lang]} width="1920" height="1080" /></div></div>
