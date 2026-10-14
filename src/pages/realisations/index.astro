@@ -4,9 +4,9 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import { projects } from '../../data/projects';
 const lang = 'fr' as const;
 ---
-<Base lang={lang} title="Réalisations | Kevin Radja" description="Huit études de cas data & BI avec dashboards interactifs : Google France, Coface, Dassault Systèmes, KPMG et un grand groupe automobile.">
+<Base lang={lang} title="Réalisations | Kevin Radja" description="Neuf études de cas data & BI avec dashboards interactifs : Google France, Coface, Dassault Systèmes, KPMG et un grand groupe automobile.">
   <section class="sec" style="padding-top:clamp(36px,5vw,64px)"><div class="wrap">
-    <div class="head"><div><div class="kicker">{lang==='fr'?'Réalisations':'Work'}</div><h1 class="pg-title">Huit projets, huit dashboards à tester.</h1></div><p class="mute">Chaque étude de cas se termine par un dashboard interactif construit sur des données fictives : filtrez, survolez, téléchargez.</p></div>
+    <div class="head"><div><div class="kicker">{lang==='fr'?'Réalisations':'Work'}</div><h1 class="pg-title">Neuf projets, neuf dashboards à tester.</h1></div><p class="mute">Chaque étude de cas se termine par un dashboard interactif construit sur des données fictives : filtrez, survolez, téléchargez.</p></div>
     <div class="grid g3">{projects.map(p => <ProjectCard p={p} lang={lang} />)}</div>
   </div></section>
 </Base>

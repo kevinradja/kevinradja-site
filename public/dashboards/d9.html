@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Assistant</title>
+<style>
+:root{--bg:#0f1720;--card:#16212c;--line:#24323f;--ink:#eef3f6;--mute:#93a3b1;--a:#2bb3a8;--b:#6c8cff;--warn:#f2b84b}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(90deg,#123b46,#1b2f5a);border-radius:12px;padding:12px 16px;margin-bottom:12px}
+.top h1{font-size:16px;font-weight:800;letter-spacing:.02em}.top small{display:block;font-size:11px;color:#b8c8d4;font-weight:500}
+.tag{font-size:11px;font-weight:700;background:#ffffff1f;padding:5px 10px;border-radius:99px}
+.grid{display:grid;grid-template-columns:1.35fr 1fr;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.card h2{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+.chat{height:330px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px}
+.m{max-width:88%;padding:9px 12px;border-radius:12px;white-space:pre-line}
+.u{align-self:flex-end;background:var(--b);color:#fff;border-bottom-right-radius:4px}
+.bot{align-self:flex-start;background:#1e2c39;border:1px solid var(--line);border-bottom-left-radius:4px}
+.bot a{color:var(--a);font-weight:700;text-decoration:none}
+.src{display:block;margin-top:6px;font-size:11px;color:var(--mute)}
+.typing{color:var(--mute);font-style:italic}
+.qs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.qs button{all:unset;cursor:pointer;font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:99px;background:#ffffff10;border:1px solid var(--line)}
+.qs button:hover{border-color:var(--a);color:var(--a)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.k{background:#1e2c39;border-radius:10px;padding:10px}.k small{display:block;font-size:10.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}.k b{font-size:22px}
+.bar{margin:9px 0}.bar div{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px}
+.bar i{display:block;height:9px;border-radius:9px;background:#24323f;overflow:hidden}.bar i span{display:block;height:100%;background:var(--a);border-radius:9px}
+.note{font-size:11.5px;color:var(--mute);margin-top:10px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.chat{height:280px}}
+</style></head><body>
+<div class="top"><div><h1 id="t1"></h1><small id="t2"></small></div><span class="tag" id="t3"></span></div>
+<div class="grid">
+ <div class="card"><h2 id="h1"></h2><div class="chat" id="chat"></div><div class="qs" id="qs"></div></div>
+ <div class="card"><h2 id="h2"></h2><div class="kpis" id="kpis"></div><div id="bars"></div><p class="note" id="note"></p></div>
+</div>
+<script>
+var FR=true;try{FR=!/^\/en(\/|$)/.test(top.location.pathname)}catch(e){}try{var q=new URLSearchParams(location.search).get('lang');if(q)FR=q!=='en'}catch(e){}
+var T=function(f,e){return FR?f:e};
+document.getElementById('t1').textContent=T('Assistant formation · portail logistique','Training assistant · logistics portal');
+document.getElementById('t2').textContent=T('Exemple illustratif · contenus fictifs et anonymisés','Illustrative example · fictional, anonymised content');
+document.getElementById('t3').textContent=T('Publié dans Teams · pilote','Published in Teams · pilot');
+document.getElementById('h1').textContent=T('Posez une question','Ask a question');
+document.getElementById('h2').textContent=T('Évaluation automatisée','Automated evaluation');
+var QA=FR?[
+ ['C’est quoi un triplet ?','Un triplet identifie une pièce de façon unique : référence article + fournisseur + site de destination. On l’utilise partout dans le flux d’approvisionnement.\n\nPour aller plus loin : <a href="#">Simulation « Rechercher un triplet »</a>','Fiche glossaire · Module Approvisionnement'],
+ ['comande urgente ?','Je pense que vous parlez d’une commande urgente. Elle se crée avec le type de commande « Urgent » dans l’outil d’approvisionnement, en 6 étapes.\n\nSimulation pas à pas : <a href="#">Créer une commande urgente</a>','Fiche simulation · FAQ n° 4'],
+ ['Je travaille en réception, quelles formations ?','Pour la réception, je vous conseille dans cet ordre :\n1. Réceptionner une livraison (démo)\n2. Contrôler un avis d’expédition (ASN)\n3. Déclarer un écart de réception\n\nTout est dans le module <a href="#">Entrepôt · Réception</a>.','Fichier processus · Entrepôt'],
+ ['Quel est le code transaction pour ça ?','Je ne trouve pas cette information dans le portail de formation, donc je préfère ne pas l’inventer. Le guide pas à pas de la simulation indique les écrans à utiliser : <a href="#">Créer une commande urgente</a>.','Règle d’honnêteté : aucune source']
+]:[
+ ['What is a triplet?','A triplet uniquely identifies a part: item reference + supplier + destination site. It is used throughout the supply flow.\n\nGo further: <a href="#">Simulation “Search a triplet”</a>','Glossary sheet · Procurement module'],
+ ['urgnt order?','I think you mean an urgent order. It is created with the “Urgent” order type in the procurement tool, in 6 steps.\n\nStep-by-step simulation: <a href="#">Create an urgent order</a>','Simulation sheet · FAQ #4'],
+ ['I work in goods receipt, which trainings?','For goods receipt, I suggest in this order:\n1. Receive a delivery (demo)\n2. Check an advance shipping notice (ASN)\n3. Report a receipt discrepancy\n\nAll in the <a href="#">Warehouse · Receipt</a> module.','Process file · Warehouse'],
+ ['What is the transaction code for that?','I cannot find this in the training portal, so I would rather not make it up. The step-by-step guide shows which screens to use: <a href="#">Create an urgent order</a>.','Honesty rule: no source']
+];
+var chat=document.getElementById('chat');
+function add(cls,html){var d=document.createElement('div');d.className='m '+cls;d.innerHTML=html;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d}
+add('bot',T('Bonjour ! Je réponds à vos questions sur le portail de formation et je vous renvoie vers la bonne simulation.','Hello! I answer your questions about the training portal and point you to the right simulation.'));
+var busy=false;
+QA.forEach(function(x){var b=document.createElement('button');b.textContent=x[0];b.onclick=function(){if(busy)return;busy=true;add('u',x[0]);var t=add('bot typing',T('L’assistant écrit…','The assistant is typing…'));
+ setTimeout(function(){t.className='m bot';t.innerHTML=x[1]+'<span class="src">'+T('Source : ','Source: ')+x[2]+'</span>';chat.scrollTop=chat.scrollHeight;busy=false},900)};document.getElementById('qs').appendChild(b)});
+var K=[[T('Score global','Overall score'),'29/30'],[T('Simulations indexées','Simulations indexed'),'365'],[T('Questions de test','Test questions'),'40+']];
+document.getElementById('kpis').innerHTML=K.map(function(k){return '<div class="k"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+var B=[[T('Qualité de réponse','Answer quality'),9],[T('Mots-clés attendus','Expected keywords'),10],[T('Honnêteté et fidélité aux sources','Honesty & source fidelity'),10]];
+document.getElementById('bars').innerHTML=B.map(function(b){return '<div class="bar"><div><span>'+b[0]+'</span><b>'+b[1]+'/10</b></div><i><span style="width:'+b[1]*10+'%"></span></i></div>'}).join('');
+document.getElementById('note').textContent=T('Le seul « échec » est un faux négatif : l’agent refuse, à raison, d’inventer un code transaction.','The only “miss” is a false negative: the agent rightly refuses to invent a transaction code.');
+</script></body></html>
