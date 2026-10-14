@@ -119,6 +119,22 @@ const featured = [projects[3], projects[4], projects[5]];
   </div>
 </section>
 
+{!vitrine && (
+<section class="c-game" id="jeu">
+  <div class="wrap">
+    <a class="c-game-in" href={r('game', lang)}>
+      <div class="c-game-art" aria-hidden="true"><span>🏡</span><span>🧑‍💼</span><span>💧</span><span>📒</span></div>
+      <div class="c-game-txt">
+        <div class="kicker">{T('Une pause ?', 'Need a break?')}</div>
+        <h2>{T('Le Village des Données', 'Data Village')}</h2>
+        <p>{T('Un petit RPG en 8-bit : aidez un village à gérer son eau, ses loyers et ses dépenses, et croisez au passage les étapes de mon parcours.', 'A tiny 8-bit RPG: help a village manage its water, rents and spending, and meet the steps of my journey along the way.')}</p>
+        <span class="btn p">{T('Jouer', 'Play')} →</span>
+      </div>
+    </a>
+  </div>
+</section>
+)}
+
 <!-- 3. RESULTS : Caeli-style slider panel -->
 <section class="sec c-results" id="resultats">
   <div class="wrap">
@@ -196,19 +212,7 @@ const featured = [projects[3], projects[4], projects[5]];
   </div>
 </section>
 
-<section class="sec" id="jeu">
-  <div class="wrap">
-    <a class="card gamebox rv" href={r('game', lang)}>
-      <div class="gb-art" aria-hidden="true">🏡<span>🧑‍💼</span></div>
-      <div>
-        <div class="kicker">{T('Une pause ?', 'Need a break?')}</div>
-        <h3>{T('Le Village des Données', 'Data Village')}</h3>
-        <p class="mute">{T('Un petit RPG en 8-bit : aidez un village à gérer son eau, ses loyers et ses dépenses, et croisez au passage les étapes de mon parcours.', 'A tiny 8-bit RPG: help a village manage its water, rents and spending, and meet the steps of my journey along the way.')}</p>
-      </div>
-      <span class="btn s sm">{T('Jouer', 'Play')} →</span>
-    </a>
-  </div>
-</section>
+
 
 <!-- 7. FINAL CALL : giant words -->
 <section class="c-final" id="contact">
