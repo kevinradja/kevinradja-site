@@ -50,6 +50,18 @@ canvas{width:100%;height:100%;display:block;image-rendering:pixelated;image-rend
 .dash .b{height:12px;border-radius:4px;background:#E3E6E8;overflow:hidden}
 .dash .b i{display:block;height:100%;width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
 .hide{display:none!important}
+.dexbtn kbd{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:4px;border-radius:5px;background:#0E5257;color:#fff;font:800 11px/1 ui-monospace,Menlo,monospace;box-shadow:0 2px 0 #062c2f;animation:kp 1.6s ease-in-out infinite}
+@keyframes kp{50%{box-shadow:0 2px 0 #062c2f,0 0 0 5px rgba(42,140,140,.25)}}
+.dex-d{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:#F4F1EA;border:2px solid #2A2F36;border-radius:12px;padding:14px;margin-bottom:14px}
+.dex-d h4{font-size:16px;margin:0 0 2px}
+.dex-d .rr{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.dex-d p{font-size:12.5px;line-height:1.5;color:#374151;margin:6px 0 0}
+.dex-d b.lb{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#0E5257;margin-top:10px}
+.dex-d ul{margin:4px 0 0;padding-left:16px;font-size:12.5px;line-height:1.5;color:#1d2430}
+.dex-d .res{margin-top:8px;background:#0E5257;color:#fff;border-radius:8px;padding:8px 10px;font-size:12.5px;font-weight:700}
+.dex-c{cursor:pointer;border-radius:10px;padding:6px 2px;transition:background .15s}
+.dex-c:hover,.dex-c.sel{background:#EDE7DA}
+.dex-tip{font-size:11.5px;color:#6B7480;margin:-4px 0 10px}
 .dexbtn{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700;color:var(--ink);white-space:nowrap}
 .mon{position:relative;display:inline-grid;place-items:center;width:var(--s,96px);height:var(--s,96px);border-radius:46% 46% 40% 40%;background:var(--c);border:4px solid #1d2430;box-shadow:0 6px 0 rgba(0,0,0,.2);color:#fff;font:800 calc(var(--s,96px)*.24)/1 ui-monospace,Menlo,Consolas,monospace;text-shadow:0 2px 0 rgba(0,0,0,.35)}
 .mon:before,.mon:after{content:"";position:absolute;top:24%;width:14%;height:16%;background:#fff;border-radius:50%;box-shadow:inset 0 0 0 calc(var(--s,96px)*.03) #1d2430}
@@ -95,7 +107,7 @@ html.embed #snd,html.embed #theme{display:none}
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><span><b id="lv">Niv. 1</b></span><div class="xp"><i id="xpb"></i></div><span id="xpt">0 XP</span><button class="dexbtn" id="dexb">📘 Datadex <b id="dexn">0</b></button><button id="snd" aria-label="sound">🔊</button><button id="theme" aria-label="theme">◐</button></div>
+  <div class="top"><span><b id="lv">Niv. 1</b></span><div class="xp"><i id="xpb"></i></div><span id="xpt">0 XP</span><button class="dexbtn" id="dexb">📘 Datadex <b id="dexn">0</b> <kbd>I</kbd></button><button id="snd" aria-label="sound">🔊</button><button id="theme" aria-label="theme">◐</button></div>
   <div class="stage" id="stage">
     <canvas id="c" width="256" height="320"></canvas>
     <div class="dlg hide" id="dlg"><img class="face hide" id="face" alt="" /><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
@@ -142,8 +154,8 @@ function post(){try{parent.postMessage({krHeight:document.body.getBoundingClient
 if(window.ResizeObserver)new ResizeObserver(post).observe(document.body);addEventListener('load',post);
 
 var TX={
- fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux six habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord. Pour aider chaque habitant, capture d’abord l’outil qu’il te demande : ils se cachent dans les hautes herbes…',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A, ou sur la barre Espace au clavier',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/6)'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Fête au village 🎉 Complète ton Datadex dans les hautes herbes !',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
- en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the six villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north. To help each villager, first catch the tool they ask for: tools hide in the tall grass…',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A, or the Space bar on a keyboard',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/6)'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'Village festival 🎉 Complete your Datadex in the tall grass!',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
+ fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux six habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord. Pour aider chaque habitant, capture d’abord l’outil qu’il te demande : ils se cachent dans les hautes herbes…',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A, ou sur Espace au clavier · I : ouvrir le Datadex',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/6)'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Fête au village 🎉 Complète ton Datadex dans les hautes herbes !',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
+ en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the six villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north. To help each villager, first catch the tool they ask for: tools hide in the tall grass…',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A, or Space on a keyboard · I: open the Datadex',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/6)'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'Village festival 🎉 Complete your Datadex in the tall grass!',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
 }[L];
 document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=TX[e.dataset.t]});
 
@@ -357,6 +369,8 @@ var held=[],tap=null;var KEYS={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',Ar
 function press(d){if(held.indexOf(d)<0)held.push(d);tap=d}function release(d){held=held.filter(function(x){return x!==d})}
 addEventListener('keydown',function(e){var k=KEYS[e.key]||KEYS[e.key.toLowerCase&&e.key.toLowerCase()];
   if(k){e.preventDefault();press(k);return}
+  if(e.key==='i'||e.key==='I'||e.key==='Tab'){e.preventDefault();if(state==='dex')closeDex();else openDex();return}
+  if(e.key==='Escape'&&state==='dex'){closeDex();return}
   if(e.key===' '||e.key==='Enter'||e.key==='e'||e.key==='E'){e.preventDefault();if(!e.repeat)action()}});
 addEventListener('keyup',function(e){var k=KEYS[e.key]||KEYS[e.key.toLowerCase&&e.key.toLowerCase()];if(k)release(k)});
 addEventListener('blur',function(){held=[]});
@@ -383,6 +397,49 @@ var MONS=[
  ['DAX','DAX','#A4373A',2],['BigQuery','BQ','#4F86E8',2],['Tableau','TB','#E97627',2],['Power Automate','PA','#0066FF',2],['dbt','dbt','#FF694B',2],['Dataiku','DKU','#2AB1AC',2],
  ['Snowflake','SF','#29B5E8',3],['IBM TM1','TM1','#054ADA',3],['Copilot','AI','#7F5AF0',3]
 ];
+var INFO_FR={
+ 'Excel':['Le couteau suisse du reporting : nettoyer, croiser, calculer.',['2026 · grand groupe automobile : registre central des formations','2025 · Coface : reportings automatisés Excel + Power Query','2022 · KPMG : suivi SEO et workflows de publication'],'−30 % de temps de reporting chez Coface · délai de mise en ligne des formations −40 %'],
+ 'Google Sheets':['Le tableur collaboratif, parfait pour partager vite des chiffres.',['2024 · Google France : suivi de 180 grands comptes'],'15+ dashboards automatisés avec SQL, BigQuery et Looker Studio'],
+ 'CSV':['Le format d’échange universel entre tous les outils.',['2023 · Dassault Systèmes : extraction et nettoyage de bases volumineuses'],'Des millions de données macroéconomiques fiabilisées (Gartner, IDC, Oxford Economics)'],
+ 'VBA':['Les macros Excel pour automatiser les tâches répétitives.',['Automatisation de fichiers Excel récurrents (contrôles, mises en forme, exports)'],'Moins de copier-coller, moins d’erreurs de saisie'],
+ 'Power Query':['Préparer et transformer les données sans toucher à la source.',['2025 · Coface : automatisation des flux de reporting'],'−30 % de temps de production pour les équipes opérationnelles'],
+ 'SQL':['Interroger les bases de données, le cœur de tout projet data.',['2025 · Coface : modélisation des données commerciales','2024 · Google France : dashboards sur BigQuery','2023 · Dassault Systèmes : extractions de données'],'Des chiffres fiables, directement à la source'],
+ 'Python':['Automatiser, nettoyer et calculer à grande échelle.',['2023 · Dassault Systèmes : pipelines d’extraction et de nettoyage (outliers, normalisation)'],'Traitement des modèles financiers passé de 100 h à 3 h'],
+ 'Power BI':['Les tableaux de bord interactifs pour piloter l’activité.',['2025 · Coface : pilotage de la performance commerciale'],'Dashboards déployés auprès de 500+ utilisateurs, 12 pays'],
+ 'Looker Studio':['La data viz connectée à l’écosystème Google.',['2024 · Google France : dashboards d’adoption technique et de ROI'],'Restitution d’insights au C-level'],
+ 'GA4':['Mesurer ce qui se passe vraiment sur un site.',['2024 · Google France : accompagnement de 180 grands comptes (CAC 40)','2022 · KPMG : mise en place du tracking'],'68,7 % d’adoption GA4, objectifs dépassés dès novembre 2023'],
+ 'DAX':['Le langage des mesures Power BI : ratios, cumuls, comparaisons.',['2025 · Coface : indicateurs des dashboards commerciaux'],'Des KPI cohérents d’un pays à l’autre'],
+ 'BigQuery':['L’entrepôt de données Google pour les gros volumes.',['2024 · Google France : sources des cockpits de mesure'],'180 grands comptes suivis dans un même outil'],
+ 'Tableau':['Un grand classique de la data viz.',['Fait partie de ma boîte à outils, aux côtés de Power BI et Looker Studio'],'Le bon outil choisi selon votre existant'],
+ 'Power Automate':['Automatiser les flux entre outils Microsoft.',['Actualisations et relances automatiques de reporting'],'Des rapports qui tournent seuls, sans intervention'],
+ 'dbt':['Transformer les données proprement, avec du SQL versionné.',['Certification dbt Fundamentals'],'Des transformations documentées et testées'],
+ 'Dataiku':['Une plateforme pour préparer la donnée et industrialiser l’analyse.',['Certification Dataiku Advanced Datasets'],'Des préparations de données reproductibles'],
+ 'Snowflake':['L’entrepôt de données cloud moderne.',['Certification Snowflake'],'Prêt pour les architectures data dans le cloud'],
+ 'IBM TM1':['Les cubes de planification financière.',['2023 · Dassault Systèmes : Global Analytics Model (12 industries, 6 marques)'],'Dashboards CAPEX, OPEX et PIB pour le comité de direction'],
+ 'Copilot':['L’IA générative au service de l’analyse.',['Formation « Construire des agents IA »'],'Des assistants qui accélèrent le travail sur la donnée']
+};
+var INFO_EN={
+ 'Excel':['The Swiss army knife of reporting: clean, join, compute.',['2026 · major automotive group: central training register','2025 · Coface: automated Excel + Power Query reports','2022 · KPMG: SEO tracking and publishing workflows'],'−30% reporting time at Coface · training time-to-market −40%'],
+ 'Google Sheets':['The collaborative spreadsheet, perfect for sharing numbers fast.',['2024 · Google France: tracking 180 key accounts'],'15+ automated dashboards with SQL, BigQuery and Looker Studio'],
+ 'CSV':['The universal exchange format between tools.',['2023 · Dassault Systèmes: extracting and cleaning large databases'],'Millions of macroeconomic data points made reliable (Gartner, IDC, Oxford Economics)'],
+ 'VBA':['Excel macros to automate repetitive tasks.',['Automating recurring Excel files (checks, formatting, exports)'],'Less copy-paste, fewer typing errors'],
+ 'Power Query':['Prepare and transform data without touching the source.',['2025 · Coface: automating reporting flows'],'−30% production time for operational teams'],
+ 'SQL':['Querying databases, the core of any data project.',['2025 · Coface: sales data modelling','2024 · Google France: dashboards on BigQuery','2023 · Dassault Systèmes: data extraction'],'Reliable numbers, straight from the source'],
+ 'Python':['Automate, clean and compute at scale.',['2023 · Dassault Systèmes: extraction and cleaning pipelines (outliers, normalisation)'],'Financial model processing cut from 100 h to 3 h'],
+ 'Power BI':['Interactive dashboards to steer the business.',['2025 · Coface: sales performance management'],'Dashboards rolled out to 500+ users, 12 countries'],
+ 'Looker Studio':['Data viz connected to the Google ecosystem.',['2024 · Google France: technical adoption and ROI dashboards'],'Insights presented to C-level'],
+ 'GA4':['Measuring what really happens on a website.',['2024 · Google France: supporting 180 key accounts (CAC 40)','2022 · KPMG: tracking setup'],'68.7% GA4 adoption, goals beaten by November 2023'],
+ 'DAX':['Power BI’s measure language: ratios, running totals, comparisons.',['2025 · Coface: KPIs of the sales dashboards'],'Consistent KPIs from one country to another'],
+ 'BigQuery':['Google’s data warehouse for large volumes.',['2024 · Google France: sources of the measurement cockpits'],'180 key accounts tracked in one tool'],
+ 'Tableau':['A data viz classic.',['Part of my toolbox, next to Power BI and Looker Studio'],'The right tool chosen for your existing setup'],
+ 'Power Automate':['Automating flows between Microsoft tools.',['Automatic report refreshes and reminders'],'Reports that run by themselves'],
+ 'dbt':['Clean data transformation with versioned SQL.',['dbt Fundamentals certification'],'Documented, tested transformations'],
+ 'Dataiku':['A platform to prepare data and industrialise analysis.',['Dataiku Advanced Datasets certification'],'Reproducible data preparation'],
+ 'Snowflake':['The modern cloud data warehouse.',['Snowflake certification'],'Ready for cloud data architectures'],
+ 'IBM TM1':['Financial planning cubes.',['2023 · Dassault Systèmes: Global Analytics Model (12 industries, 6 brands)'],'CAPEX, OPEX and GDP dashboards for the executive committee'],
+ 'Copilot':['Generative AI to speed up analysis.',['“Building AI agents” training'],'Assistants that accelerate data work']
+};
+var INFO=L==='fr'?INFO_FR:INFO_EN;
 var RAR=L==='fr'?['Commun','Peu commun','Rare','Légendaire']:['Common','Uncommon','Rare','Legendary'];
 var RCOL=['#6B7480','#1AA7B0','#8A5CC2','#E0A030'],RW=[60,28,10,2],ZONE=[.34,.24,.16,.1],SPD=[.0022,.0028,.0034,.0042];
 var dexData={};try{dexData=JSON.parse(localStorage.getItem('kr-datadex')||'{}')}catch(e){}
@@ -404,7 +461,7 @@ function throwCap(){if(!B||B.busy)return;B.busy=true;fx('throw');var mon=bt.quer
   mon.classList.remove('wob');void mon.offsetWidth;mon.classList.add('wob');
   setTimeout(function(){
     if(ok){mon.classList.add('caught');var id=B.m[0],d=dexData[id]||{n:0,s:0},isNew=!dexData[id];d.n++;if(B.shiny)d.s=1;dexData[id]=d;saveDex();
-      var gain=isNew?20:10;xp+=gain;hud();if(NPC.some(function(n){return asked[n.id]&&!done[n.id]&&NEED[n.id].indexOf(id)>=0&&!missing(n.id).length}))toast('✅ '+id+(L==='fr'?' capturé : retourne voir l’habitant !':' caught: go back to the villager!'));fx('heal');pop('+1 ♥','#FF5A6E');pop('+'+gain+' XP','#FFD45E',14);if(isNew)hearts(5);
+      var gain=isNew?20:10;xp+=gain;hud();if(Object.keys(dexData).length===1&&isNew)setTimeout(function(){toast(L==='fr'?'📘 Appuie sur I pour voir ton Datadex':'📘 Press I to open your Datadex')},1500);if(NPC.some(function(n){return asked[n.id]&&!done[n.id]&&NEED[n.id].indexOf(id)>=0&&!missing(n.id).length}))toast('✅ '+id+(L==='fr'?' capturé : retourne voir l’habitant !':' caught: go back to the villager!'));fx('heal');pop('+1 ♥','#FF5A6E');pop('+'+gain+' XP','#FFD45E',14);if(isNew)hearts(5);
       msg.innerHTML='<b>'+(L==='fr'?'Capturé !':'Caught!')+'</b> '+(isNew?(L==='fr'?'Nouveau dans ton Datadex.':'New in your Datadex.'):(L==='fr'?B.m[0]+' passe niveau '+d.n+'.':B.m[0]+' reaches level '+d.n+'.'));
       setTimeout(endBattle,1400)}
     else{B.tries--;fx('bump');if(B.tries<=0){mon.classList.add('gone');msg.innerHTML=L==='fr'?'Oh non, il s’est échappé !':'Oh no, it got away!';setTimeout(endBattle,1100)}
@@ -412,10 +469,17 @@ function throwCap(){if(!B||B.busy)return;B.busy=true;fx('throw');var mon=bt.quer
   },520)}
 function endBattle(){bt.classList.add('hide');bt.innerHTML='';B=null;state='play';tap=null}
 var dexEl=document.getElementById('dex');
+function dexSheet(name){var m=MONS.filter(function(x){return x[0]===name})[0],d=dexData[name],box=dexEl.querySelector('.dex-d');if(!m||!box)return;
+  dexEl.querySelectorAll('.dex-c').forEach(function(c){c.classList.toggle('sel',c.dataset.n===name)});
+  if(!d){box.innerHTML=monHTML(m,72,false,true)+'<div><h4>???</h4><span class="rr" style="color:'+RCOL[m[3]]+'">'+RAR[m[3]]+'</span><p>'+(L==='fr'?'Pas encore capturé. Cherche-le dans les hautes herbes du village.':'Not caught yet. Look for it in the village’s tall grass.')+'</p></div>';return}
+  var info=INFO[name]||['',[],''];
+  box.innerHTML=monHTML(m,72,d.s)+'<div><h4>'+(d.s?'✨ ':'')+name+' <small style="font-weight:600;color:#6B7480">· '+(L==='fr'?'niv. ':'lvl ')+d.n+'</small></h4><span class="rr" style="color:'+RCOL[m[3]]+'">'+RAR[m[3]]+'</span><p>'+info[0]+'</p><b class="lb">'+(L==='fr'?'Où Kevin l’a utilisé':'Where Kevin used it')+'</b><ul>'+info[1].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><div class="res">📈 '+info[2]+'</div></div>'}
 function openDex(){if(state!=='play'&&state!=='end'&&state!=='title')return;dexEl.dataset.prev=state;state='dex';var n=Object.keys(dexData).length;
-  dexEl.innerHTML='<div class="dex-in"><h3>📘 Datadex · '+n+'/'+MONS.length+'<button>✕</button></h3><div class="dex-p"><i style="width:'+(n/MONS.length*100)+'%"></i></div><div class="dex-g">'+
-   MONS.map(function(m){var d=dexData[m[0]];return '<div class="dex-c">'+monHTML(m,64,d&&d.s,!d)+'<div>'+(d?m[0]:'???')+'</div><small>'+(d?(L==='fr'?'niv. ':'lvl ')+d.n:RAR[m[3]])+'</small></div>'}).join('')+'</div></div>';
-  dexEl.classList.remove('hide');dexEl.querySelector('button').onclick=closeDex}
+  dexEl.innerHTML='<div class="dex-in"><h3>📘 Datadex · '+n+'/'+MONS.length+'<button>✕</button></h3><div class="dex-p"><i style="width:'+(n/MONS.length*100)+'%"></i></div><div class="dex-d"></div><p class="dex-tip">'+(L==='fr'?'Clique sur un outil pour voir sa fiche. Touche I ou Échap pour fermer.':'Click a tool to see its sheet. Press I or Esc to close.')+'</p><div class="dex-g">'+
+   MONS.map(function(m){var d=dexData[m[0]];return '<div class="dex-c" data-n="'+m[0]+'">'+monHTML(m,64,d&&d.s,!d)+'<div>'+(d?m[0]:'???')+'</div><small>'+(d?(L==='fr'?'niv. ':'lvl ')+d.n:RAR[m[3]])+'</small></div>'}).join('')+'</div></div>';
+  dexEl.classList.remove('hide');dexEl.querySelector('h3 button').onclick=closeDex;
+  dexEl.querySelectorAll('.dex-c').forEach(function(c){c.onclick=function(e){e.stopPropagation();dexSheet(c.dataset.n)}});
+  var first=MONS.filter(function(m){return dexData[m[0]]})[0];dexSheet(first?first[0]:MONS[0][0])}
 function closeDex(){dexEl.classList.add('hide');state=dexEl.dataset.prev||'play'}
 document.getElementById('dexb').onclick=function(e){e.stopPropagation();if(state==='dex')closeDex();else openDex()};
 paintDexN();
