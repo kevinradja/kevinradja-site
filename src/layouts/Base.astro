@@ -36,12 +36,12 @@ const nav = [
     (function(){try{var force=/[?&]intro(=|&|$)/.test(location.search);if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
   </script>}
   <script is:inline>
-    (function(){try{var t=localStorage.getItem('kr-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
+    (function(){try{var t=localStorage.getItem('kr-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);if(localStorage.getItem('kr-sound')==='off')document.documentElement.classList.add('muted')}catch(e){}})();
   </script>
 </head>
 <body>
   {intro && (
-  <div id="warp" aria-hidden="true"><canvas></canvas><div class="wl">KR<i>.csv</i></div></div>
+  <div id="warp" aria-hidden="true"><canvas></canvas><div class="wl"><span>KR<i>.csv</i></span></div></div>
   )}
   {!bare && (
   <header class="nav" id="nav">
@@ -111,11 +111,11 @@ const nav = [
     (function(){
       var root=document.documentElement;
       function cur(){return root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
-      function paint(){var d=cur()==='dark';document.querySelectorAll('#theme .sun').forEach(function(e){e.style.display=d?'block':'none'});document.querySelectorAll('#theme .moon').forEach(function(e){e.style.display=d?'none':'block'});
+      function paint(){
         document.querySelectorAll('iframe').forEach(function(f){try{f.contentWindow.postMessage({krTheme:cur()},'*')}catch(e){}})}
       var b=document.getElementById('theme');if(b)b.onclick=function(){var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('kr-theme',n)}catch(e){}paint()};
       paint();
-      var sb=document.getElementById('sound');function ps(){var m=window.KR&&KR.sfx&&KR.sfx.isMuted();document.querySelectorAll('#sound .on').forEach(function(e){e.style.display=m?'none':'block'});document.querySelectorAll('#sound .off').forEach(function(e){e.style.display=m?'block':'none'});
+      var sb=document.getElementById('sound');function ps(){var m=window.KR&&KR.sfx&&KR.sfx.isMuted();root.classList.toggle('muted',!!m);
         document.querySelectorAll('iframe').forEach(function(f){try{f.contentWindow.postMessage({krSound:m?'off':'on'},'*')}catch(e){}})}
       if(sb)sb.onclick=function(){if(!window.KR||!KR.sfx)return;var m=!KR.sfx.isMuted();KR.sfx.mute(m);if(!m)KR.sfx.play('toggle');ps()};ps();
       var bg=document.getElementById('burger'),nv=document.getElementById('nav');if(bg)bg.onclick=function(){nv.classList.toggle('open')};

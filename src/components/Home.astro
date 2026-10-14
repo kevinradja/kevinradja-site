@@ -43,6 +43,22 @@ const featured = [projects[3], projects[4], projects[5]];
 </section>
 
 {!vitrine && (
+<section class="sec" id="jeu" style="padding-top:0">
+  <div class="wrap">
+    <a class="card gamebox rv" href={r('game', lang)}>
+      <div class="gb-art" aria-hidden="true">🏡<span>🧑‍💼</span></div>
+      <div>
+        <div class="kicker">{T('Une pause ?', 'Need a break?')}</div>
+        <h3>{T('Le Village des Données', 'Data Village')}</h3>
+        <p class="mute">{T('Un petit RPG en 8-bit : aidez un village à gérer son eau, ses loyers et ses dépenses, et croisez au passage les étapes de mon parcours.', 'A tiny 8-bit RPG: help a village manage its water, rents and spending, and meet the steps of my journey along the way.')}</p>
+      </div>
+      <span class="btn s sm">{T('Jouer', 'Play')} →</span>
+    </a>
+  </div>
+</section>
+)}
+
+{!vitrine && (
 <section class="sec">
   <div class="wrap">
     <div class="head"><div><div class="kicker">{T('Trois portes', 'Three doors')}</div><h2>{T('Selon ce qui vous amène.', 'Depending on what brings you here.')}</h2></div><p class="mute">{T('Chaque porte ouvre la page faite pour vous.', 'Each door opens the page made for you.')}</p></div>

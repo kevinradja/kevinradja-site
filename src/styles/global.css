@@ -91,6 +91,11 @@ html.warp-in main{animation:plouf .7s cubic-bezier(.2,1.5,.4,1)}
 .ic{width:38px;height:38px;border-radius:999px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:13px;font-weight:700}
 .ic:hover{border-color:var(--ink)}
 .ic svg{width:17px;height:17px}
+/* pick the right icon from the first paint (no flash of both icons) */
+#theme .sun,#sound .off{display:none}
+:root[data-theme="dark"] #theme .sun{display:block}:root[data-theme="dark"] #theme .moon{display:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) #theme .sun{display:block}:root:not([data-theme="light"]) #theme .moon{display:none}}
+html.muted #sound .on{display:none}html.muted #sound .off{display:block}
 .burger{display:none}
 .nav .li{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:#0A66C2;font-size:14px;font-weight:700}
 .nav .li span{color:var(--ink)}
@@ -207,6 +212,14 @@ a.door:hover .go i{background:var(--acc);color:#fff}
 .dash iframe{width:100%;border:0;height:900px;display:block}
 
 /* timeline */
+.gamebox{display:flex;align-items:center;gap:22px;padding:22px 26px;transition:.2s}
+.gamebox:hover{transform:translateY(-3px);border-color:var(--acc)}
+.gamebox h3{margin:2px 0 6px}
+.gamebox p{font-size:14.5px;max-width:60ch}
+.gamebox .btn{margin-left:auto;flex:none}
+.gb-art{flex:none;width:84px;height:84px;border-radius:18px;background:linear-gradient(160deg,#9AD9F2,#7EC850 62%);display:grid;place-items:center;font-size:34px;position:relative;image-rendering:pixelated}
+.gb-art span{position:absolute;right:8px;bottom:6px;font-size:20px}
+@media(max-width:640px){.gamebox{flex-wrap:wrap}.gamebox .btn{margin-left:0}}
 .tl{position:relative;padding-left:28px}
 .tl:before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line2)}
 .tl .it{position:relative;padding:0 0 30px}

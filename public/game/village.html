@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le Village des Données</title>
+<style>
+:root{--bg:#F7F7F5;--card:#fff;--ink:#0E1116;--mute:#6B7480;--line:#E3E6E8;--acc:#1AA7B0;--gold:#E0A030}
+:root[data-theme="dark"]{--bg:#0E1116;--card:#171B21;--ink:#F3F5F7;--mute:#9AA3AE;--line:#262C34;--acc:#3FD3DC}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1116;--card:#171B21;--ink:#F3F5F7;--mute:#9AA3AE;--line:#262C34;--acc:#3FD3DC}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;display:flex;justify-content:center;padding:8px 12px 16px}
+.wrap{width:100%;max-width:440px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px;color:var(--mute)}
+.top b{color:var(--ink)}
+.xp{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.xp i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),#8EEAF0);transition:width .5s}
+.top button,.pad button{all:unset;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.top button{border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12px;color:var(--ink)}
+.stage{position:relative;aspect-ratio:4/5;background:#7EC850;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 18px 50px rgba(14,17,22,.12);touch-action:none;user-select:none;-webkit-user-select:none}
+canvas{width:100%;height:100%;display:block;image-rendering:pixelated;image-rendering:crisp-edges}
+.dlg{position:absolute;left:10px;right:10px;bottom:10px;background:rgba(255,253,246,.97);color:#1d2430;border:3px solid #2A2F36;border-radius:12px;padding:12px 14px 14px;font-size:14.5px;line-height:1.45;min-height:92px;box-shadow:0 6px 0 rgba(0,0,0,.18);cursor:pointer}
+.dlg .who{position:absolute;top:-14px;left:12px;background:#2A2F36;color:#fff;font-size:12px;font-weight:800;padding:3px 10px;border-radius:8px;letter-spacing:.02em}
+.dlg.mem{background:rgba(232,250,251,.97);border-color:#1AA7B0}
+.dlg.mem .who{background:#1AA7B0}
+.dlg.mem .tx{font-style:italic}
+.dlg.nar .who{background:#8A5CC2}
+.dlg .nx{position:absolute;right:10px;bottom:6px;font-size:11px;color:#6B7480;animation:bob .8s infinite alternate}
+@keyframes bob{to{transform:translateY(-3px)}}
+.toast{position:absolute;left:50%;top:12px;transform:translateX(-50%);background:#2A2F36;color:#fff;font-weight:700;font-size:13px;padding:8px 14px;border-radius:999px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.25);animation:tin .3s ease-out}
+@keyframes tin{from{opacity:0;transform:translate(-50%,-8px)}}
+.ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px;background:color-mix(in srgb,var(--card) 86%,transparent);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.ov h2{font-size:25px;letter-spacing:-.02em;margin-bottom:10px}
+.ov p{color:var(--mute);font-size:14px;line-height:1.5;max-width:320px}
+.ov .em{font-size:40px;margin-bottom:8px}
+.ov .st{display:flex;gap:18px;margin:14px 0 2px;font-size:13px;color:var(--mute)}
+.ov .st b{display:block;font-size:22px;color:var(--ink)}
+.go{margin-top:18px;background:var(--ink);color:var(--bg);border:0;border-radius:999px;padding:12px 24px;font-weight:700;font-size:14px;cursor:pointer}
+.hint{margin-top:12px;font-size:12px;color:var(--mute);max-width:300px;line-height:1.5}
+.dash{position:absolute;left:18px;right:18px;top:18%;background:#fffdf6;color:#1d2430;border:3px solid #2A2F36;border-radius:14px;padding:14px 16px;box-shadow:0 8px 0 rgba(0,0,0,.18)}
+.dash h3{font-size:14px;margin-bottom:10px}
+.dash .r{font-size:12.5px;margin:8px 0 4px;display:flex;justify-content:space-between}
+.dash .b{height:12px;border-radius:4px;background:#E3E6E8;overflow:hidden}
+.dash .b i{display:block;height:100%;width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.hide{display:none!important}
+.inv{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.inv span{width:38px;height:38px;border-radius:10px;border:1px dashed var(--line);display:grid;place-items:center;font-size:20px;filter:grayscale(1);opacity:.35;transition:.3s}
+.inv span.on{border-style:solid;border-color:var(--acc);filter:none;opacity:1;transform:scale(1.04)}
+.obj{text-align:center;font-size:12.5px;color:var(--mute);margin-top:8px;min-height:18px}
+.pad{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.dp{display:grid;grid-template-columns:repeat(3,44px);grid-template-rows:repeat(3,44px);gap:3px}
+.pad button{background:var(--card);border:1px solid var(--line);border-radius:10px;display:grid;place-items:center;font-size:16px;color:var(--ink);touch-action:none}
+.pad button:active,.pad button.dn{background:var(--line)}
+.dp .u{grid-column:2;grid-row:1}.dp .l{grid-column:1;grid-row:2}.dp .r{grid-column:3;grid-row:2}.dp .d{grid-column:2;grid-row:3}
+.ab{width:68px;height:68px;border-radius:50%!important;font-weight:800;font-size:15px!important;background:var(--acc)!important;color:#fff!important;border:0!important}
+.kb{font-size:11.5px;color:var(--mute);text-align:center;flex:1;padding:0 8px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span><b id="lv">Niv. 1</b></span><div class="xp"><i id="xpb"></i></div><span id="xpt">0 XP</span><button id="snd" aria-label="sound">🔊</button><button id="theme" aria-label="theme">◐</button></div>
+  <div class="stage" id="stage">
+    <canvas id="c" width="256" height="320"></canvas>
+    <div class="dlg hide" id="dlg"><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
+    <div class="dash hide" id="dash"></div>
+    <div id="toasts"></div>
+    <div class="ov" id="start">
+      <div class="em">🏡</div>
+      <h2 data-t="title"></h2>
+      <p data-t="intro"></p>
+      <button class="go" id="play" data-t="play"></button>
+      <p class="hint" data-t="keys"></p>
+    </div>
+    <div class="ov hide" id="end"></div>
+  </div>
+  <div class="inv" id="inv"></div>
+  <div class="obj" id="obj"></div>
+  <div class="pad">
+    <div class="dp">
+      <button class="u" data-d="up" aria-label="up">▲</button><button class="l" data-d="left" aria-label="left">◀</button><button class="r" data-d="right" aria-label="right">▶</button><button class="d" data-d="down" aria-label="down">▼</button>
+    </div>
+    <div class="kb" data-t="kb"></div>
+    <button class="ab" id="act" aria-label="action">A</button>
+  </div>
+</div>
+<script>
+(function(){
+'use strict';
+/* ---------- language, theme, sound ---------- */
+var L=(new URLSearchParams(location.search).get('lang')||'fr').slice(0,2)==='en'?'en':'fr';
+document.documentElement.lang=L;
+var root=document.documentElement;
+try{var th=localStorage.getItem('kr-theme');if(th)root.setAttribute('data-theme',th)}catch(e){}
+try{var pt=parent!==window&&parent.document.documentElement.getAttribute('data-theme');if(pt)root.setAttribute('data-theme',pt)}catch(e){}
+function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme:dark)').matches}
+var muted=false;try{muted=localStorage.getItem('kr-sound')==='off'}catch(e){}
+window.addEventListener('message',function(e){var d=e.data||{};if(d.krTheme)root.setAttribute('data-theme',d.krTheme);if(d.krSound){muted=d.krSound==='off';applyMute();paintSnd()}});
+document.getElementById('theme').onclick=function(){var n=isDark()?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('kr-theme',n)}catch(e){}};
+var sb=document.getElementById('snd');function paintSnd(){sb.textContent=muted?'🔇':'🔊'}paintSnd();
+sb.onclick=function(){muted=!muted;try{localStorage.setItem('kr-sound',muted?'off':'on')}catch(e){}applyMute();paintSnd()};
+function post(){try{parent.postMessage({krHeight:document.body.getBoundingClientRect().height+4},'*')}catch(e){}}
+if(window.ResizeObserver)new ResizeObserver(post).observe(document.body);addEventListener('load',post);
+
+var TX={
+ fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux six habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord.',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/6)'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Le village est en fête 🎉',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
+ en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the six villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north.',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/6)'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'The village is celebrating 🎉',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
+}[L];
+document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=TX[e.dataset.t]});
+
+/* ---------- audio: gentle 8-bit loop + small effects ---------- */
+var AC=null,master=null,nextT=0,stepI=0,timer=null,mode='loop',fanI=0;
+function applyMute(){if(master&&AC)master.gain.setTargetAtTime(muted?0:.55,AC.currentTime,.05)}
+function hz(m){return 440*Math.pow(2,(m-69)/12)}
+function note(m,t,d,type,v){if(!AC||!m)return;var o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(hz(m),t);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.03)}
+// C major, gentle: lead (8ths) and bass (quarters). 0 = rest.
+var LEAD=[76,0,79,0,81,79,76,0, 72,0,76,0,74,72,69,0, 69,72,74,0,72,69,67,0, 67,69,72,0,74,0,76,0,
+          76,0,79,0,84,0,81,79, 76,0,74,72,0,69,72,0, 74,0,72,69,67,0,69,0, 72,0,0,0,0,0,0,0];
+var BASS=[48,55,48,55, 45,52,45,52, 41,48,41,48, 43,50,43,50, 48,55,48,55, 45,52,45,52, 41,48,43,50, 48,43,48,0];
+var FAN=[72,76,79,84,0,79,84,0,81,84,88,0,86,84,88,91];
+var BPM=92,E=60/BPM/2;
+function tick(){while(nextT<AC.currentTime+.15){
+  if(mode==='fan'){var m=FAN[fanI];note(m,nextT,.22,'square',.05);note(m-12,nextT,.22,'triangle',.08);fanI++;if(fanI>=FAN.length){mode='loop';stepI=0}}
+  else{note(LEAD[stepI],nextT,E*1.6,'square',.035);if(stepI%2===0)note(BASS[stepI/2|0],nextT,E*1.8,'triangle',.09);stepI=(stepI+1)%LEAD.length}
+  nextT+=E}}
+function startAudio(){try{if(!AC){var A=window.AudioContext||window.webkitAudioContext;if(!A)return;AC=new A();master=AC.createGain();var lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2400;master.connect(lp);lp.connect(AC.destination);applyMute()}
+  if(AC.state==='suspended')AC.resume();if(!timer){nextT=AC.currentTime+.1;timer=setInterval(tick,30)}}catch(e){}}
+function fx(name){if(!AC||muted)return;var t=AC.currentTime;
+  if(name==='blip')note(88,t,.03,'square',.02);
+  if(name==='talk')note(79,t,.06,'triangle',.06);
+  if(name==='item'){[72,76,79,84].forEach(function(m,i){note(m,t+i*.07,.14,'square',.05)})}
+  if(name==='level'){[67,72,76,79,84].forEach(function(m,i){note(m,t+i*.06,.16,'triangle',.09)})}
+  if(name==='bump')note(45,t,.05,'triangle',.05)}
+
+/* ---------- world ---------- */
+var T=16,MW=32,MH=26,VW=16,VH=20;
+var M=[],i,x,y;
+for(y=0;y<MH;y++){M.push([]);for(x=0;x<MW;x++)M[y].push((x===0||y===0||x===MW-1||y===MH-1)?'t':'g')}
+function set(x,y,c){if(M[y]&&M[y][x]!==undefined)M[y][x]=c}
+function hash(x,y){var h=x*374761393+y*668265263;h=(h^(h>>13))*1274126177;return (h^(h>>16))>>>0}
+for(y=0;y<MH;y++)for(x=0;x<MW;x++){var dx=(x-5.5)/4,dy=(y-20.5)/2.6;if(dx*dx+dy*dy<1)set(x,y,'w')}
+for(x=1;x<MW-1;x++){set(x,13,'p');set(x,14,'p')}
+for(y=6;y<MH-1;y++){set(15,y,'p');set(16,y,'p')}
+for(y=7;y<13;y++){set(5,y,'p');set(24,y,'p')}
+for(x=11;x<15;x++)set(x,10,'p');
+for(y=15;y<21;y++)set(23,y,'p');for(x=24;x<28;x++)set(x,20,'p');
+for(x=17;x<20;x++)set(x,21,'p');
+for(x=10;x<15;x++)set(x,19,'p');
+var B=[
+ {id:'hall',x:12,y:1,w:8,h:5,roof:'#4A74C9',wall:'#F4E7CF',door:[15,16],sign:L==='fr'?'MAIRIE':'TOWN HALL'},
+ {id:'rent',x:3,y:3,w:5,h:4,roof:'#C8553D',wall:'#F2E2C4',door:[5],icon:'🔑'},
+ {id:'bake',x:22,y:3,w:5,h:4,roof:'#E0A030',wall:'#F6EAD2',door:[24],icon:'🥖'},
+ {id:'forge',x:25,y:16,w:5,h:4,roof:'#6B6F78',wall:'#D9D4CC',door:[27],icon:'⚒️',chimney:true},
+ {id:'lib',x:18,y:17,w:4,h:4,roof:'#8A5CC2',wall:'#F1E6F7',door:[19],icon:'📚'}
+];
+B.forEach(function(b){for(var yy=b.y;yy<b.y+b.h;yy++)for(var xx=b.x;xx<b.x+b.w;xx++)set(xx,yy,'b')});
+[[9,9],[10,9],[9,10],[10,10]].forEach(function(p){set(p[0],p[1],'W')});
+[[2,9],[8,4],[10,2],[21,9],[28,6],[29,11],[27,23],[21,24],[12,23],[2,16],[9,15],[19,8],[11,16],[29,16],[7,10],[26,1],[3,24],[13,8],[20,11],[29,2],[1,12],[18,23],[24,24],[30,19],[6,17],[22,15]].forEach(function(p){if(M[p[1]][p[0]]==='g')set(p[0],p[1],'t')});
+for(y=1;y<MH-1;y++)for(x=1;x<MW-1;x++)if(M[y][x]==='g'&&hash(x,y)%9===0)M[y][x]='f';
+
+/* ---------- characters ---------- */
+var NPC=[
+ {id:'ines',x:20,y:21,dir:'left',name:'Inès',role:L==='fr'?'bibliothécaire':'librarian',P:{skin:'#E9B98F',hair:'#3B2A4A',top:'#8A5CC2',bot:'#3A3550',glasses:1},item:['🗺️',L==='fr'?'Carte des sources':'Map of sources'],
+  fr:[['npc','Bonjour ! Les registres du village sont éparpillés dans trois greniers. Plus personne ne sait quel chiffre est le bon.'],['mem','2022 · KPMG France & KPMG Avocats : une chaîne de publication bien rangée, près de 300 articles migrés sans rien perdre. Ranger, c’est déjà analyser.'],['npc','Alors tiens, prends cette carte. Note d’où vient chaque chiffre : une donnée sans source, c’est une rumeur.']],
+  en:[['npc','Hello! The village records are scattered across three attics. Nobody knows which number is right anymore.'],['mem','2022 · KPMG France & KPMG Avocats: a tidy publishing pipeline, nearly 300 articles migrated without losing a thing. Tidying up is already analysis.'],['npc','Then take this map. Write down where every number comes from: data without a source is just a rumour.']]},
+ {id:'gaspard',x:28,y:20,dir:'left',name:'Gaspard',role:L==='fr'?'forgeron':'blacksmith',P:{skin:'#C98E66',hair:'#2B1B12',top:'#7A4A2A',bot:'#3A3A3A',apron:1,beard:1},item:['🔧',L==='fr'?'Clé d’automatisation':'Automation wrench'],
+  fr:[['npc','Chaque mois, je recopie les comptes du village à la main. Cent heures de travail ! Mes bras n’en peuvent plus.'],['mem','2023 · Dassault Systèmes : des pipelines Python et des cubes de données qui ont fait passer un traitement de 100 heures à 3 heures.'],['npc','Une machine pour ce qui revient chaque mois ? Ha ! Prends cette clé, je vais enfin pouvoir forger autre chose que des tableaux.']],
+  en:[['npc','Every month I copy the village accounts by hand. A hundred hours of work! My arms can’t take it anymore.'],['mem','2023 · Dassault Systèmes: Python pipelines and data cubes that took a 100-hour job down to 3 hours.'],['npc','A machine for what comes back every month? Ha! Take this wrench, I can finally forge something other than spreadsheets.']]},
+ {id:'lina',x:12,y:9,dir:'down',name:'Lina',role:L==='fr'?'fontainière':'well keeper',P:{skin:'#F0C7A0',hair:'#C0662B',top:'#3D8FD1',bot:'#2E4A6B',hat:'#3D8FD1'},item:['💧',L==='fr'?'Compteur d’eau':'Water meter'],
+  fr:[['npc','Le puits se vide plus vite chaque été… mais personne ne sait combien d’eau on consomme, ni quand.'],['mem','2024 · Google France : un cockpit de mesure pour 180 grands comptes. Ce qui se mesure s’améliore.'],['npc','Un relevé chaque semaine, et on verra enfin les fuites ? Prends ce compteur, je m’y mets dès demain !']],
+  en:[['npc','The well empties faster every summer… but nobody knows how much water we use, or when.'],['mem','2024 · Google France: a measurement cockpit for 180 key accounts. What gets measured gets better.'],['npc','One reading a week, and we’ll finally spot the leaks? Take this meter, I’ll start tomorrow!']]},
+ {id:'bertrand',x:6,y:7,dir:'down',name:'Bertrand',role:L==='fr'?'propriétaire':'landlord',P:{skin:'#E2AE86',hair:'#9A9A9A',top:'#3E7D4E',bot:'#4A3A2A',hat:'#4A3A2A'},item:['📒',L==='fr'?'Registre des loyers':'Rent ledger'],
+  fr:[['npc','Je gère les loyers des douze hameaux autour du village. Certains arrivent en retard, d’autres jamais, et mes carnets ne se ressemblent pas.'],['mem','2025 · Coface : un cockpit commercial pour 12 pays et plus de 500 utilisateurs, avec un reporting 30 % plus rapide.'],['npc','Une ligne par maison, une colonne par mois, la même partout ? C’est si simple… Voici le registre, il est à toi.']],
+  en:[['npc','I manage the rents of the twelve hamlets around the village. Some arrive late, some never, and none of my notebooks look alike.'],['mem','2025 · Coface: a sales cockpit for 12 countries and 500+ users, with reporting 30% faster.'],['npc','One row per house, one column per month, the same everywhere? That simple… Here, the ledger is yours.']]},
+ {id:'margot',x:25,y:7,dir:'down',name:'Margot',role:L==='fr'?'boulangère':'baker',P:{skin:'#F2C9A5',hair:'#5A3A22',top:'#F6F1E7',bot:'#C2884A',hat:'#FFFFFF',chef:1},item:['🔮',L==='fr'?'Sac de billes':'Bag of marbles'],
+  fr:[['npc','J’ai plus de dix apprentis et tout le village mange mon pain. Mais farine, bois, réparations… on dépense, et pour quoi ?'],['mem','Aujourd’hui · Manager Data & Digital dans un grand groupe automobile : plus de 10 personnes accompagnées au quotidien, plus de 1 000 collaborateurs touchés.'],['npc','Une bille par sou dépensé, rangée par catégorie : voilà ton premier graphique ! Garde le sac, tu en auras besoin.']],
+  en:[['npc','I have more than ten apprentices and the whole village eats my bread. But flour, wood, repairs… we spend, and on what?'],['mem','Today · Data & Digital Manager at a major automotive group: 10+ people supported day to day, 1,000+ employees reached.'],['npc','One marble per coin spent, sorted by category: there’s your first chart! Keep the bag, you’ll need it.']]},
+ {id:'jo',x:10,y:20,dir:'left',name:'Papi Jo',role:L==='fr'?'ancien sensei':'retired sensei',P:{skin:'#D7A47E',hair:'#EDEDED',top:'#FAFAFA',bot:'#FAFAFA',belt:1,rod:1},item:['🥋',L==='fr'?'Ceinture de la régularité':'Belt of consistency'],
+  fr:[['npc','Chut… ça mord. Tu sais, les chiffres, c’est comme le karaté : la régularité bat le talent.'],['mem','En dehors des données : karaté, coaching, photo et montage vidéo. Toujours la même idée : progresser un peu, mais souvent.'],['npc','Un relevé par semaine, comme un entraînement. Prends ma vieille ceinture, elle te rappellera la discipline.']],
+  en:[['npc','Shh… they’re biting. You know, numbers are like karate: consistency beats talent.'],['mem','Beyond data: karate, coaching, photography and video editing. Always the same idea: improve a little, but often.'],['npc','One reading a week, like training. Take my old belt, it will remind you of discipline.']]}
+];
+var MAYOR={id:'mayor',x:17,y:7,dir:'down',name:L==='fr'?'Mme la Maire':'Madam Mayor',P:{skin:'#E8B793',hair:'#B8B8C8',top:'#C8553D',bot:'#3A3550',sash:1}};
+var ALL=NPC.concat([MAYOR]);
+var player={x:15,y:23,px:15*T,py:23*T,dir:'up',moving:false,fx:0,fy:0,tx:0,ty:0,p:0,P:{skin:'#D9A27A',hair:'#1F1A17',top:'#1AA7B0',bot:'#2A2F36'}};
+var done={},xp=0,lvl=1,steps=0,t0=0,state='title',finale=false,party=false;
+
+/* ---------- static layer ---------- */
+var cv=document.getElementById('c'),cx=cv.getContext('2d');cx.imageSmoothingEnabled=false;
+var bg=document.createElement('canvas');bg.width=MW*T;bg.height=MH*T;var g=bg.getContext('2d');
+function R(c,col,x,y,w,h){c.fillStyle=col;c.fillRect(x,y,w,h)}
+function drawTile(x,y,ch){var X=x*T,Y=y*T,h=hash(x,y);
+  if(ch==='p'){R(g,'#E6CF98',X,Y,T,T);R(g,'#D4B97E',X+(h%13),Y+(h%11),2,1);R(g,'#D4B97E',X+(h>>4)%14,Y+(h>>8)%14,1,1);return}
+  if(ch==='w'){R(g,'#4FA4E0',X,Y,T,T);R(g,'#6FBAEB',X+(h%9),Y+(h>>3)%12,4,1);return}
+  R(g,'#7EC850',X,Y,T,T);R(g,'#6DB743',X+(h%15),Y+(h>>4)%15,1,2);R(g,'#6DB743',X+(h>>6)%15,Y+(h>>9)%15,1,2);R(g,'#8ED65F',X+(h>>11)%15,Y+(h>>13)%15,1,1);
+  if(ch==='f'){var fc=['#FF8FA3','#FFFFFF','#FFD45E','#B48CFF'][h%4];R(g,fc,X+4,Y+5,2,2);R(g,fc,X+10,Y+10,2,2);R(g,'#F4C430',X+4,Y+5,1,1)}
+  if(ch==='t'){R(g,'#7A4E2D',X+6,Y+10,4,6);g.fillStyle='#2F7D32';g.beginPath();g.arc(X+8,Y+7,7,0,7);g.fill();g.fillStyle='#3F9A3F';g.beginPath();g.arc(X+6,Y+5,4,0,7);g.fill()}
+  if(ch==='W'&&!drawTile.well){drawTile.well=1;var wx=9*T,wy=9*T;R(g,'#8C8C94',wx+3,wy+8,26,20);R(g,'#A9A9B2',wx+3,wy+8,26,4);R(g,'#2E6FA8',wx+7,wy+12,18,10);R(g,'#7A4E2D',wx+4,wy-2,3,12);R(g,'#7A4E2D',wx+25,wy-2,3,12);R(g,'#B4542F',wx+1,wy-5,30,5);R(g,'#5B3A22',wx+15,wy+2,2,8)}}
+function drawBuilding(b){var X=b.x*T,Y=b.y*T,W=b.w*T,H=b.h*T,rh=Math.round(H*.55);
+  R(g,b.wall,X+2,Y+rh-2,W-4,H-rh+2);R(g,'rgba(0,0,0,.08)',X+2,Y+H-3,W-4,3);
+  R(g,b.roof,X,Y+2,W,rh);R(g,'rgba(0,0,0,.18)',X,Y+rh-2,W,3);
+  for(var s=Y+6;s<Y+rh-3;s+=5)R(g,'rgba(255,255,255,.14)',X+2,s,W-4,1);
+  b.door.forEach(function(dx){R(g,'#6B4226',dx*T+4,Y+H-11,8,11);R(g,'#E0B04A',dx*T+10,Y+H-6,1,1)});
+  b.win=[];for(var wx=b.x;wx<b.x+b.w;wx++){if(b.door.indexOf(wx)>=0)continue;if((wx-b.x)%2===0&&wx>b.x||b.w<=4&&wx!==b.door[0]){R(g,'#5C4630',wx*T+3,Y+rh+3,10,8);R(g,'#9CD4F0',wx*T+4,Y+rh+4,8,6);R(g,'#5C4630',wx*T+8,Y+rh+4,1,6);b.win.push([wx*T+4,Y+rh+4])}}
+  if(b.chimney){R(g,'#55565C',X+W-12,Y-4,7,10)}
+  if(b.id==='hall'){R(g,'#5B3A22',X+W/2-1,Y-14,2,16);R(g,'#1AA7B0',X+W/2+1,Y-14,10,6);R(g,'#3FD3DC',X+W/2+1,Y-14,10,2);
+    R(g,'#7A4E2D',X+W/2-24,Y+rh-1,48,9);g.fillStyle='#FFF4D6';g.font='bold 7px monospace';g.textAlign='center';g.fillText(b.sign,X+W/2,Y+rh+6)}
+  if(b.icon){R(g,'#7A4E2D',X+W-14,Y+rh+1,12,11);g.font='8px serif';g.textAlign='center';g.fillText(b.icon,X+W-8,Y+rh+10)}}
+function buildBg(){drawTile.well=0;for(var y=0;y<MH;y++)for(var x=0;x<MW;x++)drawTile(x,y,M[y][x]);
+  for(y=1;y<MH-1;y++)for(x=1;x<MW-1;x++)if(M[y][x]==='w'&&hash(x,y)%5===0&&M[y][x+1]!=='w'){R(g,'#3E8E3A',x*T+14,y*T+4,1,6);R(g,'#3E8E3A',x*T+16,y*T+6,1,5)}
+  B.forEach(drawBuilding)}
+buildBg();
+
+function drawPerson(c,X,Y,dir,fr,P,bobY){var o=X+2;Y=Y-3+(bobY||0);
+  c.fillStyle='rgba(0,0,0,.2)';c.beginPath();c.ellipse(X+8,Y+17,5,2,0,0,7);c.fill();
+  var l1=fr===1?1:0,l2=fr===2?1:0;R(c,P.bot,o+3,Y+12,2,3-l1);R(c,P.bot,o+7,Y+12,2,3-l2);R(c,'#2A2320',o+3,Y+15-l1,2,1);R(c,'#2A2320',o+7,Y+15-l2,2,1);
+  R(c,P.top,o+2,Y+6,8,7);R(c,'rgba(0,0,0,.12)',o+2,Y+11,8,2);
+  var sw=fr?1:0;R(c,P.top,o+1,Y+7+sw,1,4);R(c,P.top,o+10,Y+7+(1-sw),1,4);R(c,P.skin,o+1,Y+11+sw,1,1);R(c,P.skin,o+10,Y+12-sw,1,1);
+  if(P.apron)R(c,'#C9C2B6',o+3,Y+8,6,5);
+  if(P.belt){R(c,'#1A1A1A',o+2,Y+10,8,1);R(c,'#1A1A1A',o+5,Y+11,1,2)}
+  if(P.sash){R(c,'#F4D35E',o+3,Y+6,2,2);R(c,'#F4D35E',o+5,Y+8,2,2);R(c,'#F4D35E',o+7,Y+10,2,2)}
+  R(c,P.skin,o+3,Y,6,6);
+  if(dir==='up')R(c,P.hair,o+3,Y-1,6,6);else{R(c,P.hair,o+3,Y-1,6,2);if(dir==='left')R(c,P.hair,o+7,Y,2,3);else if(dir==='right')R(c,P.hair,o+3,Y,2,3);else{R(c,P.hair,o+3,Y,1,2);R(c,P.hair,o+8,Y,1,2)}}
+  if(dir!=='up'){var ey=Y+3;if(dir==='down'){R(c,'#1d1d1d',o+4,ey,1,1);R(c,'#1d1d1d',o+7,ey,1,1)}else if(dir==='left')R(c,'#1d1d1d',o+4,ey,1,1);else R(c,'#1d1d1d',o+7,ey,1,1);
+    if(P.glasses){R(c,'#2A2F36',o+3,ey,3,1);R(c,'#2A2F36',o+6,ey,3,1)}
+    if(P.beard)R(c,P.hair,o+3,Y+4,6,2)}
+  if(P.hat&&!P.chef){R(c,P.hat,o+2,Y-2,8,2);R(c,P.hat,o+3,Y-4,6,2)}
+  if(P.chef){R(c,'#FFFFFF',o+3,Y-5,6,4);R(c,'#EDEDED',o+2,Y-2,8,1)}
+  if(P.rod){c.strokeStyle='#7A4E2D';c.lineWidth=1;c.beginPath();c.moveTo(o+1,Y+9);c.lineTo(o-9,Y-5);c.stroke();c.strokeStyle='rgba(255,255,255,.7)';c.beginPath();c.moveTo(o-9,Y-5);c.lineTo(o-11,Y+12);c.stroke()}}
+
+/* ---------- HUD ---------- */
+var inv=document.getElementById('inv');NPC.forEach(function(n){var s=document.createElement('span');s.id='i-'+n.id;s.title=n.item[1];s.textContent=n.item[0];inv.appendChild(s)});
+function count(){return NPC.filter(function(n){return done[n.id]}).length}
+function hud(){var need=50,lv=1+Math.floor(xp/need);document.getElementById('lv').textContent=TX.lv+' '+lv;document.getElementById('xpb').style.width=(xp>=200?100:(xp%need)/need*100)+'%';document.getElementById('xpt').textContent=xp+' XP';
+  var n=count();document.getElementById('obj').textContent=finale?TX.objDone:(n===6?TX.objMayor:TX.obj(n));
+  if(lv>lvl){lvl=lv;toast('⭐ '+TX.lvup+lv+' !');fx('level')}}
+var tw=document.getElementById('toasts');function toast(m){var d=document.createElement('div');d.className='toast';d.textContent=m;d.style.top=(12+tw.children.length*40)+'px';tw.appendChild(d);setTimeout(function(){d.remove()},2300)}
+
+/* ---------- dialogue ---------- */
+var dlg=document.getElementById('dlg'),who=document.getElementById('who'),tx=document.getElementById('tx'),Q=[],cur=null,shown=0,full=false,onDone=null,typeT=0;
+function say(list,cb){Q=list.slice();onDone=cb||null;next()}
+function next(){cur=Q.shift();if(!cur){dlg.classList.add('hide');var f=onDone;onDone=null;cur=null;if(f)f();return}
+  if(cur.fn){var fn=cur.fn;cur=null;fn(next);return}
+  dlg.classList.remove('hide','mem','nar');if(cur.k==='mem')dlg.classList.add('mem');if(cur.k==='nar')dlg.classList.add('nar');
+  who.textContent=cur.w;shown=0;full=false;tx.textContent='';fx('talk')}
+function advance(){if(!cur)return;if(!full){shown=cur.t.length;tx.textContent=cur.t;full=true;return}next()}
+dlg.addEventListener('click',advance);
+function typeStep(dt){if(!cur||full)return;typeT+=dt;while(typeT>22&&shown<cur.t.length){typeT-=22;shown++;if(shown%3===0)fx('blip')}tx.textContent=cur.t.slice(0,shown);if(shown>=cur.t.length)full=true}
+
+function memLabel(n){return n.id==='margot'?TX.now:n.id==='jo'?TX.beyond:TX.mem}
+function talk(n){n.dir={up:'down',down:'up',left:'right',right:'left'}[player.dir];
+  if(n===MAYOR)return talkMayor();
+  var lines=n[L].map(function(l){return l[0]==='mem'?{k:'mem',w:'✦ '+memLabel(n),t:l[1]}:{k:'npc',w:n.name+' · '+n.role,t:l[1]}});
+  if(done[n.id])return say([{k:'npc',w:n.name+' · '+n.role,t:L==='fr'?'Merci encore ! Va voir la maire quand tu as tous les objets.':'Thanks again! Visit the mayor once you have every item.'}]);
+  say(lines,function(){done[n.id]=1;xp+=25;document.getElementById('i-'+n.id).classList.add('on');fx('item');toast(n.item[0]+' '+n.item[1]+' '+TX.got+' · +25 XP');hud()})}
+function talkMayor(){var n=count(),M_=MAYOR.name;
+  if(finale)return say([{k:'npc',w:M_,t:L==='fr'?'Le village n’a jamais été aussi bien tenu. Profite de la fête !':'The village has never been better run. Enjoy the festival!'}]);
+  if(n<6)return say([{k:'npc',w:M_,t:L==='fr'?'Bienvenue, voyageur ! Notre village ne sait plus où passent son eau, ses loyers et ses dépenses.':'Welcome, traveller! Our village no longer knows where its water, rents and spending go.'},{k:'npc',w:M_,t:L==='fr'?'Les habitants marqués d’un « ! » ont chacun un problème… et un objet à te confier. Il t’en manque encore '+(6-n)+'.':'The villagers marked with “!” each have a problem… and an item to give you. You still need '+(6-n)+'.'}]);
+  var F=L==='fr'?[
+    {k:'npc',w:M_,t:'Tu as tout ? Le compteur, le registre, la carte, la clé, les billes… et même la ceinture de Papi Jo ? Montre-moi !'},
+    {k:'nar',w:TX.narr,t:'Kevin pose les six objets sur la grande table. Les billes roulent, la carte se déplie, le compteur s’allume, la clé tourne toute seule…'},
+    {fn:showDash},
+    {k:'npc',w:M_,t:'Pour la première fois, on sait où va chaque goutte et chaque sou ! Et ce tableau, tout le village sait le lire.'},
+    {k:'npc',w:M_,t:'Ce soir, fête au village en ton honneur. Et voici la clé du village : reviens quand tu veux, il y aura toujours une place pour toi.'}
+  ]:[
+    {k:'npc',w:M_,t:'You have everything? The meter, the ledger, the map, the wrench, the marbles… even Papi Jo’s belt? Show me!'},
+    {k:'nar',w:TX.narr,t:'Kevin lays the six items on the big table. The marbles roll, the map unfolds, the meter lights up, the wrench turns by itself…'},
+    {fn:showDash},
+    {k:'npc',w:M_,t:'For the first time we know where every drop and every coin goes! And the whole village can read this dashboard.'},
+    {k:'npc',w:M_,t:'Tonight, a festival in your honour. And here is the key to the village: come back anytime, there will always be a seat for you.'}
+  ];
+  say(F,function(){finale=true;party=true;xp+=50;fx('item');toast('🔑 '+(L==='fr'?'Clé du village':'Key to the village')+' · +50 XP');hud();mode='fan';fanI=0;setTimeout(showEnd,5200)})}
+function showDash(cont){var d=document.getElementById('dash');
+  d.innerHTML='<h3>'+TX.dashT+'</h3>'+[[TX.d1,'−22 %',22*3,'#3D8FD1'],[TX.d2,'97 %',97,'#3E7D4E'],[TX.d3,'100 %',100,'#E0A030']].map(function(r){return '<div class="r"><span>'+r[0]+'</span><b>'+r[1]+'</b></div><div class="b"><i style="background:'+r[3]+'" data-w="'+r[2]+'"></i></div>'}).join('');
+  d.classList.remove('hide');fx('level');setTimeout(function(){d.querySelectorAll('i').forEach(function(e){e.style.width=e.dataset.w+'%'})},60);
+  var go=function(){d.classList.add('hide');d.removeEventListener('click',go);stage.removeEventListener('keyact',go);cont()};
+  setTimeout(function(){d.addEventListener('click',go);dashWait=go},700)}
+var dashWait=null,stage=document.getElementById('stage');
+function showEnd(){var s=Math.round((performance.now()-t0)/1000),best=0;try{best=+localStorage.getItem('kr-village-best')||0}catch(e){}if(!best||s<best){best=s;try{localStorage.setItem('kr-village-best',s)}catch(e){}}
+  function f(v){return Math.floor(v/60)+':'+('0'+v%60).slice(-2)}
+  var e=document.getElementById('end');e.innerHTML='<div class="em">🎉</div><h2>'+TX.endT+'</h2><p>'+TX.endP+'</p><div class="st"><div><b>'+lvl+'</b>'+TX.stLv+'</div><div><b>'+steps+'</b>'+TX.stSteps+'</div><div><b>'+f(s)+'</b>'+TX.stTime+'</div><div><b>'+f(best)+'</b>'+TX.best+'</div></div><button class="go" id="again">'+TX.again+'</button>';
+  e.classList.remove('hide');state='end';document.getElementById('again').onclick=reset}
+function reset(){done={};xp=0;lvl=1;steps=0;finale=false;party=false;sparks=[];player.x=15;player.y=23;player.px=15*T;player.py=23*T;player.dir='up';player.moving=false;
+  document.querySelectorAll('.inv span').forEach(function(s){s.classList.remove('on')});document.getElementById('end').classList.add('hide');hud();state='play';t0=performance.now()}
+
+/* ---------- input ---------- */
+var held=[];var KEYS={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'up',z:'up',s:'down',a:'left',q:'left',d:'right'};
+function press(d){if(held.indexOf(d)<0)held.push(d)}function release(d){held=held.filter(function(x){return x!==d})}
+addEventListener('keydown',function(e){var k=KEYS[e.key]||KEYS[e.key.toLowerCase&&e.key.toLowerCase()];
+  if(k){e.preventDefault();press(k);return}
+  if(e.key===' '||e.key==='Enter'||e.key==='e'||e.key==='E'){e.preventDefault();if(!e.repeat)action()}});
+addEventListener('keyup',function(e){var k=KEYS[e.key]||KEYS[e.key.toLowerCase&&e.key.toLowerCase()];if(k)release(k)});
+addEventListener('blur',function(){held=[]});
+document.querySelectorAll('.dp button').forEach(function(b){var d=b.dataset.d;
+  b.addEventListener('pointerdown',function(e){e.preventDefault();startAudio();b.classList.add('dn');press(d);try{b.setPointerCapture(e.pointerId)}catch(_){}});
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(ev){b.addEventListener(ev,function(){b.classList.remove('dn');release(d)})})});
+document.getElementById('act').addEventListener('pointerdown',function(e){e.preventDefault();startAudio();action()});
+function action(){if(state==='title'){begin();return}if(state!=='play')return;
+  if(dashWait){var w=dashWait;dashWait=null;w();return}
+  if(cur){advance();return}
+  var f=front();var n=npcAt(f[0],f[1])||ALL.filter(function(n){return Math.abs(n.x-player.x)+Math.abs(n.y-player.y)===1})[0];if(n&&!player.moving)talk(n)}
+function begin(){document.getElementById('start').classList.add('hide');state='play';t0=performance.now();startAudio();hud();
+  say([{k:'nar',w:TX.narr,t:L==='fr'?'Kevin arrive au Village des Données. Au nord, la mairie. Partout, des habitants qui ont besoin d’un coup de main…':'Kevin arrives in Data Village. Up north, the town hall. Everywhere, villagers who could use a hand…'}])}
+document.getElementById('play').onclick=begin;
+var DIRS={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
+function front(){var d=DIRS[player.dir];return[player.x+d[0],player.y+d[1]]}
+function npcAt(x,y){for(var i=0;i<ALL.length;i++)if(ALL[i].x===x&&ALL[i].y===y)return ALL[i];return null}
+function walkable(x,y){var c=M[y]&&M[y][x];return (c==='g'||c==='p'||c==='f')&&!npcAt(x,y)}
+
+/* ---------- loop ---------- */
+var last=performance.now(),STEP=170,sparks=[],smoke=[],fwT=0,bumpT=0,time=0;
+function update(dt){time+=dt;typeStep(dt);
+  if(state==='play'&&!cur&&!dashWait){
+    if(player.moving){player.p+=dt/STEP;if(player.p>=1){player.moving=false;player.x=player.tx;player.y=player.ty;steps++}
+      player.px=(player.fx+(player.tx-player.fx)*Math.min(1,player.p))*T;player.py=(player.fy+(player.ty-player.fy)*Math.min(1,player.p))*T}
+    if(!player.moving&&held.length){var d=held[held.length-1];player.dir=d;var v=DIRS[d],nx=player.x+v[0],ny=player.y+v[1];
+      if(walkable(nx,ny)){player.moving=true;player.p=0;player.fx=player.x;player.fy=player.y;player.tx=nx;player.ty=ny}else if(time-bumpT>350){bumpT=time;fx('bump')}}}
+  if(Math.random()<dt/260)smoke.push({x:(25*T+5*T-9),y:16*T-6,a:1});
+  smoke.forEach(function(s){s.y-=dt*.012;s.x+=Math.sin((s.y+time*.01)/6)*.15;s.a-=dt/2200});smoke=smoke.filter(function(s){return s.a>0});
+  if(party){fwT-=dt;if(fwT<=0){fwT=420+Math.random()*300;var bx=camX+30+Math.random()*196,by=camY+30+Math.random()*120,col=['#FFD45E','#FF8FA3','#3FD3DC','#B48CFF','#8ED65F'][Math.random()*5|0];
+    for(var k=0;k<26;k++){var a=k/26*6.283,sp=.03+Math.random()*.05;sparks.push({x:bx,y:by,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,l:1,c:col})}}}
+  sparks.forEach(function(p){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=.00006*dt;p.l-=dt/1300});sparks=sparks.filter(function(p){return p.l>0})}
+var camX=0,camY=0;
+function render(){var W=VW*T,H=VH*T;
+  camX=Math.max(0,Math.min(MW*T-W,Math.round(player.px+8-W/2)));camY=Math.max(0,Math.min(MH*T-H,Math.round(player.py+8-H/2)));
+  cx.drawImage(bg,camX,camY,W,H,0,0,W,H);
+  // water shimmer
+  for(var y=Math.floor(camY/T);y<=Math.min(MH-1,Math.floor((camY+H)/T));y++)for(var x=Math.floor(camX/T);x<=Math.min(MW-1,Math.floor((camX+W)/T));x++)if(M[y][x]==='w'){var o=(time/90+hash(x,y))%16|0;R(cx,'rgba(255,255,255,.35)',x*T-camX+o%12,y*T-camY+(hash(y,x)%12),3,1)}
+  smoke.forEach(function(s){cx.fillStyle='rgba(220,220,225,'+s.a*.7+')';cx.fillRect(Math.round(s.x-camX),Math.round(s.y-camY),3,3)});
+  var list=ALL.map(function(n){return{n:n,y:n.y*T}}).concat([{p:1,y:player.py}]).sort(function(a,b){return a.y-b.y});
+  list.forEach(function(e){if(e.p){var fr=player.moving?(player.p<.5?1:2):0;drawPerson(cx,Math.round(player.px-camX),Math.round(player.py-camY),player.dir,fr,player.P);return}
+    var n=e.n,bob=Math.sin(time/400+n.x)>.6?-1:0;drawPerson(cx,n.x*T-camX,n.y*T-camY,n.dir,0,n.P,bob);
+    var mark=null,col='#FFD45E';if(n===MAYOR){mark=count()===6&&!finale?'!':finale?'♥':'?';col=count()===6&&!finale?'#FFD45E':finale?'#FF8FA3':'#E3E6E8'}else mark=done[n.id]?'✓':'!';if(done[n.id])col='#8ED65F';
+    var bx=n.x*T-camX+4,by=n.y*T-camY-17+(Math.sin(time/250+n.x)*1.5|0);R(cx,'#2A2F36',bx-1,by-1,10,11);R(cx,col,bx,by,8,9);cx.fillStyle='#2A2F36';cx.font='bold 8px monospace';cx.textAlign='center';cx.fillText(mark,bx+4,by+8)});
+  if(isDark()){cx.fillStyle='rgba(12,20,52,.45)';cx.fillRect(0,0,W,H);cx.globalCompositeOperation='lighter';
+    B.forEach(function(b){(b.win||[]).forEach(function(w){cx.fillStyle='rgba(255,200,90,.55)';cx.fillRect(w[0]-camX,w[1]-camY,8,6);cx.fillStyle='rgba(255,180,60,.12)';cx.fillRect(w[0]-camX-4,w[1]-camY-4,16,14)})});
+    var gr=cx.createRadialGradient(player.px-camX+8,player.py-camY+8,2,player.px-camX+8,player.py-camY+8,46);gr.addColorStop(0,'rgba(255,220,150,.22)');gr.addColorStop(1,'rgba(255,220,150,0)');cx.fillStyle=gr;cx.fillRect(0,0,W,H);
+    cx.globalCompositeOperation='source-over'}
+  sparks.forEach(function(p){cx.globalAlpha=Math.max(0,p.l);R(cx,p.c,Math.round(p.x-camX),Math.round(p.y-camY),2,2)});cx.globalAlpha=1}
+function loop(now){var dt=Math.min(50,now-last);last=now;update(dt);render();requestAnimationFrame(loop)}
+hud();requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
