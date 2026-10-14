@@ -1,0 +1,26 @@
+---
+import type { Lang } from '../data/projects';
+import { calendly, links, ui } from '../i18n';
+const { lang } = Astro.props as { lang: Lang };
+const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
+---
+<div class="card cc">
+  <div class="l dk">
+    <div class="m">KR<i>.csv</i></div>
+    <div class="n">Kevin Radja</div>
+    <div class="t" set:html={T('Consultant Data &amp; BI freelance<br>Paris · à distance, France &amp; international', 'Freelance Data &amp; BI Consultant<br>Paris · remote, France &amp; worldwide')} />
+    <div class="av"><b class="dot" style="box-shadow:0 0 0 4px rgba(63,211,220,.25);background:#3FD3DC"></b><span>{ui.common.available[lang]}</span></div>
+    <div class="q">{T('Vos données Excel, SQL ou Power BI transformées en tableaux de bord clairs et en reporting automatisé.', 'Your Excel, SQL or Power BI data turned into clear dashboards and automated reporting.')}</div>
+    <div class="k"><span>Power BI</span><span>SQL</span><span>Excel</span><span>Python</span><span>Power Automate</span><span>DAX / M</span></div>
+  </div>
+  <div class="r">
+    <div class="h">{T('Me contacter', 'Get in touch')}</div>
+    <a class="btn p" href={calendly} target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>{T('Réserver un appel de 30 min', 'Book a 30-min call')}</a>
+    <a class="row" href={links.mail}><span class="ic2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span><span><small>E-mail</small><strong>kevinradja91940@gmail.com</strong></span><em>→</em></a>
+    <a class="row" href={links.whatsapp} target="_blank" rel="noopener"><span class="ic2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/></svg></span><span><small>WhatsApp</small><strong>+33 7 69 10 15 56</strong></span><em>→</em></a>
+    <div class="h" style="margin-top:8px">{T('Mes profils', 'My profiles')}</div>
+    <div class="pl"><a href={links.linkedin} target="_blank" rel="noopener">LinkedIn</a><a href={links.malt} target="_blank" rel="noopener">Malt</a></div>
+    <div class="nt">{T('Réponse sous 48 à 72 h', 'Reply within 48 to 72 hours')}</div>
+    <div class="nt">{ui.footer.siret[lang]}</div>
+  </div>
+</div>

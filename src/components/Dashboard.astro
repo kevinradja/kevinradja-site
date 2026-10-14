@@ -1,0 +1,7 @@
+---
+import type { Lang } from '../data/projects';
+import { ui } from '../i18n';
+const { id, lang, title } = Astro.props as { id: string; lang: Lang; title: string };
+---
+<div class="head" style="margin-bottom:18px"><div><div class="kicker">{ui.common.dashboard[lang]}</div><h2>{title}</h2></div><p class="mute" style="font-size:14px">{ui.common.dashNote[lang]}</p></div>
+<div class="dash"><iframe src={`/dashboards/${id}.html?lang=${lang}`} title={title} loading="lazy"></iframe></div>

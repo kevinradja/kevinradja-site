@@ -1,0 +1,35 @@
+---
+import type { Lang } from '../data/projects';
+import { r, calendly } from '../i18n';
+const { lang, compact = false } = Astro.props as { lang: Lang; compact?: boolean };
+const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
+const contact = r('contact', lang);
+const packs = [
+  { k: T('Quick-Win', 'Quick-Win'), t: T('Un livrable, vite.', 'One deliverable, fast.'), p: '690 €', li: [T('Nettoyage des données (Power Query)', 'Data cleanup (Power Query)'), T('Au choix : dashboard 1 page, Excel propre, rapport DAX/M corrigé ou script Python', 'Your pick: 1-page dashboard, clean Excel, fixed DAX/M report or Python script'), T('Guide de prise en main', 'Handover guide')], b: T('Choisir Quick-Win', 'Choose Quick-Win') },
+  { k: T('Le plus demandé', 'Most popular'), t: T('Pack PME', 'SME Pack'), p: '1 500 €', hi: true, li: [T('Modèle de données + dashboard multi-pages', 'Data model + multi-page dashboard'), T('Modules : Marketing & Ads, Finance & Compta, Tech & SaaS, Commerce & Ops', 'Modules: Marketing & Ads, Finance & Accounting, Tech & SaaS, Commerce & Ops'), T('Actualisation planifiée', 'Scheduled refresh'), T('Formation de vos équipes', 'Team training')], b: T('Choisir le pack PME', 'Choose the SME pack') },
+  { k: T('Sur-mesure', 'Bespoke'), t: T('Cockpit BI', 'BI Cockpit'), p: '4 000 €', li: [T('Cadrage et KPI avec la direction', 'Scoping and KPIs with leadership'), T('Pipelines de données et modèle sémantique', 'Data pipelines and semantic model'), T('Dashboards, reporting automatisé (Power Automate, Python) et outils .exe sur mesure', 'Dashboards, automated reporting (Power Automate, Python) and bespoke .exe tools'), T('Documentation et transfert de compétences', 'Documentation and knowledge transfer')], b: T('Discuter du projet', 'Discuss the project') },
+];
+const opts = [
+  [T('Audit data de 2 h (déduit si projet)', '2-hour data audit (credited if you proceed)'), '150 €'],
+  [T('Page de dashboard supplémentaire', 'Extra dashboard page'), '+350 €'],
+  [T('Source de données supplémentaire', 'Extra data source'), '+450 €'],
+  [T('Support & évolutions', 'Support & updates'), T('300 €/mois', '300 €/mo')],
+];
+---
+<div class="grid g3">
+  {packs.map(p => (
+    <div class:list={['card pr rv', { hi: p.hi }]}>
+      <div class="k">{p.k}</div>
+      <h3>{p.t}</h3>
+      <div class="price"><small>{T('à partir de', 'from')}</small>{p.p}</div>
+      <ul>{p.li.map(l => <li>{l}</li>)}</ul>
+      <a class:list={['btn', p.hi ? 'p' : 's']} href={p.hi ? calendly : contact} target={p.hi ? '_blank' : undefined} rel="noopener">{p.b}</a>
+    </div>
+  ))}
+</div>
+{!compact && (
+  <div class="grid g2" style="margin-top:18px">
+    {opts.map(o => <div class="card opt"><span>{o[0]}</span><b>{o[1]}</b></div>)}
+  </div>
+)}
+<p class="mute" style="margin-top:18px;font-size:14px">{T('Paiement en deux fois : 50 % à la commande, 50 % à la livraison. Tarifs HT, entreprise individuelle.', 'Two payments: 50% upfront, 50% on delivery. Prices excl. VAT, sole trader.')}</p>

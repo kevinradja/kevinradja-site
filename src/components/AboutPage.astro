@@ -1,0 +1,55 @@
+---
+import type { Lang } from '../data/projects';
+import { r, calendly, links } from '../i18n';
+const { lang } = Astro.props as { lang: Lang };
+const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
+const tl = [
+  ['2026 →', T('Manager Data & Digital · grand groupe automobile', 'Data & Digital Manager · major automotive group'), T('Registre de formations, outils partagés avec les RH, cockpit d’adoption du portail interne. En parallèle, activité freelance Data & BI.', 'Training registry, shared tools with HR, adoption cockpit for the internal portal. Freelance Data & BI activity alongside.')],
+  ['2025', T('Business Information · Coface, Europe centrale & de l’Est', 'Business Information · Coface, Central & Eastern Europe'), T('Cockpit commercial Power BI pour 12 pays et 500+ utilisateurs, clôtures mensuelles sécurisées, qualité des bases de prospection B2B. Reporting −30 %.', 'Power BI sales cockpit for 12 countries and 500+ users, secured monthly closes, B2B prospecting data quality. Reporting −30%.')],
+  ['2024', T('Perf & Data · Google France', 'Perf & Data · Google France'), T('Cockpit de mesure pour 180 grands comptes (Plx/BigQuery, Google Sheets), accompagnement GA4, Consent Mode et Enhanced Conversions des annonceurs du CAC 40.', 'Measurement cockpit for 180 key accounts (Plx/BigQuery, Google Sheets), GA4, Consent Mode and Enhanced Conversions support for CAC 40 advertisers.')],
+  ['2023', T('Corporate Strategic Planning · Dassault Systèmes', 'Corporate Strategic Planning · Dassault Systèmes'), T('Pipelines Python et cubes IBM TM1 du Global Analytics Model : 12 industries, 6 marques, données IDC, Gartner, Omdia, Oxford Economics. Traitement 100 h → quelques heures.', 'Python pipelines and IBM TM1 cubes for the Global Analytics Model: 12 industries, 6 brands, IDC, Gartner, Omdia and Oxford Economics data. Processing 100 h → a few hours.')],
+  ['2022', T('Équipe Web · KPMG France & KPMG Avocats', 'Web team · KPMG France & KPMG Avocats'), T('Content Factory sur Adobe Experience Manager, SEO, lancement du site KPMG Avocats avec près de 300 articles migrés.', 'Content Factory on Adobe Experience Manager, SEO, launch of the KPMG Avocats site with close to 300 migrated articles.')],
+];
+const tools = [
+  [T('Visualisation', 'Visualisation'), ['Power BI', 'DAX / M', 'Excel', 'Google Sheets', 'Looker Studio']],
+  [T('Données', 'Data'), ['SQL Server', 'BigQuery', 'Oracle SQL', 'Power Query', 'IBM TM1']],
+  [T('Automatisation', 'Automation'), ['Python', 'Power Automate', 'VBA', 'Scripts .exe', 'API REST']],
+  [T('Méthode', 'Method'), [T('Cadrage KPI', 'KPI scoping'), T('Qualité des données', 'Data quality'), T('Documentation', 'Documentation'), T('Formation', 'Training'), 'RGPD / GDPR']],
+];
+const how = [
+  [T('Je commence par la question, pas par l’outil.', 'I start with the question, not the tool.'), T('Un dashboard répond à une décision précise. Si la question n’est pas claire, on la clarifie avant d’ouvrir Power BI.', 'A dashboard answers a specific decision. If the question is not clear, we clarify it before opening Power BI.')],
+  [T('Je livre quelque chose que vous pouvez maintenir.', 'I deliver something you can maintain.'), T('Fichiers sources, documentation, formation : vous n’êtes jamais dépendant de moi.', 'Source files, documentation, training: you never depend on me.')],
+  [T('Je dis quand c’est trop.', 'I say when it is too much.'), T('Si un Quick-Win suffit, je ne vends pas un Cockpit. Le bon livrable est celui qui sera utilisé.', 'If a Quick-Win is enough, I will not sell a Cockpit. The right deliverable is the one that gets used.')],
+];
+---
+<section class="sec" style="padding-top:clamp(36px,5vw,64px)"><div class="wrap">
+  <div class="ph">
+    <div>
+      <div class="kicker">{T('Parcours', 'About')}</div>
+      <h1 style="font-size:clamp(30px,4vw,46px)">{T('Cinq ans de données dans des grands groupes, au service des PME.', 'Five years of data in large groups, now serving SMEs.')}</h1>
+      <p class="lead" style="margin-top:18px">{T('Je suis Kevin, consultant data & BI basé près de Paris. Depuis plus de 5 ans, je conçois des outils de reporting et de données pour Google France, Coface, Dassault Systèmes, KPMG et un grand groupe automobile, où je suis aujourd’hui Manager Data Analysis & Digital. En freelance, j’aide les PME et les équipes de grands groupes à obtenir des chiffres fiables, rapidement.', 'I’m Kevin, a data & BI consultant based near Paris. For over 5 years I have built reporting and data tools for Google France, Coface, Dassault Systèmes, KPMG and a major automotive group, where I am now Data Analysis & Digital Manager. As a freelancer I help SMEs and large-company teams get reliable numbers, fast.')}</p>
+      <div class="row" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel', 'Book a call')}</a><a class="btn s" href={links.linkedin} target="_blank" rel="noopener">LinkedIn</a><a class="btn s" href={links.malt} target="_blank" rel="noopener">Malt</a></div>
+    </div>
+    <img class="card" src="/kevin.jpg" alt="Kevin Radja" width="900" height="900" style="border-radius:var(--r);aspect-ratio:1;object-fit:cover;max-width:420px;justify-self:center" />
+  </div>
+</div></section>
+<section class="sec"><div class="wrap">
+  <div class="grid g2" style="gap:48px;align-items:start">
+    <div>
+      <div class="head"><div><div class="kicker">{T('Chronologie', 'Timeline')}</div><h2>{T('Quatre maisons, cinq ans.', 'Four houses, five years.')}</h2></div></div>
+      <div class="tl">{tl.map(x => <div class="it rv"><div class="d">{x[0]}</div><h3>{x[1]}</h3><p style="font-size:15px">{x[2]}</p></div>)}</div>
+    </div>
+    <div>
+      <div class="head"><div><div class="kicker">{T('Outils', 'Tools')}</div><h2>{T('Ce que je manie au quotidien.', 'What I use every day.')}</h2></div></div>
+      <div class="grid" style="gap:14px">{tools.map(t => <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{t[0]}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{(t[1] as string[]).map(c => <span class="chip">{c}</span>)}</div></div>)}</div>
+      <div class="head" style="margin-top:40px"><div><div class="kicker">{T('Façon de travailler', 'How I work')}</div><h2>{T('Trois règles.', 'Three rules.')}</h2></div></div>
+      <div class="grid" style="gap:14px">{how.map(h => <div class="card rv" style="padding:20px"><h3 style="font-size:17px;margin-bottom:6px">{h[0]}</h3><p style="font-size:14.5px">{h[1]}</p></div>)}</div>
+    </div>
+  </div>
+</div></section>
+<section class="sec"><div class="wrap">
+  <div class="card" style="padding:32px;display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap">
+    <div><h2 style="font-size:26px">{T('Envie de voir ce que ça donne sur vos données ?', 'Want to see what it looks like on your data?')}</h2><p style="margin-top:6px">{T('30 minutes, sans engagement, on regarde votre fichier ensemble.', '30 minutes, no commitment, we look at your file together.')}</p></div>
+    <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel', 'Book a call')}</a>
+  </div>
+</div></section>

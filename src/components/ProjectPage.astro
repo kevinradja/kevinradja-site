@@ -1,0 +1,54 @@
+---
+import type { Lang, Project } from '../data/projects';
+import { projects } from '../data/projects';
+import { ui, project as url, r } from '../i18n';
+import Dashboard from './Dashboard.astro';
+const { p, lang } = Astro.props as { p: Project; lang: Lang };
+const i = projects.indexOf(p);
+const next = projects[(i + 1) % projects.length];
+const C = ui.common;
+---
+<section class="sec" style="padding-top:clamp(36px,5vw,64px)">
+  <div class="wrap">
+    <a class="btn s sm vitrine-back" href={r('portfolio', lang)} style="display:none;margin-bottom:22px">{C.back[lang]}</a>
+    <div class="ph">
+      <div>
+        <div class="kicker">{C.caseStudy[lang]} · {p.client[lang]} · {p.year}</div>
+        <h1 style="font-size:clamp(30px,4vw,46px)">{p.title[lang]}</h1>
+        <p class="lead" style="margin-top:18px">{p.intro[lang]}</p>
+        <div class="meta">{p.tags[lang].map(t => <span class="chip">{t}</span>)}<span class="chip a">{p.sector[lang]}</span></div>
+      </div>
+      <img class="card" src={p.thumb} alt={p.title[lang]} width="1920" height="1080" style="border-radius:var(--r)" />
+    </div>
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <div class="four">
+      <div class="card"><h3>{C.mission[lang]}</h3><p>{p.mission[lang]}</p></div>
+      <div class="card"><h3>{C.challenge[lang]}</h3><p>{p.challenge[lang]}</p></div>
+      <div class="card"><h3>{C.solution[lang]}</h3><p>{p.solution[lang]}</p></div>
+      <div class="card hl"><h3>{C.result[lang]}</h3><p>{p.result[lang]}</p></div>
+    </div>
+    <div class="prose" style="max-width:72ch;margin-top:36px">{p.body[lang].map(b => <p>{b}</p>)}</div>
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <Dashboard id={p.dash} lang={lang} title={lang === 'fr' ? 'Testez le dashboard' : 'Try the dashboard'} />
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <a class="btn s" href={r('work', lang)}>← {C.allProjects[lang]}</a>
+    <a class="btn p" href={url(next.slug, lang)} data-next>{C.next[lang]} : {next.title[lang]} →</a>
+  </div>
+</section>
+<script is:inline>
+  /* vitrine mode (?v=1): hide nav, footer and contact links; keep the marker on internal project links */
+  (function(){if(!/[?&]v=1(&|$)/.test(location.search))return;document.documentElement.classList.add('vitrine');
+    var s=document.createElement('style');s.textContent='.vitrine .nav,.vitrine .foot,.vitrine .cta{display:none!important}.vitrine .vitrine-back{display:inline-flex!important}';document.head.appendChild(s);
+    var fr=document.documentElement.lang==='fr',list=fr?'/realisations/':'/en/work/',port=fr?'/portfolio/':'/en/portfolio/';
+    document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute('href');if(h===list){a.setAttribute('href',port);return}if(h.indexOf(list)===0&&h.indexOf('v=1')<0)a.setAttribute('href',h+(h.indexOf('?')<0?'?':'&')+'v=1')});
+  })();
+</script>

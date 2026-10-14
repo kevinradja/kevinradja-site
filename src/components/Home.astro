@@ -1,0 +1,87 @@
+---
+import type { Lang } from '../data/projects';
+import { projects } from '../data/projects';
+import { r, calendly, ui } from '../i18n';
+import Logos from './Logos.astro';
+import ProjectCard from './ProjectCard.astro';
+import Pricing from './Pricing.astro';
+import ContactCard from './ContactCard.astro';
+const { lang, vitrine = false } = Astro.props as { lang: Lang; vitrine?: boolean };
+const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
+const doors = [
+  { k: T('Je dirige une PME', 'I run an SME'), h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Un reporting mensuel qui tourne seul, un dashboard que vous ouvrez le lundi matin, un prix annoncé d’avance.', 'A monthly report that runs itself, a dashboard you open on Monday morning, an upfront price.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
+  { k: T('Je suis une équipe data ou finance', 'I’m a data or finance team'), h: T('Un renfort qui connaît les grands groupes.', 'Extra hands who know large organisations.'), p: T('Power BI, SQL, Python, clôtures et qualité de données : j’ai livré chez Google, Coface, Dassault Systèmes et KPMG.', 'Power BI, SQL, Python, closes and data quality: delivered at Google, Coface, Dassault Systèmes and KPMG.'), to: r('work', lang), c: T('Voir les réalisations', 'See the work') },
+  { k: T('Je cherche un freelance', 'I’m hiring a freelancer'), h: T('L’essentiel, en trente secondes.', 'The essentials, in thirty seconds.'), p: T('Parcours, outils, façon de travailler et disponibilité : tout ce qu’il faut pour décider d’un premier appel.', 'Background, tools, ways of working and availability: all you need to decide on a first call.'), to: r('about', lang), c: T('Voir le parcours', 'See the background') },
+];
+const results = [
+  { v: '−30 %', l: T('de temps de production du reporting', 'reporting production time'), c: 'Coface · 12 ' + T('pays', 'countries') + ' · 500+ ' + T('utilisateurs', 'users') },
+  { v: '68,7 %', l: T('d’adoption GA4 sur 180 grands comptes', 'GA4 adoption across 180 key accounts'), c: 'Google France · ' + T('objectifs dépassés dès nov. 2023', 'goals beaten by Nov. 2023') },
+  { v: '100 h → 3 h', l: T('de traitement des données', 'of data processing'), c: 'Dassault Systèmes · ' + T('pipelines Python', 'Python pipelines') },
+  { v: '−40 %', l: T('de délai de mise en ligne des formations', 'training time-to-market'), c: T('Groupe automobile · outil partagé RH/data', 'Automotive group · shared HR/data tool') },
+];
+const featured = [projects[3], projects[4], projects[5]];
+---
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Kevin Radja · {T('Consultant Data & BI freelance', 'Freelance Data & BI consultant')} · Paris</div>
+    <h1 class="rv in">{T('Vos données, enfin', 'Your data, finally')}<br /><em>{T('lisibles.', 'readable.')}</em></h1>
+    <p class="lead" style="margin-top:22px">{T('Je transforme vos fichiers Excel, bases SQL et rapports Power BI en tableaux de bord clairs et en reporting automatisé. Plus de 5 ans chez Google France, Coface, Dassault Systèmes et KPMG, au service des PME et des équipes de grands groupes.', 'I turn your Excel files, SQL databases and Power BI reports into clear dashboards and automated reporting. 5+ years at Google France, Coface, Dassault Systèmes and KPMG, now serving SMEs and large-company teams.')}</p>
+    <div class="stats">
+      <div><b>5+</b><span>{T('années d’expérience data & BI', 'years of data & BI experience')}</span></div>
+      <div><b>25 M€+</b><span>{T('de portefeuilles pilotés par mes dashboards', 'of portfolios steered by my dashboards')}</span></div>
+      <div><b>5 000+</b><span>{T('utilisateurs formés ou équipés', 'users trained or equipped')}</span></div>
+    </div>
+    <Logos lang={lang} />
+    {!vitrine && <div class="avail"><span class="dot"></span>{ui.common.available[lang]} · {T('réponse sous 48 à 72 h', 'reply within 48 to 72 hours')}</div>}
+    <div class="row">
+      {!vitrine && <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel de 30 min', 'Book a 30-min call')}</a>}
+      <a class="btn s" href={vitrine ? '#work' : r('work', lang)}>{T('Voir les réalisations', 'See the work')}</a>
+      {!vitrine && <a class="btn s" href={r('pricing', lang)}>{T('Les offres', 'Pricing')}</a>}
+    </div>
+  </div>
+</section>
+
+{!vitrine && (
+<section class="sec">
+  <div class="wrap">
+    <div class="head"><div><div class="kicker">{T('Trois portes', 'Three doors')}</div><h2>{T('Selon ce qui vous amène.', 'Depending on what brings you here.')}</h2></div><p class="mute">{T('Chaque porte ouvre la page faite pour vous.', 'Each door opens the page made for you.')}</p></div>
+    <div class="grid g3">
+      {doors.map(d => <a class="card door rv" href={d.to}><div class="k">{d.k}</div><h3>{d.h}</h3><p>{d.p}</p><div class="go"><span>{d.c}</span><i>→</i></div></a>)}
+    </div>
+  </div>
+</section>
+)}
+
+<section class="sec">
+  <div class="wrap">
+    <div class="head"><div><div class="kicker">{T('Résultats', 'Results')}</div><h2>{T('Ce que ça a donné.', 'What it delivered.')}</h2></div></div>
+    <div class="grid g4">
+      {results.map(x => <div class="card res rv"><div class="v">{x.v}</div><div class="l">{x.l}</div><div class="c">{x.c}</div></div>)}
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="head"><div><div class="kicker">{T('Réalisations', 'Work')}</div><h2>{T('Des études de cas, avec les dashboards à tester.', 'Case studies, with live dashboards to try.')}</h2></div>{!vitrine && <a class="btn s" href={r('work', lang)}>{ui.common.allProjects[lang]} →</a>}</div>
+    <div class="grid g3">
+      {(vitrine ? projects : featured).map(p => <ProjectCard p={p} lang={lang} vitrine={vitrine} />)}
+    </div>
+  </div>
+</section>
+
+{!vitrine && (
+<section class="sec">
+  <div class="wrap">
+    <div class="head"><div><div class="kicker">{T('Offres', 'Pricing')}</div><h2>{T('Trois façons de travailler ensemble.', 'Three ways to work together.')}</h2></div><p class="mute">{T('Des forfaits clairs, un prix annoncé d’avance, un livrable que vous gardez.', 'Clear packs, an upfront price, a deliverable you keep.')}</p></div>
+    <Pricing lang={lang} compact />
+    <div style="margin-top:14px"><a class="btn s" href={r('pricing', lang)}>{T('Options, déroulé et questions fréquentes', 'Options, process and FAQ')} →</a></div>
+  </div>
+</section>
+<section class="sec" id="contact">
+  <div class="wrap">
+    <div class="head"><div><div class="kicker">Contact</div><h2>{T('Parlons de votre projet.', 'Let’s talk about your project.')}</h2></div></div>
+    <ContactCard lang={lang} />
+  </div>
+</section>
+)}

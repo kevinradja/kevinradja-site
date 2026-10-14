@@ -1,0 +1,91 @@
+---
+import '../styles/global.css';
+import type { Lang } from '../data/projects';
+import { r, altPath, ui, calendly } from '../i18n';
+interface Props { lang: Lang; title: string; description: string; bare?: boolean; image?: string; path?: string }
+const { lang, title, description, bare = false, image = '/og.png' } = Astro.props;
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/';
+const other = altPath(path, lang);
+const site = Astro.site?.origin ?? '';
+const nav = [
+  { k: 'work', h: r('work', lang) }, { k: 'pricing', h: r('pricing', lang) }, { k: 'about', h: r('about', lang) }, { k: 'game', h: r('game', lang) }, { k: 'contact', h: r('contact', lang) },
+] as const;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={site + path} />
+  <link rel="alternate" hreflang={lang === 'fr' ? 'en' : 'fr'} href={site + other} />
+  <link rel="alternate" hreflang={lang} href={site + path} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={site + image} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_GB'} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function(){try{var t=localStorage.getItem('kr-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
+  </script>
+</head>
+<body>
+  {!bare && (
+  <header class="nav" id="nav">
+    <div class="wrap in">
+      <a class="logo" href={r('home', lang)} aria-label="Kevin Radja">KR<i>.csv</i></a>
+      <nav class="links">
+        {nav.map(n => <a class:list={['l', { on: path.startsWith(n.h) && n.h !== '/' }]} href={n.h}>{ui.nav[n.k][lang]}</a>)}
+      </nav>
+      <a class="ic" href={other} title={lang === 'fr' ? 'English version' : 'Version française'}>{lang === 'fr' ? 'EN' : 'FR'}</a>
+      <button class="ic" id="theme" aria-label={ui.theme[lang]} title={ui.theme[lang]}>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="ic" id="sound" data-silent aria-label={ui.sound[lang]} title={ui.sound[lang]}>
+        <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>
+        <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg>
+      </button>
+      <a class="btn p sm cta" href={calendly} target="_blank" rel="noopener">{ui.nav.cta[lang]}</a>
+      <button class="ic burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </header>
+  )}
+  <main><slot /></main>
+  {!bare && (
+  <footer class="foot">
+    <div class="wrap in">
+      <div><b style="color:var(--ink)">Kevin Radja</b> · {ui.footer.line[lang]}<br /><span style="font-size:12.5px">{ui.footer.siret[lang]}</span></div>
+      <div class="links">
+        <a href={r('work', lang)}>{ui.nav.work[lang]}</a><a href={r('pricing', lang)}>{ui.nav.pricing[lang]}</a><a href={r('contact', lang)}>{ui.nav.contact[lang]}</a>
+        <a href={r('legal', lang)}>{ui.footer.legal[lang]}</a><a href={r('privacy', lang)}>{ui.footer.privacy[lang]}</a>
+      </div>
+      <div>© {new Date().getFullYear()} Kevin Radja</div>
+    </div>
+  </footer>
+  )}
+  <script is:inline src="/sfx.js"></script>
+  <script is:inline>
+    (function(){
+      var root=document.documentElement;
+      function cur(){return root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
+      function paint(){var d=cur()==='dark';document.querySelectorAll('#theme .sun').forEach(function(e){e.style.display=d?'block':'none'});document.querySelectorAll('#theme .moon').forEach(function(e){e.style.display=d?'none':'block'});
+        document.querySelectorAll('iframe').forEach(function(f){try{f.contentWindow.postMessage({krTheme:cur()},'*')}catch(e){}})}
+      var b=document.getElementById('theme');if(b)b.onclick=function(){var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('kr-theme',n)}catch(e){}paint()};
+      paint();
+      var sb=document.getElementById('sound');function ps(){var m=window.KR&&KR.sfx&&KR.sfx.isMuted();document.querySelectorAll('#sound .on').forEach(function(e){e.style.display=m?'none':'block'});document.querySelectorAll('#sound .off').forEach(function(e){e.style.display=m?'block':'none'});
+        document.querySelectorAll('iframe').forEach(function(f){try{f.contentWindow.postMessage({krSound:m?'off':'on'},'*')}catch(e){}})}
+      if(sb)sb.onclick=function(){if(!window.KR||!KR.sfx)return;var m=!KR.sfx.isMuted();KR.sfx.mute(m);if(!m)KR.sfx.play('toggle');ps()};ps();
+      var bg=document.getElementById('burger'),nv=document.getElementById('nav');if(bg)bg.onclick=function(){nv.classList.toggle('open')};
+      var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.1});
+      document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
+      window.addEventListener('message',function(e){if(e.data&&e.data.krHeight){document.querySelectorAll('iframe').forEach(function(f){if(f.contentWindow===e.source)f.style.height=Math.ceil(e.data.krHeight)+'px'})}});
+    })();
+  </script>
+</body>
+</html>

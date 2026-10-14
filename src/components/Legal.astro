@@ -1,0 +1,49 @@
+---
+import type { Lang } from '../data/projects';
+const { lang, kind } = Astro.props as { lang: Lang; kind: 'legal' | 'privacy' };
+const fr = lang === 'fr';
+const legal = fr ? {
+  t: 'Mentions légales & conditions d’utilisation', i: 'Cette page présente les informations légales relatives à ce site et ses conditions d’utilisation. Dernière mise à jour : octobre 2026.',
+  s: [['01. Éditeur', ['Kevin Radja, consultant data & BI freelance', 'Basé près de Paris, France', 'SIRET : 130 405 574 00018', 'Code APE : 62.01Z', 'E-mail : kevinradja91940@gmail.com', 'Directeur de la publication : Kevin Radja']],
+  ['02. Hébergement', ['Ce site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis (vercel.com).']],
+  ['03. Propriété intellectuelle', ['Les textes, visuels et mises en page des études de cas de ce site sont la propriété de Kevin Radja, sauf mention contraire. Toute reproduction ou réutilisation sans accord écrit préalable est interdite.', 'Les noms d’entreprises cités dans le portfolio appartiennent à leurs propriétaires respectifs. Ils sont mentionnés uniquement pour décrire des missions et expériences passées et n’impliquent aucune recommandation de leur part. Les dashboards présentés reposent sur des données fictives.']],
+  ['04. Responsabilité', ['Les informations de ce site sont fournies à titre indicatif et peuvent évoluer sans préavis. Kevin Radja ne saurait être tenu responsable de l’usage qui en est fait ni du contenu des sites externes vers lesquels il renvoie.']],
+  ['05. Données personnelles', ['Le traitement de vos données personnelles est décrit dans la Politique de confidentialité.']],
+  ['06. Droit applicable', ['Ce site et les présentes conditions sont régis par le droit français. Tout litige relève des tribunaux français compétents.']],
+  ['07. Contact', ['Pour toute question sur ce site, écrivez à kevinradja91940@gmail.com.']]],
+} : {
+  t: 'Legal Notice & Terms of Use', i: 'This page sets out the legal information about this website and the rules for using it. Last updated: October 2026.',
+  s: [['01. Publisher', ['Kevin Radja, freelance data & BI consultant', 'Based near Paris, France', 'SIRET: 130 405 574 00018', 'APE Code: 62.01Z', 'Email: kevinradja91940@gmail.com', 'Publication director: Kevin Radja']],
+  ['02. Hosting', ['This website is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA (vercel.com).']],
+  ['03. Intellectual property', ['The texts, visuals and case study layouts on this site are the property of Kevin Radja, unless stated otherwise. They may not be copied or reused without prior written consent.', 'Company names mentioned in the portfolio belong to their respective owners. They are cited only to describe past assignments and experiences, and do not imply endorsement. The dashboards shown run on fictional data.']],
+  ['04. Liability', ['The information on this site is provided for general purposes and may change without notice. Kevin Radja cannot be held liable for any use of this information or for the content of external websites linked from this site.']],
+  ['05. Personal data', ['How your personal data is handled is described in the Privacy Policy.']],
+  ['06. Applicable law', ['This website and these terms are governed by French law. Any dispute will be brought before the competent French courts.']],
+  ['07. Contact', ['For any question about this website, write to kevinradja91940@gmail.com.']]],
+};
+const privacy = fr ? {
+  t: 'Politique de confidentialité', i: 'Cette politique explique quelles données personnelles sont collectées sur ce site et comment elles sont utilisées. Le site est édité par Kevin Radja, consultant data & BI freelance basé près de Paris. Dernière mise à jour : octobre 2026.',
+  s: [['01. Responsable du traitement', ['Le responsable du traitement est Kevin Radja. Pour toute question sur vos données, écrivez à kevinradja91940@gmail.com.']],
+  ['02. Données collectées', ['Uniquement les données que vous choisissez de m’envoyer : vos coordonnées (nom, e-mail et, si vous les indiquez, entreprise et téléphone) et votre message. L’hébergeur fournit des statistiques de fréquentation anonymes qui ne permettent pas de vous identifier. Le jeu et le thème clair/sombre mémorisent vos préférences uniquement dans votre navigateur.']],
+  ['03. Finalités', ['Vos données servent uniquement à répondre à votre demande, préparer une proposition et assurer le suivi d’une mission potentielle ou en cours. La base légale est votre consentement et les mesures précontractuelles prises à votre demande (article 6 du RGPD).']],
+  ['04. Durée de conservation', ['Les messages de prospects sont conservés au maximum 3 ans après notre dernier échange. Les données liées à une mission client sont conservées pendant la durée imposée par les obligations comptables et fiscales françaises.']],
+  ['05. Destinataires', ['Vos données ne sont jamais vendues, louées ni utilisées à des fins de prospection par des tiers. Elles sont seulement traitées par les outils nécessaires au fonctionnement du site et à ma réponse : l’hébergeur du site (Vercel), l’outil de prise de rendez-vous (Calendly) et mon fournisseur de messagerie.']],
+  ['06. Vos droits', ['Conformément au RGPD, vous pouvez à tout moment accéder aux données vous concernant, les faire rectifier ou effacer, vous opposer à leur traitement, en demander la limitation ou retirer votre consentement. Pour exercer ces droits, écrivez à kevinradja91940@gmail.com. Vous pouvez aussi adresser une réclamation à la CNIL (www.cnil.fr).']],
+  ['07. Cookies', ['Ce site n’utilise pas de cookies publicitaires ni de traceurs tiers. Vous pouvez bloquer les cookies à tout moment dans les réglages de votre navigateur.']]],
+} : {
+  t: 'Privacy Policy', i: 'This policy explains what personal data is collected on this website and how it is used. The site is published by Kevin Radja, freelance data & BI consultant based near Paris, France. Last updated: October 2026.',
+  s: [['01. Who is responsible', ['The data controller is Kevin Radja. For any question about your data, write to kevinradja91940@gmail.com.']],
+  ['02. What data is collected', ['Only the data you choose to send me: your contact details (name, email and, if you share them, company and phone number) and your message. The host provides anonymous audience statistics that do not identify you. The game and the light/dark theme store your preferences in your browser only.']],
+  ['03. Why it is used', ['Your data is used only to answer your request, prepare a proposal and follow up on a potential or ongoing assignment. The legal basis is your consent and the steps taken at your request before a contract (Article 6 of the GDPR).']],
+  ['04. How long it is kept', ['Messages from prospects are kept for up to 3 years after our last exchange. Data related to a client assignment is kept for the duration required by French accounting and tax rules.']],
+  ['05. Who can access it', ['Your data is never sold, rented or shared for marketing purposes. It is only processed by the tools needed to run this site and reply to you: the website host (Vercel), the scheduling tool (Calendly) and my email provider.']],
+  ['06. Your rights', ['Under the GDPR you can at any time access the data I hold about you, have it corrected or deleted, object to its use, ask for its processing to be limited or withdraw your consent. To exercise these rights, email kevinradja91940@gmail.com. You can also file a complaint with the CNIL (www.cnil.fr).']],
+  ['07. Cookies', ['This site does not use advertising cookies or third-party trackers. You can block cookies at any time in your browser settings.']]],
+};
+const d = kind === 'legal' ? legal : privacy;
+---
+<section class="sec" style="padding-top:clamp(36px,5vw,64px)"><div class="wrap" style="max-width:760px">
+  <h1 style="font-size:clamp(28px,3.6vw,40px)">{d.t}</h1>
+  <p class="lead" style="margin-top:14px;font-size:16px">{d.i}</p>
+  {d.s.map(s => <div style="margin-top:28px"><h2 style="font-size:19px;margin-bottom:8px">{s[0]}</h2>{(s[1] as string[]).map(p => <p style="margin-top:8px;font-size:15px">{p}</p>)}</div>)}
+</div></section>

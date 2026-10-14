@@ -1,0 +1,15 @@
+---
+import type { Lang, Project } from '../data/projects';
+import { project as url, ui } from '../i18n';
+const { p, lang, vitrine = false } = Astro.props as { p: Project; lang: Lang; vitrine?: boolean };
+const href = url(p.slug, lang) + (vitrine ? '?v=1' : '');
+---
+<a class="card pc rv" href={href}>
+  <img src={p.thumb} alt={p.title[lang]} loading="lazy" width="1920" height="1080" />
+  <div class="b">
+    <div class="m"><span class="acc" style="font-weight:700">{p.year}</span>·<span>{p.client[lang]}</span></div>
+    <h3>{p.title[lang]}</h3>
+    <p>{p.short[lang]}</p>
+    <div class="t">{p.tags[lang].slice(0, 3).map(t => <span class="chip">{t}</span>)}</div>
+  </div>
+</a>

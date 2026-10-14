@@ -1,0 +1,37 @@
+---
+import type { Lang } from '../data/projects';
+import { calendly } from '../i18n';
+import Pricing from './Pricing.astro';
+const { lang } = Astro.props as { lang: Lang };
+const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
+const steps = [
+  [T('Appel de 30 min', '30-min call'), T('On regarde votre fichier ou votre outil ensemble. Je vous dis si c’est un Quick-Win, un Pack PME ou un Cockpit, et à quel prix. Sans engagement.', 'We look at your file or tool together. I tell you whether it is a Quick-Win, an SME Pack or a Cockpit, and at what price. No commitment.')],
+  [T('Cadrage', 'Scoping'), T('Une page qui liste les indicateurs, les sources de données, le livrable et la date. Vous validez, je démarre. 50 % à la commande.', 'A one-page brief listing the KPIs, data sources, deliverable and date. You approve, I start. 50% upfront.')],
+  [T('Construction', 'Build'), T('Je travaille sur une copie anonymisée de vos données ou directement dans votre environnement. Un point d’avancement à mi-parcours.', 'I work on an anonymised copy of your data or directly in your environment. One progress check-in half-way.')],
+  [T('Livraison & prise en main', 'Delivery & handover'), T('Le livrable est à vous, documenté. Une session de formation pour votre équipe, puis 30 jours de corrections incluses. 50 % à la livraison.', 'The deliverable is yours, documented. A training session for your team, then 30 days of fixes included. 50% on delivery.')],
+];
+const faq = [
+  [T('Combien de temps ça prend ?', 'How long does it take?'), T('Un Quick-Win se livre en 1 à 2 semaines, un Pack PME en 3 à 5 semaines, un Cockpit BI en 6 à 10 semaines selon le nombre de sources. Je m’engage sur une date au cadrage.', 'A Quick-Win ships in 1 to 2 weeks, an SME Pack in 3 to 5 weeks, a BI Cockpit in 6 to 10 weeks depending on the number of sources. I commit to a date at scoping.')],
+  [T('Mes données sont confidentielles.', 'My data is confidential.'), T('Je signe un accord de confidentialité si vous le souhaitez, je travaille de préférence sur des extraits anonymisés, et rien de vos données n’apparaît jamais sur ce site : tous les dashboards présentés ici tournent sur des données fictives.', 'I sign an NDA if you wish, I prefer to work on anonymised extracts, and none of your data ever appears on this site: every dashboard shown here runs on fictional data.')],
+  [T('Vous travaillez à distance ?', 'Do you work remotely?'), T('Oui, partout en France et à l’international, avec des points en visio. Des journées sur site en Île-de-France sont possibles pour le cadrage ou la formation.', 'Yes, across France and internationally, with video check-ins. On-site days in the Paris area are possible for scoping or training.')],
+  [T('Et après la livraison ?', 'What happens after delivery?'), T('Vous gardez tout, y compris les fichiers sources et la documentation. L’option Support & évolutions (300 €/mois) couvre les ajustements, nouvelles pages et questions de vos équipes.', 'You keep everything, including source files and documentation. The Support & updates option (€300/month) covers adjustments, new pages and your team’s questions.')],
+  [T('Quels outils ?', 'Which tools?'), T('Power BI, Excel et Power Query, SQL (SQL Server, BigQuery, Oracle), Python, Power Automate. Je m’adapte à votre existant plutôt que d’imposer un nouvel outil.', 'Power BI, Excel and Power Query, SQL (SQL Server, BigQuery, Oracle), Python, Power Automate. I adapt to what you already have rather than imposing a new tool.')],
+  [T('Comment se passe la facturation ?', 'How does invoicing work?'), T('Entreprise individuelle, facture en deux fois (50 % à la commande, 50 % à la livraison), paiement par virement à 30 jours. Les tarifs sont indiqués hors taxes.', 'Sole trader, invoiced in two instalments (50% upfront, 50% on delivery), bank transfer within 30 days. Prices are excl. VAT.')],
+];
+---
+<section class="sec" style="padding-top:clamp(36px,5vw,64px)"><div class="wrap">
+  <div class="head"><div><div class="kicker">{T('Offres', 'Pricing')}</div><h1 style="font-size:clamp(30px,4vw,46px)">{T('Trois façons de travailler ensemble.', 'Three ways to work together.')}</h1></div><p class="mute">{T('Des forfaits clairs, un prix annoncé d’avance, un livrable que vous gardez.', 'Clear packs, an upfront price, a deliverable you keep.')}</p></div>
+  <Pricing lang={lang} />
+</div></section>
+<section class="sec"><div class="wrap">
+  <div class="head"><div><div class="kicker">{T('Déroulé', 'Process')}</div><h2>{T('Comment ça se passe.', 'How it works.')}</h2></div></div>
+  <div class="grid g4 steps">{steps.map(s => <div class="card step rv"><h3>{s[0]}</h3><p>{s[1]}</p></div>)}</div>
+  <div class="card" style="margin-top:28px;padding:28px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <div><div class="kicker" style="margin-bottom:6px">{T('Première marche', 'First step')}</div><h3>{T('Audit data de 2 h · 150 €, déduits si on travaille ensemble.', '2-hour data audit · €150, credited if we work together.')}</h3><p style="font-size:14.5px;margin-top:6px">{T('Vous repartez avec un diagnostic écrit de votre reporting et trois actions concrètes.', 'You leave with a written diagnosis of your reporting and three concrete actions.')}</p></div>
+    <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver l’audit', 'Book the audit')}</a>
+  </div>
+</div></section>
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="head"><div><div class="kicker">FAQ</div><h2>{T('Questions fréquentes.', 'Frequently asked.')}</h2></div></div>
+  <div class="faq">{faq.map(f => <details><summary>{f[0]}</summary><p>{f[1]}</p></details>)}</div>
+</div></section>

@@ -1,0 +1,8 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectPage from '../../components/ProjectPage.astro';
+import { projects } from '../../data/projects';
+export function getStaticPaths() { return projects.map(p => ({ params: { slug: p.slug }, props: { p } })); }
+const { p } = Astro.props;
+---
+<Base lang="fr" title={`${p.title.fr} | Kevin Radja`} description={p.intro.fr} image={p.thumb}><ProjectPage p={p} lang="fr" /></Base>

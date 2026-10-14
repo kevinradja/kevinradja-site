@@ -1,0 +1,12 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ProjectCard from '../../../components/ProjectCard.astro';
+import { projects } from '../../../data/projects';
+const lang = 'en' as const;
+---
+<Base lang={lang} title="Work | Kevin Radja" description="Eight data & BI case studies with interactive dashboards: Google France, Coface, Dassault Systèmes, KPMG and a major automotive group.">
+  <section class="sec" style="padding-top:clamp(36px,5vw,64px)"><div class="wrap">
+    <div class="head"><div><div class="kicker">{lang==='fr'?'Réalisations':'Work'}</div><h1 style="font-size:clamp(30px,4vw,46px)">Eight projects, eight dashboards to try.</h1></div><p class="mute">Every case study ends with an interactive dashboard built on fictional data: filter, hover, download.</p></div>
+    <div class="grid g3">{projects.map(p => <ProjectCard p={p} lang={lang} />)}</div>
+  </div></section>
+</Base>
