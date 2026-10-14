@@ -143,8 +143,9 @@ const nav = [
       w.addEventListener('click',late);
       addEventListener('keydown',function(e){if(done)return;var k=(e.key||'').toLowerCase();if(k==='a'||k===' '||k==='enter'){e.preventDefault();late()}});
       w.addEventListener('contextmenu',function(e){e.preventDefault();late()});
-      /* the wheel is not a gesture that allows sound: it still launches, silently */
-      addEventListener('wheel',function(){if(!done&&!going)go(false)},{passive:true});addEventListener('touchmove',function(){if(!done&&!going)go(false)},{passive:true});
+      /* the wheel cannot unlock sound: it only makes the invitation flash, the visitor must click or press a key */
+      var nT=0;function nudge(){if(done||going)return;w.classList.add('ask');w.classList.remove('nudge');void w.offsetWidth;w.classList.add('nudge');clearTimeout(nT);nT=setTimeout(function(){w.classList.remove('nudge')},900)}
+      addEventListener('wheel',nudge,{passive:true});addEventListener('touchmove',nudge,{passive:true});
       var sk=w.querySelector('.wskip');if(sk)sk.addEventListener('click',function(e){e.stopPropagation();end()});
       function f(now){if(done)return;if(!launchAt){requestAnimationFrame(f);return}var t=now-launchAt;if(rm)t=Math.max(t,WARP);var p=Math.min(1,t/WARP),sp=.003+Math.pow(p,2.4)*.075;
         x.fillStyle='rgba(7,28,30,'+(p<.9?.35:.6)+')';x.fillRect(0,0,W,H);

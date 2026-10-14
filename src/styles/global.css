@@ -1179,3 +1179,9 @@ body{overflow-x:clip}
 .pj-kpi span{font-size:15px;font-weight:600;color:var(--ink)}
 /* phones: long single words in page titles must fit */
 @media(max-width:520px){.pg-title{font-size:clamp(22px,7vw,40px);max-width:100%}}
+
+/* intro: scrolling makes the invitation and the A button flash */
+#warp.nudge .wask{animation:nudgeAsk .3s steps(2) 3;opacity:1}
+#warp.nudge .wpad .wa{animation:nudgeA .3s ease-in-out 3}
+@keyframes nudgeAsk{50%{opacity:.2;transform:scale(1.06)}}
+@keyframes nudgeA{50%{transform:scale(1.3)}}
