@@ -20,13 +20,15 @@ const brand = (s: string) => esc(s)
   .replace(/KPMG/g, '<span class="b-kp">KPMG</span>');
 const dot = (s: string) => /Coface/.test(s) ? 'cf' : /Google/.test(s) ? 'go' : /Dassault/.test(s) ? 'ds' : /KPMG/.test(s) ? 'kp' : '';
 const tools = [
-  [T('Data & BI', 'Data & BI'), ['Power BI', 'DAX / M', 'Power Query', 'Excel', 'Google Sheets', 'Looker Studio', T('Data visualisation', 'Data visualisation')]],
-  [T('Données & automatisation', 'Data & automation'), ['SQL Server', 'BigQuery', 'Oracle SQL', 'Python', 'IBM TM1', 'Power Automate', 'VBA', 'API REST']],
-  [T('Web & marketing analytics', 'Web & marketing analytics'), ['GA4', 'Google Ads', 'Consent Mode', 'Enhanced Conversions', 'Adobe Experience Manager', 'SEO', 'A/B testing']],
-  [T('Management & conseil', 'Management & consulting'), [T('Accompagnement d’équipe', 'Team support'), T('Coaching & montée en compétence', 'Coaching & upskilling'), T('Cadrage KPI', 'KPI scoping'), T('Adoption & conduite du changement', 'Adoption & change management'), T('Formation', 'Training'), T('Qualité des données', 'Data quality'), T('Documentation', 'Documentation'), 'RGPD / GDPR']],
+  [T('Data viz & BI', 'Data viz & BI'), ['Power BI', 'DAX', 'Power Query', 'Tableau', 'Looker Studio', 'Excel', 'Google Sheets', 'Google Analytics']],
+  [T('Données & ETL', 'Data & ETL'), ['SQL', 'BigQuery', 'Snowflake', 'dbt', 'Dataiku', 'SAP', 'Python', 'IBM TM1 Cognos']],
+  [T('Web & tracking', 'Web & tracking'), ['Consent Mode', 'Enhanced Conversions', 'Adobe Experience Manager', 'SEO', 'HTML / CSS', 'JavaScript', 'VBA']],
+  [T('Business & finance', 'Business & finance'), [T('Pilotage de la performance commerciale', 'Sales performance management'), T('Création de KPI', 'KPI design'), T('Pipeline CRM', 'CRM pipeline'), T('Projections financières', 'Financial forecasting'), T('Analyses d’écarts', 'Variance analysis'), T('Modélisation de rentabilité', 'Profitability modelling')]],
+  [T('Management & méthode', 'Management & method'), [T('Accompagnement d’équipe', 'Team support'), T('Coaching & montée en compétence', 'Coaching & upskilling'), T('Adoption & conduite du changement', 'Adoption & change management'), T('Agile (Scrum)', 'Agile (Scrum)'), T('Coordination IT & métier', 'IT & business coordination'), 'Jira', 'Figma', 'Trello', T('Qualité des données', 'Data quality'), 'RGPD / GDPR']],
 ];
-// Certifications: filled in once Kevin provides the exact list (section hidden while empty).
-const certs: string[] = [];
+const certs: string[] = ['Google Advanced Data Analytics', 'Google Business Intelligence', 'Google Project Management', 'Dataiku Advanced Datasets', 'dbt Fundamentals', 'Snowflake', T('Construire des agents IA', 'Building AI agents')];
+const degree = T('Master Informatique & Digital · EFREI Paris', 'MSc Computer Science & Digital · EFREI Paris');
+const langs = [[T('Français', 'French'), T('natif', 'native')], [T('Anglais', 'English'), T('natif', 'native')], [T('Tamoul', 'Tamil'), T('natif', 'native')], [T('Japonais', 'Japanese'), T('intermédiaire', 'intermediate')], [T('Allemand', 'German'), T('notions', 'basic')], [T('Roumain', 'Romanian'), T('notions', 'basic')]];
 const hobbies = [
   ['🥋', T('Karaté', 'Karate')], ['🎬', T('Montage vidéo', 'Video editing')], ['📷', T('Photographie', 'Photography')], ['🧭', T('Coaching', 'Coaching')],
 ];
@@ -56,7 +58,8 @@ const how = [
     <div>
       <div class="head"><div><div class="kicker">{T('Compétences', 'Skills')}</div><h2>{T('Ce que je sais faire.', 'What I can do.')}</h2></div></div>
       <div class="grid" style="gap:14px">{tools.map(t => <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{t[0]}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{(t[1] as string[]).map(c => <span class="chip">{c}</span>)}</div></div>)}
-        {certs.length > 0 && <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('Certifications', 'Certifications')}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{certs.map(c => <span class="chip">🎓 {c}</span>)}</div></div>}
+        <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('Diplôme & certifications', 'Degree & certifications')}</div><div style="display:flex;flex-wrap:wrap;gap:6px"><span class="chip">🎓 {degree}</span>{certs.map(c => <span class="chip">📜 {c}</span>)}</div></div>
+        <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('Langues', 'Languages')}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{langs.map(l => <span class="chip">{l[0]} <span class="mute" style="font-weight:500">· {l[1]}</span></span>)}</div></div>
         <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('En dehors des données', 'Beyond data')}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{hobbies.map(h => <span class="chip">{h[0]} {h[1]}</span>)}</div></div>
       </div>
       <div class="head" style="margin-top:40px"><div><div class="kicker">{T('Façon de travailler', 'How I work')}</div><h2>{T('Trois règles.', 'Three rules.')}</h2></div></div>
