@@ -2,12 +2,15 @@
 import type { Lang } from '../data/projects';
 import { ui } from '../i18n';
 const { lang } = Astro.props as { lang: Lang };
-const logos = [
-  { n: 'Google', f: 'google.svg', h: 24 }, { n: 'Coface', f: 'coface.svg', h: 22 }, { n: 'Dassault Systèmes', f: 'dassault.svg', h: 20 }, { n: 'KPMG', f: 'kpmg.svg', h: 24 },
+const logos: { n: string; f: string; d?: string; h: number }[] = [
+  { n: 'Google', f: 'google.svg', h: 24 }, { n: 'Coface', f: 'coface.svg', d: 'coface-dark.svg', h: 22 }, { n: 'Dassault Systèmes', f: 'dassault.svg', d: 'dassault-dark.svg', h: 20 }, { n: 'KPMG', f: 'kpmg.svg', d: 'kpmg-dark.svg', h: 24 },
 ];
 ---
 <div class="logos">
   <span>{ui.common.trusted[lang]}</span>
-  {logos.map(l => <img src={`/logos/${l.f}`} alt={l.n} title={l.n} style={`height:${l.h}px`} loading="lazy" />)}
+  {logos.map(l => <>
+    <img class:list={[{ lt: l.d }]} src={`/logos/${l.f}`} alt={l.n} title={l.n} style={`height:${l.h}px`} loading="lazy" />
+    {l.d && <img class="dk" src={`/logos/${l.d}`} alt={l.n} title={l.n} style={`height:${l.h}px`} loading="lazy" />}
+  </>)}
   <em class="chip" style="font-style:normal">{lang === 'fr' ? '+ un grand groupe automobile' : '+ a major automotive group'}</em>
 </div>

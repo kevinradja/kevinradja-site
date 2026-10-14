@@ -100,9 +100,10 @@ a.card:hover{transform:translateY(-3px);border-color:var(--line2)}
 .logos{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;margin-top:30px}
 .logos img{height:22px;width:auto;transition:transform .2s}
 .logos img:hover{transform:translateY(-2px)}
-.logos img{border-radius:10px;box-sizing:content-box}
-:root[data-theme="dark"] .logos img{background:#fff;padding:7px 12px}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .logos img{background:#fff;padding:7px 12px}}
+.logos img.dk{display:none}
+:root[data-theme="dark"] .logos img.dk{display:inline}
+:root[data-theme="dark"] .logos img.lt{display:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .logos img.dk{display:inline}:root:not([data-theme="light"]) .logos img.lt{display:none}}
 .logos span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:700;width:100%}
 .avail{display:inline-flex;align-items:center;gap:10px;margin-top:26px;font-size:14px;color:var(--ink2)}
 
