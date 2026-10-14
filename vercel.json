@@ -1,1 +1,15 @@
-{ "framework": "astro", "trailingSlash": true }
+{
+  "framework": "astro",
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/fv/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ]
+}
