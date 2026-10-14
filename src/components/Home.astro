@@ -154,13 +154,18 @@ const featured = [projects[3], projects[4], projects[5]];
       <div class="c-game-txt">
         <div class="kicker">{T('Une pause ?', 'Need a break?')}</div>
         <h2>{T('Le Village des Données', 'Data Village')}</h2>
-        <p>{T('Un petit RPG en 8-bit : aidez un village à gérer son eau, ses loyers et ses dépenses, et croisez au passage les étapes de mon parcours.', 'A tiny 8-bit RPG: help a village manage its water, rents and spending, and meet the steps of my journey along the way.')}</p>
+        <p>{T('Un RPG en 8-bit : capturez des outils sauvages (Excel, SQL, Power BI…) dans les hautes herbes, aidez les habitants à remettre de l’ordre dans leurs chiffres et complétez votre Datadex. Chaque habitant cache une étape de mon parcours.', 'An 8-bit RPG: catch wild tools (Excel, SQL, Power BI…) in the tall grass, help villagers sort out their numbers and complete your Datadex. Each villager hides a step of my journey.')}</p>
         <span class="btn p">{T('Jouer', 'Play')} →</span>
-        <div class="c-talk" aria-hidden="true">
-          <div class="tk tk1"><img src="/npc1.svg" alt="" /><span>{T('Mes chiffres ne collent pas…', 'My numbers don’t add up…')}</span></div>
-          <div class="tk tk2 me"><span>{T('On range tout ça ensemble !', 'Let’s sort it out together!')}</span><img src="/avatar-wink.svg" alt="" /></div>
-          <div class="tk tk3"><img src="/npc3-happy.svg" alt="" /><span>{T('Enfin un tableau lisible !', 'Finally a readable dashboard!')}</span></div>
-        </div>
+        <div class="c-talk" aria-hidden="true" data-lines={JSON.stringify([
+          ['/npc1.svg', T('Mes registres sont éparpillés partout…', 'My records are scattered everywhere…')],
+          ['/avatar-wink.svg', T('Il me faut un Excel. Je vais en capturer un !', 'I need an Excel. I’ll go catch one!')],
+          ['/npc2.svg', T('100 heures de calcul à la main, à l’aide !', '100 hours of manual work, help!')],
+          ['/avatar.svg', T('Un Python sauvage devrait faire l’affaire.', 'A wild Python should do the trick.')],
+          ['/npc3.svg', T('Le puits se vide, personne ne sait pourquoi.', 'The well is emptying, nobody knows why.')],
+          ['/avatar-think.svg', T('GA4 et Looker Studio : on va tout mesurer.', 'GA4 and Looker Studio: we’ll measure everything.')],
+          ['/npc4-happy.svg', T('Les loyers sont enfin à jour, merci !', 'Rents are finally up to date, thanks!')],
+          ['/avatar-wow.svg', T('Datadex 12/19… il manque les légendaires !', 'Datadex 12/19… legendaries still missing!')],
+        ])}></div>
       </div>
     </a>
   </div>
@@ -292,6 +297,12 @@ const featured = [projects[3], projects[4], projects[5]];
     // pricing: deal the cards when the section shows up
     var dl=document.getElementById('deal');
     if(dl){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){dl.classList.add('go');if(window.krDeal)krDeal(dl);else dl.classList.add('in');io.disconnect()}})},{threshold:.25});io.observe(dl)}
+    // game band: a looping chat between Kevin and the villagers
+    document.querySelectorAll('.c-talk[data-lines]').forEach(function(box){var L=JSON.parse(box.dataset.lines),i=0;
+      function add(){var l=L[i%L.length],me=l[0].indexOf('avatar')>=0,d=document.createElement('div');d.className='tk'+(me?' me':'');
+        d.innerHTML=me?'<span></span><img alt="" src="'+l[0]+'">':'<img alt="" src="'+l[0]+'"><span></span>';d.querySelector('span').textContent=l[1];
+        box.appendChild(d);requestAnimationFrame(function(){d.classList.add('in')});while(box.children.length>3){var o=box.firstElementChild;o.remove()}i++}
+      add();add();setInterval(add,2200)});
     // results slider
     document.querySelectorAll('.c-slider').forEach(function(s){var n=s.querySelectorAll('.c-slide').length,i=0,t;
       function go(k){i=(k+n)%n;['.c-slide','.c-slide-txt','.c-dots button'].forEach(function(q){s.querySelectorAll(q).forEach(function(e,j){e.classList.toggle('on',j===i)})})}
