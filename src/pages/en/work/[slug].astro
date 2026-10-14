@@ -5,4 +5,4 @@ import { projects } from '../../../data/projects';
 export function getStaticPaths() { return projects.map(p => ({ params: { slug: p.slug }, props: { p } })); }
 const { p } = Astro.props;
 ---
-<Base lang="en" title={`${p.title.en} | Kevin Radja`} description={p.intro.en} image={p.thumb}><ProjectPage p={p} lang="en" /></Base>
+<Base lang="en" title={`${p.title.en} | Kevin Radja`} description={p.intro.en} image={`/og/${p.slug}-en.jpg`}><ProjectPage p={p} lang="en" /></Base>
