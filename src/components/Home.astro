@@ -73,6 +73,7 @@ const featured = [projects[3], projects[4], projects[5]];
       <div class="kicker">{T('Mon métier', 'What I do')}</div>
       <div class="c-giant">{T('De l’Excel', 'From Excel')}</div>
       <div class="device c-story-dev">
+        <div class="hp" aria-hidden="true"><b>HP</b><span><i></i></span><em>25/100</em></div>
         <div class="scr stage" data-step="0">
           <div class="bar"></div>
           <div class="cap">ventes_mars_FINAL_v3(2).xlsx</div>
@@ -146,6 +147,7 @@ const featured = [projects[3], projects[4], projects[5]];
 <section class="c-game" id="jeu">
   <div class="wrap">
     <a class="c-game-in" href={r('game', lang)}>
+      <span class="c-cloud c1" aria-hidden="true"></span><span class="c-cloud c2" aria-hidden="true"></span><span class="c-walker" aria-hidden="true"><img src="/avatar.svg" alt="" /></span>
       <div class="c-game-art" aria-hidden="true"><span>🏡</span><span>🧑‍💼</span><span>💧</span><span>📒</span></div>
       <div class="c-game-txt">
         <div class="kicker">{T('Une pause ?', 'Need a break?')}</div>
@@ -260,7 +262,7 @@ const featured = [projects[3], projects[4], projects[5]];
     if(sec){var st=sec.querySelector('.stage'),li=sec.querySelectorAll('.c-steps li'),cap=sec.querySelector('.cap'),ex=sec.querySelectorAll('.c-explain p');
       var caps=['ventes_mars_FINAL_v3(2).xlsx','ventes_mars_propre.csv','ca_mensuel.pbix','dashboard · live'];
       var upd=function(){var r=sec.getBoundingClientRect(),h=sec.offsetHeight-innerHeight,p=h>0?Math.min(1,Math.max(0,-r.top/h)):1,k=Math.min(3,Math.floor(p*4.2));
-        st.style.setProperty('--p',p.toFixed(3));if(st.dataset.step!=String(k)){var dv=st.closest('.device');if(st.dataset.step!==undefined&&dv){dv.classList.remove('shake');void dv.offsetWidth;dv.classList.add('shake');clearTimeout(dv._t);dv._t=setTimeout(function(){dv.classList.remove('shake')},700)}var pv=st.dataset.step===undefined?-1:+st.dataset.step;if(pv>=0&&window.KR&&KR.sfx)KR.sfx.play(k>pv?(k===3?'stage3':'heal'):'stage0');if(pv>=0&&k>pv&&dv){for(var h=0;h<3;h++){(function(h){var e=document.createElement('span');e.className='heal';e.innerHTML=h===0?'+1 <i>♥</i>':'<i>♥</i>';e.style.left=(42+h*9-(h?14:0))+'%';e.style.animationDelay=(h*.12)+'s';dv.appendChild(e);setTimeout(function(){e.remove()},1500)})(h)}}st.dataset.step=k;cap.textContent=caps[k];li.forEach(function(e,i){e.classList.toggle('on',i===k)});ex.forEach(function(e,i){e.classList.toggle('on',i===k)})}};
+        st.style.setProperty('--p',p.toFixed(3));if(st.dataset.step!=String(k)){var dv=st.closest('.device');if(st.dataset.step!==undefined&&dv){dv.classList.remove('shake');void dv.offsetWidth;dv.classList.add('shake');clearTimeout(dv._t);dv._t=setTimeout(function(){dv.classList.remove('shake')},700)}var pv=st.dataset.step===undefined?-1:+st.dataset.step;if(pv>=0&&window.KR&&KR.sfx)KR.sfx.play(k>pv?(k===3?'stage3':'heal'):'stage0');if(pv>=0&&k>pv&&dv){for(var h=0;h<3;h++){(function(h){var e=document.createElement('span');e.className='heal';e.innerHTML=h===0?'+1 <i>♥</i>':'<i>♥</i>';e.style.left=(42+h*9-(h?14:0))+'%';e.style.animationDelay=(h*.12)+'s';dv.appendChild(e);setTimeout(function(){e.remove()},1500)})(h)}}st.dataset.step=k;cap.textContent=caps[k];if(dv){var hv=[25,55,80,100][k];dv.style.setProperty('--hp',hv+'%');dv.dataset.hp=k;var he=dv.querySelector('.hp em');if(he)he.textContent=hv+'/100'}li.forEach(function(e,i){e.classList.toggle('on',i===k)});ex.forEach(function(e,i){e.classList.toggle('on',i===k)})}};
       addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd()}
     // hero: title zooms and fades, device comes forward while scrolling
     var ht=document.querySelector('.c-title'),hd=document.querySelector('.c-hero-dev');

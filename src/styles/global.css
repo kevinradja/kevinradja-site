@@ -910,3 +910,31 @@ body{line-height:1.65}
 .c-aud-dark .device .dg .t b{color:var(--ink)}
 .c-aud-l button:focus{outline:none}
 .c-aud-l button:focus-visible{outline:2px solid #9FE0D8;outline-offset:4px;border-radius:6px}
+
+/* HP bar of the Excel file */
+.hp{position:absolute;left:50%;top:-38px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:#1d2430;border:3px solid #F4EFE4;border-radius:8px;padding:5px 10px;font:800 12px/1 ui-monospace,Menlo,Consolas,monospace;color:#F4EFE4;z-index:4;box-shadow:0 4px 0 rgba(0,0,0,.25);white-space:nowrap}
+.hp span{width:clamp(90px,12vw,150px);height:10px;background:#3a4250;border-radius:2px;overflow:hidden}
+.hp i{display:block;height:100%;width:var(--hp,25%);background:#E5484D;transition:width .7s cubic-bezier(.2,.8,.2,1),background .5s;background-image:linear-gradient(rgba(255,255,255,.35) 0 30%,transparent 30%)}
+.device[data-hp="1"] .hp i{background-color:#F0A030}
+.device[data-hp="2"] .hp i{background-color:#C8D44A}
+.device[data-hp="3"] .hp i{background-color:#4BC86B}
+.hp b{color:#FF5A6E}
+/* game band comes alive */
+.c-game-in{position:relative;overflow:hidden}
+.c-game-art span{animation:hop 2.4s ease-in-out infinite}
+.c-game-art span:nth-child(2){animation-delay:.2s}.c-game-art span:nth-child(3){animation-delay:.4s}.c-game-art span:nth-child(4){animation-delay:.6s}
+@keyframes hop{0%,60%,100%{transform:none}70%{transform:translateY(-10px) rotate(-4deg)}80%{transform:translateY(0)}85%{transform:translateY(-4px)}}
+.c-cloud{position:absolute;top:8%;width:90px;height:26px;background:#fff;border-radius:20px;opacity:.85;animation:cloud 38s linear infinite;z-index:0}
+.c-cloud:before{content:"";position:absolute;left:18px;top:-14px;width:40px;height:30px;background:#fff;border-radius:50%}
+.c-cloud.c2{top:16%;transform:scale(.7);animation-duration:55s;animation-delay:-20s}
+@keyframes cloud{from{left:-120px}to{left:110%}}
+.c-walker{position:absolute;bottom:10px;width:44px;height:44px;z-index:1;animation:walk 18s linear infinite}
+.c-walker img{width:100%;height:100%;border-radius:50%;border:3px solid #2A2F36;animation:step .4s steps(2) infinite}
+@keyframes walk{from{left:-60px}to{left:105%}}
+@keyframes step{50%{transform:translateY(-4px)}}
+.c-game-art,.c-game-txt{position:relative;z-index:2}
+.c-game-txt .btn.p{animation:press 1.4s steps(2) infinite}
+@keyframes press{50%{box-shadow:0 0 0 4px rgba(14,82,87,.25)}}
+.c-game-in:hover .c-game-txt{animation:shake .5s cubic-bezier(.36,.07,.19,.97)}
+/* about avatar alive */
+.ab-dev img.alive{animation:bob 3.4s ease-in-out infinite}
