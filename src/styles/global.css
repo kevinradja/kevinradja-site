@@ -542,3 +542,14 @@ a.card:hover{transform:translateY(-3px);border-color:var(--acc)}
 .c-game-txt p{color:#3C5557;max-width:58ch;margin-bottom:16px}
 .c-game-txt .btn.p{background:#0E5257;color:#FAF7F0}
 @media(max-width:700px){.c-game-in{grid-template-columns:1fr}.c-game-art{grid-template-columns:repeat(4,52px)}.c-game-art span{width:52px;height:52px;font-size:24px}}
+@media(max-width:700px){
+  .c-story-dev{width:100%;margin:10px 0}
+  .c-story-dev .scr{aspect-ratio:1/1}
+  .c-story-dev .ly{inset:34px 8px 10px}
+  .c-story-dev .tb{font-size:11px}.c-story-dev .tb td,.c-story-dev .tb th{padding:6px 3px}
+  .c-story-dev .ly0 .tb tr{transform:none!important}
+  .c-story-dev .note{font-size:10.5px}
+  .c-story-dev .dg{grid-template-columns:repeat(3,1fr);gap:6px}.c-story-dev .dg .t{padding:7px}.c-story-dev .dg .t b{font-size:16px}.c-story-dev .dg .t small{font-size:8.5px}
+  .c-panel{padding:16px 12px;justify-content:center}
+  .c-giant{font-size:clamp(26px,8.6vw,60px)}
+}
