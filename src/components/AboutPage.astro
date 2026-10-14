@@ -38,15 +38,15 @@ const how = [
   [T('Je dis quand c’est trop.', 'I say when it is too much.'), T('Si un Quick-Win suffit, je ne vends pas un Cockpit. Le bon livrable est celui qui sera utilisé.', 'If a Quick-Win is enough, I will not sell a Cockpit. The right deliverable is the one that gets used.')],
 ];
 ---
-<section class="sec" style="padding-top:clamp(36px,5vw,64px)"><div class="wrap">
-  <div class="ph">
+<section class="ab-hero"><div class="wrap">
+  <div class="ph ph-c">
     <div>
       <div class="kicker">{T('Parcours', 'About')}</div>
-      <h1 style="font-size:clamp(30px,4vw,46px)">{T('Cinq ans de données dans des grands groupes, au service des PME.', 'Five years of data in large groups, now serving SMEs.')}</h1>
+      <h1 class="pg-title">{T('Cinq ans de données dans des grands groupes, au service des PME.', 'Five years of data in large groups, now serving SMEs.')}</h1>
       <p class="lead" style="margin-top:18px">{T('Je suis Kevin, consultant data & BI basé près de Paris. Depuis plus de 5 ans, je conçois des outils de reporting et de données pour Google France, Coface, Dassault Systèmes, KPMG et un grand groupe automobile, où je suis aujourd’hui Manager Data & Digital : j’y accompagne plus de 10 personnes et mon travail touche plus de 1 000 collaborateurs. En freelance, j’aide les PME et les équipes de grands groupes à obtenir des chiffres fiables, rapidement.', 'I’m Kevin, a data & BI consultant based near Paris. For over 5 years I have built reporting and data tools for Google France, Coface, Dassault Systèmes, KPMG and a major automotive group, where I am now Data & Digital Manager, supporting 10+ people on work that reaches 1,000+ employees. As a freelancer I help SMEs and large-company teams get reliable numbers, fast.')}</p>
       <div class="row" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel', 'Book a call')}</a><a class="btn s" href={links.linkedin} target="_blank" rel="noopener">LinkedIn</a><a class="btn s" href={links.malt} target="_blank" rel="noopener">Malt</a></div>
     </div>
-    <img class="card" src="/kevin.jpg" alt="Kevin Radja" width="900" height="900" style="border-radius:var(--r);aspect-ratio:1;object-fit:cover;max-width:420px;justify-self:center" />
+    <div class="device ab-dev"><div class="scr"><img src="/kevin.jpg" alt="Kevin Radja" width="900" height="900" /></div></div>
   </div>
 </div></section>
 <section class="sec"><div class="wrap">
@@ -68,8 +68,8 @@ const how = [
   </div>
 </div></section>
 <section class="sec"><div class="wrap">
-  <div class="card" style="padding:32px;display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap">
-    <div><h2 style="font-size:26px">{T('Envie de voir ce que ça donne sur vos données ?', 'Want to see what it looks like on your data?')}</h2><p style="margin-top:6px">{T('30 minutes, sans engagement, on regarde votre fichier ensemble.', '30 minutes, no commitment, we look at your file together.')}</p></div>
+  <div class="c-band">
+    <div><h2 class="c-band-t">{T('Envie de voir ce que ça donne sur vos données ?', 'Want to see what it looks like on your data?')}</h2><p style="margin-top:6px">{T('30 minutes, sans engagement, on regarde votre fichier ensemble.', '30 minutes, no commitment, we look at your file together.')}</p></div>
     <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel', 'Book a call')}</a>
   </div>
 </div></section>

@@ -553,3 +553,60 @@ a.card:hover{transform:translateY(-3px);border-color:var(--acc)}
   .c-panel{padding:16px 12px;justify-content:center}
   .c-giant{font-size:clamp(26px,8.6vw,60px)}
 }
+
+/* ===================== other pages, Caeli style ===================== */
+.pg-title{font-size:clamp(38px,7vw,112px);color:var(--acc);max-width:18ch;margin:6px auto 0;line-height:.9}
+.head{flex-direction:column;align-items:center;text-align:center;justify-content:center;gap:12px;margin-bottom:40px}
+.head>div{display:flex;flex-direction:column;align-items:center}
+.head p{margin:0 auto;text-align:center}
+.sec[style*="padding-top"]{padding-top:clamp(56px,8vw,110px)!important}
+
+/* project page */
+.pj-hero{padding:clamp(56px,8vw,110px) 0 0;text-align:center}
+.pj-hero .lead{margin:22px auto 0;text-align:center}
+.pj-hero .meta{justify-content:center}
+.pj-dev{max-width:980px;margin:clamp(36px,5vw,64px) auto 0}
+.pj-dev .scr{padding:0;background:var(--card)}
+.pj-dev img{width:100%;height:auto;display:block}
+.pj-four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pj-four>div{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px 22px}
+.pj-four span{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:30px;color:var(--line2)}
+.pj-four h3{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;text-transform:uppercase;font-size:18px;color:var(--acc);margin:10px 0 8px}
+.pj-four p{font-size:14.5px}
+.pj-four .hl{background:var(--deep);border-color:var(--deep)}
+.pj-four .hl span{color:rgba(244,239,228,.3)}.pj-four .hl h3{color:#9FE0D8}.pj-four .hl p{color:rgba(244,239,228,.85)}
+@media(max-width:980px){.pj-four{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.pj-four{grid-template-columns:1fr}}
+.pj-prose{max-width:72ch;margin:44px auto 0;font-size:16.5px}
+.pj-next{background:var(--deep);padding:clamp(60px,9vw,120px) 0;margin-top:clamp(40px,6vw,80px)}
+.pj-next-in{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px}
+.pj-next .kicker{color:#9FE0D8}
+.pj-next-t{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;text-transform:uppercase;font-size:clamp(30px,5.4vw,80px);line-height:.92;color:#F4EFE4;max-width:20ch;transition:color .2s}
+.pj-next-in:hover .pj-next-t{color:#9FE0D8}
+.pj-next .btn.p{background:#F4EFE4;color:var(--deep)}
+.pj-next .btn.s{background:transparent;color:#F4EFE4;border-color:rgba(244,239,228,.35)}
+.pj-next .btn.s:hover{border-color:#F4EFE4;color:#fff}
+.pj-next+.foot{margin-top:0}
+
+/* about page */
+.ab-hero{padding:clamp(56px,8vw,110px) 0 clamp(30px,4vw,50px)}
+.ph-c{grid-template-columns:1fr;text-align:center;justify-items:center;gap:clamp(30px,4vw,56px)}
+.ph-c .lead{margin-left:auto!important;margin-right:auto!important}
+.ph-c .row{justify-content:center}
+.ab-dev{width:min(360px,80vw)}
+.ab-dev .scr{padding:0;aspect-ratio:1}
+.ab-dev img{width:100%;height:100%;object-fit:cover;display:block}
+.tl .d{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:26px;letter-spacing:-.01em;color:var(--acc)}
+.tl h3{font-size:18px}
+.c-band{background:var(--deep);color:#F4EFE4;border-radius:22px;padding:clamp(36px,6vw,80px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px}
+.c-band-t{color:#F4EFE4;font-size:clamp(28px,4.6vw,64px);max-width:18ch}
+.c-band p{color:rgba(244,239,228,.8)!important}
+.c-band .btn.p{background:#F4EFE4;color:var(--deep)}
+
+/* pricing page cards, steps */
+.step{border-radius:var(--r)}
+.step:before{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:28px;color:var(--line2)}
+.faq summary{font-weight:700}
+
+/* game page: frame the game like a device */
+.sec iframe[src*="village"]{border-radius:18px}
