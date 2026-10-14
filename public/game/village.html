@@ -48,6 +48,35 @@ canvas{width:100%;height:100%;display:block;image-rendering:pixelated;image-rend
 .dash .b{height:12px;border-radius:4px;background:#E3E6E8;overflow:hidden}
 .dash .b i{display:block;height:100%;width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
 .hide{display:none!important}
+.dexbtn{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700;color:var(--ink);white-space:nowrap}
+.mon{position:relative;display:inline-grid;place-items:center;width:var(--s,96px);height:var(--s,96px);border-radius:46% 46% 40% 40%;background:var(--c);border:4px solid #1d2430;box-shadow:0 6px 0 rgba(0,0,0,.2);color:#fff;font:800 calc(var(--s,96px)*.24)/1 ui-monospace,Menlo,Consolas,monospace;text-shadow:0 2px 0 rgba(0,0,0,.35)}
+.mon:before,.mon:after{content:"";position:absolute;top:24%;width:14%;height:16%;background:#fff;border-radius:50%;box-shadow:inset 0 0 0 calc(var(--s,96px)*.03) #1d2430}
+.mon:before{left:24%}.mon:after{right:24%}
+.mon span{margin-top:32%}
+.mon.shiny{box-shadow:0 6px 0 rgba(0,0,0,.2),0 0 0 4px #FFD45E,0 0 24px #FFD45E}
+.mon.unk{background:#c9c2b6;filter:grayscale(1);opacity:.45}
+.bt,.dex{position:absolute;inset:0;background:rgba(10,20,30,.78);display:flex;align-items:center;justify-content:center;padding:14px;z-index:20}
+.bt-in,.dex-in{background:#fffdf6;color:#1d2430;border:3px solid #2A2F36;border-radius:14px;padding:18px;text-align:center;width:min(380px,100%);box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.bt-in h3{font-size:17px;margin:12px 0 2px}
+.bt-rar{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.bt-bar{position:relative;height:22px;background:#E3E6E8;border:3px solid #2A2F36;border-radius:8px;margin:14px 0 8px;overflow:hidden}
+.bt-bar .z{position:absolute;top:0;bottom:0;background:#4BC86B}
+.bt-bar .cur{position:absolute;top:-2px;bottom:-2px;width:5px;background:#1d2430;border-radius:2px}
+.bt-msg{font-size:12.5px;color:#4b5563;min-height:34px}
+.bt-btns{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.bt-btns button{border:0;border-radius:10px;padding:10px 16px;font-weight:800;cursor:pointer;font-size:13px}
+.bt-btns .cap{background:#0E5257;color:#fff}.bt-btns .run{background:#E3E6E8;color:#1d2430}
+.mon.wob{animation:wob .5s ease-in-out}
+@keyframes wob{25%{transform:rotate(-12deg)}50%{transform:rotate(10deg)}75%{transform:rotate(-6deg)}}
+.mon.gone{animation:gone .5s ease-in forwards}@keyframes gone{to{transform:translateX(140px) scale(.4);opacity:0}}
+.mon.caught{animation:caught .6s ease-in forwards}@keyframes caught{50%{transform:scale(1.15)}to{transform:scale(.2) translateY(40px);opacity:0}}
+.dex-in{width:min(560px,100%);max-height:100%;overflow:auto;text-align:left}
+.dex-in h3{display:flex;justify-content:space-between;align-items:center;font-size:16px;margin-bottom:10px}
+.dex-in h3 button{border:0;background:#E3E6E8;border-radius:8px;padding:6px 10px;font-weight:800;cursor:pointer}
+.dex-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px}
+.dex-c{text-align:center;font-size:11px;font-weight:700}
+.dex-c small{display:block;color:#6B7480;font-weight:600}
+.dex-p{height:8px;background:#E3E6E8;border-radius:4px;margin:4px 0 12px;overflow:hidden}.dex-p i{display:block;height:100%;background:#0E5257}
 html.embed #snd,html.embed #theme{display:none}
 .inv{display:flex;gap:6px;justify-content:center;margin-top:10px}
 .inv span{width:38px;height:38px;border-radius:10px;border:1px dashed var(--line);display:grid;place-items:center;font-size:20px;filter:grayscale(1);opacity:.35;transition:.3s}
@@ -64,7 +93,7 @@ html.embed #snd,html.embed #theme{display:none}
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><span><b id="lv">Niv. 1</b></span><div class="xp"><i id="xpb"></i></div><span id="xpt">0 XP</span><button id="snd" aria-label="sound">🔊</button><button id="theme" aria-label="theme">◐</button></div>
+  <div class="top"><span><b id="lv">Niv. 1</b></span><div class="xp"><i id="xpb"></i></div><span id="xpt">0 XP</span><button class="dexbtn" id="dexb">📘 Datadex <b id="dexn">0</b></button><button id="snd" aria-label="sound">🔊</button><button id="theme" aria-label="theme">◐</button></div>
   <div class="stage" id="stage">
     <canvas id="c" width="256" height="320"></canvas>
     <div class="dlg hide" id="dlg"><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
@@ -78,6 +107,8 @@ html.embed #snd,html.embed #theme{display:none}
       <p class="hint" data-t="keys"></p>
     </div>
     <div class="ov hide" id="end"></div>
+    <div class="bt hide" id="bt"></div>
+    <div class="dex hide" id="dex"></div>
   </div>
   <div class="inv" id="inv"></div>
   <div class="obj" id="obj"></div>
@@ -109,8 +140,8 @@ function post(){try{parent.postMessage({krHeight:document.body.getBoundingClient
 if(window.ResizeObserver)new ResizeObserver(post).observe(document.body);addEventListener('load',post);
 
 var TX={
- fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux six habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord.',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A, ou sur la barre Espace au clavier',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/6)'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Le village est en fête 🎉',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
- en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the six villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north.',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A, or the Space bar on a keyboard',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/6)'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'The village is celebrating 🎉',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
+ fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux six habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord. Et attention aux hautes herbes : des outils sauvages s’y cachent…',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A, ou sur la barre Espace au clavier',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/6)'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Fête au village 🎉 Complète ton Datadex dans les hautes herbes !',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
+ en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the six villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north. And watch the tall grass: wild tools are hiding there…',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A, or the Space bar on a keyboard',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/6)'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'Village festival 🎉 Complete your Datadex in the tall grass!',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
 }[L];
 document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=TX[e.dataset.t]});
 
@@ -138,6 +169,8 @@ function fx(name){if(!AC||muted)return;var t=AC.currentTime;
   if(name==='level'){[67,72,76,79,84].forEach(function(m,i){note(m,t+i*.06,.16,'triangle',.09)})}
   if(name==='bump')note(45,t,.05,'triangle',.05);
   if(name==='heal'){[76,79,83,88,91].forEach(function(m,i){note(m,t+i*.045,.09,'square',.035)});note(95,t+.24,.22,'triangle',.06);note(100,t+.3,.18,'sine',.03)}
+  if(name==='enc'){[60,64,67,72,67,72,76].forEach(function(m,i){note(m,t+i*.06,.08,'square',.04)})}
+  if(name==='throw'){note(72,t,.08,'square',.04);note(84,t+.08,.1,'square',.03)}
   if(name==='step')note(stepAlt=!stepAlt?40:43,t,.03,'triangle',.025)}
 var stepAlt=false,pops=[];
 function pop(text,col,dy){pops.push({x:player.px+8,y:player.py-6+(dy||0),t:0,text:text,col:col})}
@@ -172,6 +205,7 @@ B.forEach(function(b){for(var yy=b.y;yy<b.y+b.h;yy++)for(var xx=b.x;xx<b.x+b.w;x
 [[9,9],[10,9],[9,10],[10,10]].forEach(function(p){set(p[0],p[1],'W')});
 [[2,9],[8,4],[10,2],[21,9],[28,6],[29,11],[27,23],[21,24],[12,23],[2,16],[9,15],[19,8],[11,16],[29,16],[7,10],[26,1],[3,24],[13,8],[20,11],[29,2],[1,12],[18,23],[24,24],[30,19],[6,17],[22,15]].forEach(function(p){if(M[p[1]][p[0]]==='g')set(p[0],p[1],'t')});
 for(y=1;y<MH-1;y++)for(x=1;x<MW-1;x++)if(M[y][x]==='g'&&hash(x,y)%9===0)M[y][x]='f';
+[[27,1,30,8],[1,15,4,18],[28,9,30,12],[9,15,13,17],[17,23,22,24],[6,1,10,2]].forEach(function(r){for(var yy=r[1];yy<=r[3];yy++)for(var xx=r[0];xx<=r[2];xx++){var c=M[yy]&&M[yy][xx];if(c==='g'||c==='f')M[yy][xx]='h'}});
 
 /* ---------- characters ---------- */
 var NPC=[
@@ -208,6 +242,7 @@ function drawTile(x,y,ch){var X=x*T,Y=y*T,h=hash(x,y);
   if(ch==='w'){R(g,'#4FA4E0',X,Y,T,T);R(g,'#6FBAEB',X+(h%9),Y+(h>>3)%12,4,1);return}
   R(g,'#7EC850',X,Y,T,T);R(g,'#6DB743',X+(h%15),Y+(h>>4)%15,1,2);R(g,'#6DB743',X+(h>>6)%15,Y+(h>>9)%15,1,2);R(g,'#8ED65F',X+(h>>11)%15,Y+(h>>13)%15,1,1);
   if(ch==='f'){var fc=['#FF8FA3','#FFFFFF','#FFD45E','#B48CFF'][h%4];R(g,fc,X+4,Y+5,2,2);R(g,fc,X+10,Y+10,2,2);R(g,'#F4C430',X+4,Y+5,1,1)}
+  if(ch==='h'){R(g,'#5FAE3E',X,Y,T,T);for(var k=0;k<6;k++){var bx=X+1+((h>>(k*3))%14),by=Y+3+((h>>(k*2))%9);R(g,'#3E8E2E',bx,by,2,6);R(g,'#8ED65F',bx,by,2,2)}return}
   if(ch==='t'){R(g,'#7A4E2D',X+6,Y+10,4,6);g.fillStyle='#2F7D32';g.beginPath();g.arc(X+8,Y+7,7,0,7);g.fill();g.fillStyle='#3F9A3F';g.beginPath();g.arc(X+6,Y+5,4,0,7);g.fill()}
   if(ch==='W'&&!drawTile.well){drawTile.well=1;var wx=9*T,wy=9*T;R(g,'#8C8C94',wx+3,wy+8,26,20);R(g,'#A9A9B2',wx+3,wy+8,26,4);R(g,'#2E6FA8',wx+7,wy+12,18,10);R(g,'#7A4E2D',wx+4,wy-2,3,12);R(g,'#7A4E2D',wx+25,wy-2,3,12);R(g,'#B4542F',wx+1,wy-5,30,5);R(g,'#5B3A22',wx+15,wy+2,2,8)}}
 function drawBuilding(b){var X=b.x*T,Y=b.y*T,W=b.w*T,H=b.h*T,rh=Math.round(H*.55);
@@ -312,7 +347,7 @@ document.querySelectorAll('.dp button').forEach(function(b){var d=b.dataset.d;
   b.addEventListener('pointerdown',function(e){e.preventDefault();startAudio();b.classList.add('dn');press(d);try{b.setPointerCapture(e.pointerId)}catch(_){}});
   ['pointerup','pointercancel','lostpointercapture'].forEach(function(ev){b.addEventListener(ev,function(){b.classList.remove('dn');release(d)})})});
 document.getElementById('act').addEventListener('pointerdown',function(e){e.preventDefault();startAudio();action()});
-function action(){if(state==='title'){begin();return}if(state!=='play')return;
+function action(){if(state==='title'){begin();return}if(state==='battle'){throwCap();return}if(state==='dex'){closeDex();return}if(state!=='play')return;
   if(dashWait){var w=dashWait;dashWait=null;w();return}
   if(cur){advance();return}
   var f=front();var n=npcAt(f[0],f[1])||ALL.filter(function(n){return Math.abs(n.x-player.x)+Math.abs(n.y-player.y)===1})[0];if(n&&!player.moving)talk(n)}
@@ -322,13 +357,57 @@ document.getElementById('play').onclick=begin;
 var DIRS={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
 function front(){var d=DIRS[player.dir];return[player.x+d[0],player.y+d[1]]}
 function npcAt(x,y){for(var i=0;i<ALL.length;i++)if(ALL[i].x===x&&ALL[i].y===y)return ALL[i];return null}
-function walkable(x,y){var c=M[y]&&M[y][x];return (c==='g'||c==='p'||c==='f')&&!npcAt(x,y)}
+function walkable(x,y){var c=M[y]&&M[y][x];return (c==='g'||c==='p'||c==='f'||c==='h')&&!npcAt(x,y)}
+
+/* ---------- Datadex: wild tools hiding in the tall grass ---------- */
+var MONS=[
+ ['Excel','XL','#1D6F42',0],['Google Sheets','GS','#0F9D58',0],['CSV','CSV','#7B8794',0],['VBA','VBA','#7A4A2A',0],
+ ['Power Query','PQ','#C9A400',1],['SQL','SQL','#336791',1],['Python','PY','#3776AB',1],['Power BI','BI','#D9A400',1],['Looker Studio','LS','#4285F4',1],['GA4','GA4','#E37400',1],
+ ['DAX','DAX','#A4373A',2],['BigQuery','BQ','#4F86E8',2],['Tableau','TB','#E97627',2],['Power Automate','PA','#0066FF',2],['dbt','dbt','#FF694B',2],['Dataiku','DKU','#2AB1AC',2],
+ ['Snowflake','SF','#29B5E8',3],['IBM TM1','TM1','#054ADA',3],['Copilot','AI','#7F5AF0',3]
+];
+var RAR=L==='fr'?['Commun','Peu commun','Rare','Légendaire']:['Common','Uncommon','Rare','Legendary'];
+var RCOL=['#6B7480','#1AA7B0','#8A5CC2','#E0A030'],RW=[60,28,10,2],ZONE=[.34,.24,.16,.1],SPD=[.0022,.0028,.0034,.0042];
+var dexData={};try{dexData=JSON.parse(localStorage.getItem('kr-datadex')||'{}')}catch(e){}
+function saveDex(){try{localStorage.setItem('kr-datadex',JSON.stringify(dexData))}catch(e){}paintDexN()}
+function paintDexN(){document.getElementById('dexn').textContent=Object.keys(dexData).length+'/'+MONS.length}
+function monHTML(m,size,shiny,unk){return '<span class="mon'+(shiny?' shiny':'')+(unk?' unk':'')+'" style="--c:'+m[2]+';--s:'+size+'px"><span>'+(unk?'?':m[1])+'</span></span>'}
+var bt=document.getElementById('bt'),B=null;
+function pickMon(){var r=Math.random()*100,acc=0,tier=0;for(var i=0;i<4;i++){acc+=RW[i];if(r<acc){tier=i;break}}var pool=MONS.filter(function(m){return m[3]===tier});return pool[Math.random()*pool.length|0]}
+function encounter(){var m=pickMon(),shiny=Math.random()<1/30,z=ZONE[m[3]];state='battle';held=[];tap=null;
+  B={m:m,shiny:shiny,tries:3,zs:.1+Math.random()*(.8-z),zw:z,pos:0,t0:performance.now(),busy:false};
+  fx('enc');var nm=(shiny?'✨ ':'')+m[0];
+  bt.innerHTML='<div class="bt-in">'+monHTML(m,96,shiny)+'<h3>'+(L==='fr'?'Un '+nm+' sauvage apparaît !':'A wild '+nm+' appears!')+'</h3><div class="bt-rar" style="color:'+RCOL[m[3]]+'">'+RAR[m[3]]+'</div>'+
+   '<div class="bt-bar"><i class="z" style="left:'+(B.zs*100)+'%;width:'+(B.zw*100)+'%"></i><b class="cur"></b></div>'+
+   '<div class="bt-msg">'+(L==='fr'?'Appuie sur A ou Espace quand le curseur est dans la zone verte. 3 essais.':'Press A or Space when the cursor is in the green zone. 3 tries.')+'</div>'+
+   '<div class="bt-btns"><button class="cap">'+(L==='fr'?'Capturer':'Catch')+'</button><button class="run">'+(L==='fr'?'Fuir':'Run')+'</button></div></div>';
+  bt.classList.remove('hide');bt.querySelector('.cap').onclick=function(e){e.stopPropagation();throwCap()};bt.querySelector('.run').onclick=function(e){e.stopPropagation();endBattle()}}
+function battleTick(){if(!B||B.busy)return;var t=performance.now()-B.t0;B.pos=(Math.sin(t*SPD[B.m[3]])+1)/2;var c=bt.querySelector('.cur');if(c)c.style.left='calc('+(B.pos*100)+'% - 2px)'}
+function throwCap(){if(!B||B.busy)return;B.busy=true;fx('throw');var mon=bt.querySelector('.mon'),msg=bt.querySelector('.bt-msg'),ok=B.pos>=B.zs&&B.pos<=B.zs+B.zw;
+  mon.classList.remove('wob');void mon.offsetWidth;mon.classList.add('wob');
+  setTimeout(function(){
+    if(ok){mon.classList.add('caught');var id=B.m[0],d=dexData[id]||{n:0,s:0},isNew=!dexData[id];d.n++;if(B.shiny)d.s=1;dexData[id]=d;saveDex();
+      var gain=isNew?20:10;xp+=gain;hud();fx('heal');pop('+1 ♥','#FF5A6E');pop('+'+gain+' XP','#FFD45E',14);if(isNew)hearts(5);
+      msg.innerHTML='<b>'+(L==='fr'?'Capturé !':'Caught!')+'</b> '+(isNew?(L==='fr'?'Nouveau dans ton Datadex.':'New in your Datadex.'):(L==='fr'?B.m[0]+' passe niveau '+d.n+'.':B.m[0]+' reaches level '+d.n+'.'));
+      setTimeout(endBattle,1400)}
+    else{B.tries--;fx('bump');if(B.tries<=0){mon.classList.add('gone');msg.innerHTML=L==='fr'?'Oh non, il s’est échappé !':'Oh no, it got away!';setTimeout(endBattle,1100)}
+      else{msg.innerHTML=(L==='fr'?'Raté ! Encore ':'Missed! ')+B.tries+(L==='fr'?' essai'+(B.tries>1?'s':'')+'.':' left.');B.busy=false;B.t0=performance.now()-Math.random()*2000}}
+  },520)}
+function endBattle(){bt.classList.add('hide');bt.innerHTML='';B=null;state='play';tap=null}
+var dexEl=document.getElementById('dex');
+function openDex(){if(state!=='play'&&state!=='end'&&state!=='title')return;dexEl.dataset.prev=state;state='dex';var n=Object.keys(dexData).length;
+  dexEl.innerHTML='<div class="dex-in"><h3>📘 Datadex · '+n+'/'+MONS.length+'<button>✕</button></h3><div class="dex-p"><i style="width:'+(n/MONS.length*100)+'%"></i></div><div class="dex-g">'+
+   MONS.map(function(m){var d=dexData[m[0]];return '<div class="dex-c">'+monHTML(m,64,d&&d.s,!d)+'<div>'+(d?m[0]:'???')+'</div><small>'+(d?(L==='fr'?'niv. ':'lvl ')+d.n:RAR[m[3]])+'</small></div>'}).join('')+'</div></div>';
+  dexEl.classList.remove('hide');dexEl.querySelector('button').onclick=closeDex}
+function closeDex(){dexEl.classList.add('hide');state=dexEl.dataset.prev||'play'}
+document.getElementById('dexb').onclick=function(e){e.stopPropagation();if(state==='dex')closeDex();else openDex()};
+paintDexN();
 
 /* ---------- loop ---------- */
 var last=performance.now(),STEP=170,sparks=[],smoke=[],fwT=0,bumpT=0,time=0;
 function update(dt){time+=dt;typeStep(dt);
   if(state==='play'&&!cur&&!dashWait){
-    if(player.moving){player.p+=dt/STEP;if(player.p>=1){player.moving=false;player.x=player.tx;player.y=player.ty;steps++;fx('step')}
+    if(player.moving){player.p+=dt/STEP;if(player.p>=1){player.moving=false;player.x=player.tx;player.y=player.ty;steps++;fx('step');if(M[player.y][player.x]==='h'&&Math.random()<.16)encounter()}
       player.px=(player.fx+(player.tx-player.fx)*Math.min(1,player.p))*T;player.py=(player.fy+(player.ty-player.fy)*Math.min(1,player.p))*T}
     if(!player.moving&&(held.length||tap)){var d=held.length?held[held.length-1]:tap;tap=null;player.dir=d;var v=DIRS[d],nx=player.x+v[0],ny=player.y+v[1];
       if(walkable(nx,ny)){player.moving=true;player.p=0;player.fx=player.x;player.fy=player.y;player.tx=nx;player.ty=ny}else if(time-bumpT>350){bumpT=time;fx('bump')}}}
@@ -346,7 +425,7 @@ function render(){var W=VW*T,H=VH*T;
   for(var y=Math.floor(camY/T);y<=Math.min(MH-1,Math.floor((camY+H)/T));y++)for(var x=Math.floor(camX/T);x<=Math.min(MW-1,Math.floor((camX+W)/T));x++)if(M[y][x]==='w'){var o=(time/90+hash(x,y))%16|0;R(cx,'rgba(255,255,255,.35)',x*T-camX+o%12,y*T-camY+(hash(y,x)%12),3,1)}
   smoke.forEach(function(s){cx.fillStyle='rgba(220,220,225,'+s.a*.7+')';cx.fillRect(Math.round(s.x-camX),Math.round(s.y-camY),3,3)});
   var list=ALL.map(function(n){return{n:n,y:n.y*T}}).concat([{p:1,y:player.py}]).sort(function(a,b){return a.y-b.y});
-  list.forEach(function(e){if(e.p){var fr=player.moving?(player.p<.5?1:2):0;drawPerson(cx,Math.round(player.px-camX),Math.round(player.py-camY),player.dir,fr,player.P);return}
+  list.forEach(function(e){if(e.p){var fr=player.moving?(player.p<.5?1:2):0;drawPerson(cx,Math.round(player.px-camX),Math.round(player.py-camY),player.dir,fr,player.P);if(M[player.y]&&M[player.y][player.x]==='h'&&!player.moving){var gx=player.x*T-camX,gy=player.y*T-camY;for(var q=0;q<5;q++){R(cx,'#3E8E2E',gx+1+q*3,gy+9,2,6);R(cx,'#8ED65F',gx+1+q*3,gy+9,2,2)}}return}
     var n=e.n,bob=Math.sin(time/400+n.x)>.6?-1:0;drawPerson(cx,n.x*T-camX,n.y*T-camY,n.dir,0,n.P,bob);
     var mark=null,col='#FFD45E';if(n===MAYOR){mark=count()===6&&!finale?'!':finale?'♥':'?';col=count()===6&&!finale?'#FFD45E':finale?'#FF8FA3':'#E3E6E8'}else mark=done[n.id]?'✓':'!';if(done[n.id])col='#8ED65F';
     var bx=n.x*T-camX+4,by=n.y*T-camY-17+(Math.sin(time/250+n.x)*1.5|0);R(cx,'#2A2F36',bx-1,by-1,10,11);R(cx,col,bx,by,8,9);cx.fillStyle='#2A2F36';cx.font='bold 8px monospace';cx.textAlign='center';cx.fillText(mark,bx+4,by+8)});
@@ -356,7 +435,7 @@ function render(){var W=VW*T,H=VH*T;
     cx.globalCompositeOperation='source-over'}
   sparks.forEach(function(p){cx.globalAlpha=Math.max(0,p.l);R(cx,p.c,Math.round(p.x-camX),Math.round(p.y-camY),2,2)});cx.globalAlpha=1;
   cx.font='bold 9px monospace';cx.textAlign='center';pops.forEach(function(p){if(p.t<0)return;cx.globalAlpha=Math.max(0,1-p.t/1300);var x=Math.round(p.x-camX),y=Math.round(p.y-camY);cx.fillStyle='#1d2430';cx.fillText(p.text,x+1,y+1);cx.fillStyle=p.col;cx.fillText(p.text,x,y)});cx.globalAlpha=1}
-function loop(now){var dt=Math.min(50,now-last);last=now;update(dt);render();requestAnimationFrame(loop)}
+function loop(now){var dt=Math.min(50,now-last);last=now;update(dt);render();if(state==='battle')battleTick();requestAnimationFrame(loop)}
 hud();requestAnimationFrame(loop);
 })();
 </script>

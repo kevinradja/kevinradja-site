@@ -29,6 +29,14 @@ const tools = [
 const certs: string[] = ['Google Advanced Data Analytics', 'Google Business Intelligence', 'Google Project Management', 'Dataiku Advanced Datasets', 'dbt Fundamentals', 'Snowflake', T('Construire des agents IA', 'Building AI agents')];
 const degree = T('Master Informatique & Digital · EFREI Paris', 'MSc Computer Science & Digital · EFREI Paris');
 const langs = [[T('Français', 'French'), T('natif', 'native')], [T('Anglais', 'English'), T('natif', 'native')], [T('Tamoul', 'Tamil'), T('natif', 'native')], [T('Japonais', 'Japanese'), T('intermédiaire', 'intermediate')], [T('Allemand', 'German'), T('notions', 'basic')], [T('Roumain', 'Romanian'), T('notions', 'basic')]];
+const skIcons = ['📊', '🧹', '🛰️', '💶', '🧭'];
+const skDesc = [
+  T('Des tableaux de bord qu’on lit en cinq secondes.', 'Dashboards you can read in five seconds.'),
+  T('Des données propres, reliées et fiables.', 'Clean, connected, reliable data.'),
+  T('Mesurer ce qui se passe vraiment sur vos sites.', 'Measure what really happens on your sites.'),
+  T('Des indicateurs qui parlent à la direction.', 'Metrics that speak to leadership.'),
+  T('Embarquer les équipes, pas seulement livrer.', 'Bring teams along, not just deliver.'),
+];
 const hobbies = [
   ['🥋', T('Karaté', 'Karate')], ['🎬', T('Montage vidéo', 'Video editing')], ['📷', T('Photographie', 'Photography')], ['🧭', T('Coaching', 'Coaching')],
 ];
@@ -58,10 +66,18 @@ const how = [
     </div>
     <div>
       <div class="head"><div><div class="kicker">{T('Compétences', 'Skills')}</div><h2>{T('Ce que je sais faire.', 'What I can do.')}</h2></div></div>
-      <div class="ab-skills">{tools.map(t => <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{t[0]}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{(t[1] as string[]).map(c => <span class="chip">{c}</span>)}</div></div>)}
-        <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('Diplôme & certifications', 'Degree & certifications')}</div><div style="display:flex;flex-wrap:wrap;gap:6px"><span class="chip">🎓 {degree}</span>{certs.map(c => <span class="chip">📜 {c}</span>)}</div></div>
-        <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('Langues', 'Languages')}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{langs.map(l => <span class="chip">{l[0]} <span class="mute" style="font-weight:500">· {l[1]}</span></span>)}</div></div>
-        <div class="card" style="padding:18px 20px"><div class="kicker" style="margin-bottom:8px">{T('En dehors des données', 'Beyond data')}</div><div style="display:flex;flex-wrap:wrap;gap:6px">{hobbies.map(h => <span class="chip">{h[0]} {h[1]}</span>)}</div></div>
+      <div class="sk">
+        <div class="sk-sphere" aria-label={T('Outils', 'Tools')}>
+          {tools.flatMap((t, ci) => (t[1] as string[]).map(c => <span data-cat={ci} class:list={[{ big: ['Excel', 'Power BI', 'SQL', 'Python'].includes(c) }]}>{c}</span>))}
+        </div>
+        <div class="sk-cats">
+          {tools.map((t, ci) => <div class="sk-cat" data-cat={ci}><b>{skIcons[ci]}</b><h3>{t[0]}</h3><p>{skDesc[ci]}</p></div>)}
+        </div>
+      </div>
+      <div class="sk-strips">
+        <div class="sk-strip"><div class="kicker">{T('Diplôme & certifications', 'Degree & certifications')}</div><div class="sk-badges"><span><i>🎓</i>{degree}</span>{certs.map(c => <span><i>✓</i>{c}</span>)}</div></div>
+        <div class="sk-strip"><div class="kicker">{T('Langues', 'Languages')}</div><div class="sk-langs">{langs.map(l => <span>{l[0]}<em data-l={l[1]}><i></i><i></i><i></i></em></span>)}</div></div>
+        <div class="sk-strip"><div class="kicker">{T('En dehors des données', 'Beyond data')}</div><div class="sk-hob">{hobbies.map(h => <span><i>{h[0]}</i>{h[1]}</span>)}</div></div>
       </div>
       <div class="head" style="margin-top:40px"><div><div class="kicker">{T('Façon de travailler', 'How I work')}</div><h2>{T('Trois règles.', 'Three rules.')}</h2></div></div>
       <div class="ab-rules">{how.map(h => <div class="card rv" style="padding:20px"><h3 style="font-size:17px;margin-bottom:6px">{h[0]}</h3><p style="font-size:14.5px">{h[1]}</p></div>)}</div>
@@ -80,4 +96,17 @@ const how = [
     seq.forEach(function(u){var x=new Image();x.src=u});
     setInterval(function(){i=(i+1)%seq.length;im.src=seq[i]},1600);
     im.addEventListener('mouseenter',function(){im.src='/avatar-wow.svg'});})();
+</script>
+
+<script is:inline>
+  /* rotating 3D sphere of tools; hover a domain card to light up its tools */
+  (function(){var sp=document.querySelector('.sk-sphere');if(!sp)return;var tags=[].slice.call(sp.children),n=tags.length,R=0,ax=.0035,ay=.0025,mx=0,my=0,pts=[];
+    tags.forEach(function(t,i){var phi=Math.acos(-1+(2*i+1)/n),th=Math.sqrt(n*Math.PI)*phi;pts.push([Math.cos(th)*Math.sin(phi),Math.sin(th)*Math.sin(phi),Math.cos(phi)])});
+    function size(){R=sp.clientWidth*.4}size();addEventListener('resize',size);
+    sp.addEventListener('mousemove',function(e){var r=sp.getBoundingClientRect();mx=((e.clientX-r.left)/r.width-.5);my=((e.clientY-r.top)/r.height-.5)});
+    sp.addEventListener('mouseleave',function(){mx=my=0});
+    function rot(a,b){var ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b);pts.forEach(function(p){var y=p[1]*ca-p[2]*sa,z=p[1]*sa+p[2]*ca;var x=p[0]*cb+z*sb;z=-p[0]*sb+z*cb;p[0]=x;p[1]=y;p[2]=z})}
+    (function f(){rot(ax+my*.02,ay+mx*.02);tags.forEach(function(t,i){var p=pts[i],s=(p[2]+2)/3;t.style.transform='translate(-50%,-50%) translate3d('+(p[0]*R)+'px,'+(p[1]*R)+'px,0) scale('+s+')';t.style.opacity=String(.25+.75*(p[2]+1)/2);t.style.zIndex=String(Math.round(s*100))});requestAnimationFrame(f)})();
+    document.querySelectorAll('.sk-cat').forEach(function(c){c.addEventListener('mouseenter',function(){sp.dataset.on=c.dataset.cat;c.classList.add('on')});c.addEventListener('mouseleave',function(){delete sp.dataset.on;c.classList.remove('on')})});
+  })();
 </script>
