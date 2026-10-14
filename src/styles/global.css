@@ -1040,3 +1040,17 @@ html.warp #warp{background:#FAF7F0;transition:background .5s}
 @keyframes ring{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(2.6)}}
 #warp.press .wdev{animation:none;transform:none}
 html.warp-rm #warp.launch canvas{opacity:0}
+
+/* ===== entry v3: dark from the start, readable logo, longer hyperspace ===== */
+html.warp #warp{background:#05100F}
+#warp.launch{background:#05100F}
+.wsc{animation:wscIn .7s ease-out both}
+@keyframes wscIn{from{opacity:0;transform:scale(.94)}}
+.wq{color:#F4EFE4}
+.wq:after{color:#9FE0D8}
+.wdev{box-shadow:0 40px 80px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.08)}
+.wpad path{fill:#2A8C8C}
+.wpad{filter:drop-shadow(0 14px 22px rgba(0,0,0,.6))}
+#warp .wl{z-index:3;font-size:clamp(56px,11vw,150px);color:#F4EFE4;text-shadow:0 0 40px rgba(159,224,216,.55),0 0 90px rgba(159,224,216,.35);opacity:0;animation:wl3 2.75s cubic-bezier(.3,.6,.3,1) 3.1s forwards}
+#warp .wl i{color:#9FE0D8}
+@keyframes wl3{0%{opacity:0;transform:scale(.4);filter:blur(8px)}22%{opacity:1;transform:scale(1);filter:none}78%{opacity:1;transform:scale(1.08)}100%{opacity:0;transform:scale(2.2);filter:blur(6px)}}
