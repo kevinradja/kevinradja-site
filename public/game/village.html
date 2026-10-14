@@ -298,11 +298,14 @@ var LEAD=[76,0,79,0,81,79,76,0, 72,0,76,0,74,72,69,0, 69,72,74,0,72,69,67,0, 67,
           76,0,79,0,84,0,81,79, 76,0,74,72,0,69,72,0, 74,0,72,69,67,0,69,0, 72,0,0,0,0,0,0,0];
 var BASS=[48,55,48,55, 45,52,45,52, 41,48,41,48, 43,50,43,50, 48,55,48,55, 45,52,45,52, 41,48,43,50, 48,43,48,0];
 var FAN=[72,76,79,84,0,79,84,0,81,84,88,0,86,84,88,91];
+var ENDL=[77,81,84,89,88,84,81,84,86,0,84,82,81,0,0,0,74,77,81,86,84,81,77,81,82,0,81,79,77,0,0,0,77,81,84,89,91,89,88,86,84,0,86,88,89,0,84,0,82,81,79,77,79,81,82,84,81,0,79,0,77,0,0,0];
+var ENDB=[53,60,53,60,50,57,50,57,46,53,48,55,53,60,53,48,53,60,53,60,50,57,50,57,46,53,48,55,53,48,53,0];
 var BPM=92,E=60/BPM/2;
 function tick(){while(nextT<AC.currentTime+.15){
   if(mode==='fan'){var m=FAN[fanI];note(m,nextT,.22,'square',.05);note(m-12,nextT,.22,'triangle',.08);fanI++;if(fanI>=FAN.length){mode='loop';stepI=0}}
+  else if(mode==='end'){var em=ENDL[stepI%ENDL.length];note(em,nextT,.2,'square',.045);if(em)note(em-12,nextT,.12,'square',.015);if(stepI%2===0){note(ENDB[(stepI/2|0)%ENDB.length],nextT,.3,'triangle',.11)}if(stepI%4===2)note(96,nextT,.03,'square',.01);stepI=(stepI+1)%ENDL.length}
   else{note(LEAD[stepI],nextT,E*1.6,'square',.035);if(stepI%2===0)note(BASS[stepI/2|0],nextT,E*1.8,'triangle',.09);stepI=(stepI+1)%LEAD.length}
-  nextT+=E}}
+  nextT+=mode==='end'?.2:E}}
 function startAudio(){try{if(!AC){var A=window.AudioContext||window.webkitAudioContext;if(!A)return;AC=new A();master=AC.createGain();var lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2400;master.connect(lp);lp.connect(AC.destination);applyMute()}
   if(AC.state==='suspended')AC.resume();if(!timer){nextT=AC.currentTime+.1;timer=setInterval(tick,30)}}catch(e){}}
 function fx(name){if(!AC||muted)return;var t=AC.currentTime;
@@ -690,10 +693,10 @@ function endCard(){var cv=document.getElementById('endc');if(!cv)return;var c=cv
 function showEnd(){var s=Math.round((performance.now()-t0)/1000),best=0;try{best=+localStorage.getItem('kr-village-best')||0}catch(e){}if(!best||s<best){best=s;try{localStorage.setItem('kr-village-best',s)}catch(e){}}
   function f(v){return Math.floor(v/60)+':'+('0'+v%60).slice(-2)}
   var e=document.getElementById('end');e.innerHTML='<canvas id="endc" width="256" height="150"></canvas><h2>'+TX.endT+'</h2><p>'+TX.endP+'</p><div class="st"><div><b>'+lvl+'</b>'+TX.stLv+'</div><div><b>'+steps+'</b>'+TX.stSteps+'</div><div><b>'+f(s)+'</b>'+TX.stTime+'</div><div><b>'+f(best)+'</b>'+TX.best+'</div></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="go" id="share" target="_blank" rel="noopener" style="text-decoration:none;background:#0A66C2;color:#fff">'+(L==='fr'?'Partager sur LinkedIn':'Share on LinkedIn')+'</a><button class="go" id="again">'+TX.again+'</button></div>';
-  e.classList.remove('hide');state='end';endCard();var dn=Object.keys(dexData).length,msg=(L==='fr'?'🏡 J’ai sauvé le Village des Données en '+f(s)+' (niveau '+lvl+', Datadex '+dn+'/'+MONS.length+') ! Le petit RPG data de Kevin Radja, à tester ici : ':'🏡 I saved Data Village in '+f(s)+' (level '+lvl+', Datadex '+dn+'/'+MONS.length+')! Kevin Radja’s little data RPG, try it here: ')+'https://kevinradja-site.vercel.app'+(L==='fr'?'/jeu/':'/en/game/');
+  e.classList.remove('hide');state='end';mode='end';stepI=0;endCard();var dn=Object.keys(dexData).length,msg=(L==='fr'?'🏡 J’ai sauvé le Village des Données en '+f(s)+' (niveau '+lvl+', Datadex '+dn+'/'+MONS.length+') ! Le petit RPG data de Kevin Radja, à tester ici : ':'🏡 I saved Data Village in '+f(s)+' (level '+lvl+', Datadex '+dn+'/'+MONS.length+')! Kevin Radja’s little data RPG, try it here: ')+'https://kevinradja-site.vercel.app'+(L==='fr'?'/jeu/':'/en/game/');
   document.getElementById('share').href='https://www.linkedin.com/feed/?shareActive=true&text='+encodeURIComponent(msg);
   document.getElementById('again').onclick=reset}
-function reset(){done={};xp=0;lvl=1;steps=0;finale=false;party=false;sparks=[];player.x=15;player.y=23;player.px=15*T;player.py=23*T;player.dir='up';player.moving=false;
+function reset(){mode='loop';stepI=0;done={};xp=0;lvl=1;steps=0;finale=false;party=false;sparks=[];player.x=15;player.y=23;player.px=15*T;player.py=23*T;player.dir='up';player.moving=false;
   document.querySelectorAll('.inv span').forEach(function(s){s.classList.remove('on')});document.getElementById('end').classList.add('hide');hud();state='play';t0=performance.now()}
 
 /* ---------- input ---------- */
