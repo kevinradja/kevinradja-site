@@ -128,7 +128,7 @@ const nav = [
       var going=false;
       function go(user){if(launchAt||going)return;going=true;loud=!!user;w.classList.add('press');snd('padA');
         setTimeout(function(){w.classList.add('fix');snd('heal')},260);
-        setTimeout(function(){w.classList.add('launch');launchAt=performance.now();snd('warp');setTimeout(end,WARP+SPLASH+1500)},1700)}
+        setTimeout(function(){w.classList.add('launch');launchAt=performance.now();snd('warp');setTimeout(end,WARP+SPLASH+1500)},2000)}
       setTimeout(function(){if(!launchAt)w.classList.add('ask')},2300);
       setTimeout(function(){go(false)},5600);
       function end(){if(done)return;done=true;root.classList.remove('warp');root.classList.add('warp-in');w.remove();setTimeout(function(){root.classList.remove('warp-in')},800)}

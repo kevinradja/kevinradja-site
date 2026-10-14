@@ -1102,3 +1102,17 @@ html.warp #warp{background:#05100F}
 #warp.fix .wmess{opacity:0;transform:scale(1.04) rotate(1deg);filter:blur(2px)}
 #warp.fix .wclean{opacity:1;transform:none}
 #warp.fix .wdev{transform:scale(1.03)}
+@media (max-width:600px){
+.wclean{inset:8px;gap:6px}
+.wc-h{font-size:10px}
+.wc-k{gap:5px}
+.wc-k div{padding:5px 7px;border-radius:8px}
+.wc-k small{font-size:7px}
+.wc-k b{font-size:13px}
+.wc-k em{font-size:8px}
+.wc-c>svg:first-child,.wc-d{padding:4px;border-radius:8px}
+.wmess{inset:7px;gap:7px}
+.wmess .wt{padding:5px;font-size:6px}
+.wmess .wt b{font-size:9px}
+.wmess .wnote{font-size:6px;padding:6px 5px}
+}
