@@ -214,5 +214,12 @@ const nav = [
       window.addEventListener('message',function(e){if(e.data&&e.data.krHeight){document.querySelectorAll('iframe').forEach(function(f){if(f.contentWindow===e.source)f.style.height=Math.ceil(e.data.krHeight)+'px'})}});
     })();
   </script>
+  <div class="sbar" aria-hidden="true"><span class="sbar-l">{lang === 'fr' ? 'Défiler' : 'Scroll'}<i>↓</i></span><span class="sbar-t"><b></b></span></div>
+  <script is:inline>
+    (function(){var b=document.querySelector('.sbar');if(!b)return;var t=b.querySelector('.sbar-t'),de=document.documentElement;
+      function upd(){var max=de.scrollHeight-innerHeight,p=max>0?Math.min(1,Math.max(0,scrollY/max)):0;b.style.setProperty('--sp',p.toFixed(4));b.classList.toggle('none',max<40);b.classList.toggle('moved',scrollY>60)}
+      addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);addEventListener('load',upd);upd();setTimeout(upd,800);
+      t.addEventListener('click',function(e){var r=t.getBoundingClientRect(),p=(e.clientY-r.top)/r.height;scrollTo({top:p*(de.scrollHeight-innerHeight),behavior:'smooth'})})})();
+  </script>
 </body>
 </html>
