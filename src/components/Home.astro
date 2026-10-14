@@ -10,16 +10,16 @@ const { lang, vitrine = false } = Astro.props as { lang: Lang; vitrine?: boolean
 const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
 
 const audiences = [
-  { w: T('PME', 'SMEs'), img: '', h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Un reporting mensuel qui tourne seul, un tableau de bord que vous ouvrez le lundi matin, un prix annoncé d’avance.', 'A monthly report that runs itself, a dashboard you open on Monday morning, an upfront price.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
+  { w: T('PME', 'SMEs'), img: '', h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Sans recruter de data analyst : un prix annoncé d’avance, un livrable que vous gardez, et une équipe formée pour s’en servir.', 'Without hiring a data analyst: an upfront price, a deliverable you keep, and a team trained to use it.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
   { w: T('Équipes data', 'Data teams'), img: '/thumbs/04.png', h: T('Un renfort qui connaît les grands groupes.', 'Extra hands who know large organisations.'), p: T('Power BI, SQL, Python, clôtures et qualité de données : j’ai livré chez Google, Coface, Dassault Systèmes et KPMG.', 'Power BI, SQL, Python, closes and data quality: delivered at Google, Coface, Dassault Systèmes and KPMG.'), to: r('work', lang), c: T('Voir les réalisations', 'See the work') },
   { w: T('Recruteurs', 'Recruiters'), img: '/avatar.svg', h: T('L’essentiel, en trente secondes.', 'The essentials, in thirty seconds.'), p: T('Parcours, compétences, certifications et disponibilité : tout ce qu’il faut pour décider d’un premier appel.', 'Background, skills, certifications and availability: everything you need to decide on a first call.'), to: r('about', lang), c: T('Voir le parcours', 'See the background') },
 ];
 
 const results = [
-  { v: '−30 %', t: T('de temps de reporting', 'less reporting time'), p: T('Des tableaux de bord Power BI pour piloter la performance commerciale, déployés auprès de plus de 500 utilisateurs.', 'Power BI dashboards to steer sales performance, rolled out to 500+ users.'), c: 'Coface · 12 ' + T('pays', 'countries'), logo: '/logos/coface.svg' },
-  { v: '68,7 %', t: T('d’adoption GA4', 'GA4 adoption'), p: T('Un cockpit de mesure pour suivre 180 grands comptes, objectifs dépassés dès novembre 2023.', 'A measurement cockpit tracking 180 key accounts, goals beaten by November 2023.'), c: 'Google France', logo: '/logos/google.svg' },
-  { v: '100 h → 3 h', t: T('de traitement', 'of processing'), p: T('Des pipelines Python qui ont automatisé la préparation des modèles financiers pour le comité de direction.', 'Python pipelines that automated the financial models prepared for the executive committee.'), c: 'Dassault Systèmes', logo: '/logos/dassault.svg' },
-  { v: '−40 %', t: T('de délai de mise en ligne', 'faster time-to-market'), p: T('Un outil partagé entre RH et data pour publier les formations plus vite, sans perdre le fil.', 'A tool shared by HR and data to publish training faster, without losing track.'), c: T('Grand groupe automobile', 'Major automotive group'), logo: '' },
+  { v: '−30 %', t: T('de temps de reporting', 'less reporting time'), p: T('Les équipes commerciales passent moins de temps à compiler leurs chiffres, et plus de temps à vendre.', 'Sales teams spend less time compiling numbers, and more time selling.'), c: 'Coface · 12 ' + T('pays', 'countries'), logo: '/logos/coface.svg' },
+  { v: '68,7 %', t: T('d’adoption GA4', 'GA4 adoption'), p: T('Les annonceurs ont adopté le nouveau suivi plus vite que prévu : objectifs dépassés dès novembre 2023.', 'Advertisers adopted the new tracking faster than planned: goals beaten by November 2023.'), c: 'Google France', logo: '/logos/google.svg' },
+  { v: '100 h → 3 h', t: T('de traitement', 'of processing'), p: T('Ce qui prenait deux semaines de calcul se fait en une matinée, et la direction reçoit ses chiffres à temps.', 'What took two weeks of computing now takes a morning, and leadership gets its numbers on time.'), c: 'Dassault Systèmes', logo: '/logos/dassault.svg' },
+  { v: '−40 %', t: T('de délai de mise en ligne', 'faster time-to-market'), p: T('Les formations sont en ligne plus vite, et RH comme data travaillent enfin sur le même fichier.', 'Training goes live faster, and HR and data finally work from the same file.'), c: T('Grand groupe automobile', 'Major automotive group'), logo: '' },
 ];
 const viz = [
   `<svg viewBox="0 0 200 110" preserveAspectRatio="none"><line x1="0" y1="18" x2="200" y2="18" stroke="var(--line2)" stroke-dasharray="4 5" /><polyline class="draw" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" points="0,18 30,22 60,20 90,38 120,56 150,72 175,80 200,84" /><circle class="fade" cx="200" cy="84" r="6" fill="var(--acc)" /></svg>`,
@@ -193,7 +193,7 @@ const featured = [projects[3], projects[4], projects[5]];
       <span>{T('lisibles, fiables', 'readable, reliable')}</span>
       <span>{T('et utiles.', 'and useful.')}</span>
     </h2>
-    <p>{T('Pas de jargon, pas d’usine à gaz. Des chiffres que toute l’équipe comprend, qui se mettent à jour tout seuls, et qui servent à décider.', 'No jargon, no overbuilt systems. Numbers the whole team understands, that update themselves, and that help you decide.')}</p>
+    <p>{T('Pas de jargon, pas d’usine à gaz : des chiffres justes, que toute l’équipe comprend du premier coup.', 'No jargon, no overbuilt systems: accurate numbers the whole team gets at first glance.')}</p>
     </div>
     {!vitrine && (
     <div class="c-aud c-aud-dark">
