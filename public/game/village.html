@@ -466,28 +466,28 @@ var dexData={};try{dexData=JSON.parse(localStorage.getItem('kr-datadex')||'{}')}
 function saveDex(){try{localStorage.setItem('kr-datadex',JSON.stringify(dexData))}catch(e){}paintDexN()}
 function paintDexN(){document.getElementById('dexn').textContent=Object.keys(dexData).length+'/'+MONS.length}
 function monHTML(m,size,shiny,unk){return '<span class="mon'+(shiny?' shiny':'')+(unk?' unk':'')+'" style="--c:'+m[2]+';--s:'+size+'px"><span>'+(unk?'?':m[1])+'</span></span>'}
-var bt=document.getElementById('bt'),B=null;
+var bt=document.getElementById('bt'),BT=null;
 function pickMon(){var w=wanted();if(w.length&&Math.random()<.45){var t=w[Math.random()*w.length|0];return MONS.filter(function(m){return m[0]===t})[0]}var r=Math.random()*100,acc=0,tier=0;for(var i=0;i<4;i++){acc+=RW[i];if(r<acc){tier=i;break}}var pool=MONS.filter(function(m){return m[3]===tier});return pool[Math.random()*pool.length|0]}
 function encounter(){var m=pickMon(),shiny=Math.random()<1/30,z=ZONE[m[3]];state='battle';held=[];tap=null;
-  B={m:m,shiny:shiny,tries:3,zs:.1+Math.random()*(.8-z),zw:z,pos:0,t0:performance.now(),busy:false};
+  BT={m:m,shiny:shiny,tries:3,zs:.1+Math.random()*(.8-z),zw:z,pos:0,t0:performance.now(),busy:false};
   fx('enc');var nm=(shiny?'✨ ':'')+m[0];
   bt.innerHTML='<div class="bt-in">'+monHTML(m,96,shiny)+'<h3>'+(L==='fr'?'Un '+nm+' sauvage apparaît !':'A wild '+nm+' appears!')+'</h3><div class="bt-rar" style="color:'+RCOL[m[3]]+'">'+RAR[m[3]]+'</div>'+
-   '<div class="bt-bar"><i class="z" style="left:'+(B.zs*100)+'%;width:'+(B.zw*100)+'%"></i><b class="cur"></b></div>'+
+   '<div class="bt-bar"><i class="z" style="left:'+(BT.zs*100)+'%;width:'+(BT.zw*100)+'%"></i><b class="cur"></b></div>'+
    '<div class="bt-msg">'+(L==='fr'?'Appuie sur A ou Espace quand le curseur est dans la zone verte. 3 essais.':'Press A or Space when the cursor is in the green zone. 3 tries.')+'</div>'+
    '<div class="bt-btns"><button class="cap">'+(L==='fr'?'Capturer':'Catch')+'</button><button class="run">'+(L==='fr'?'Fuir':'Run')+'</button></div></div>';
   bt.classList.remove('hide');bt.querySelector('.cap').onclick=function(e){e.stopPropagation();throwCap()};bt.querySelector('.run').onclick=function(e){e.stopPropagation();endBattle()}}
-function battleTick(){if(!B||B.busy)return;var t=performance.now()-B.t0;B.pos=(Math.sin(t*SPD[B.m[3]])+1)/2;var c=bt.querySelector('.cur');if(c)c.style.left='calc('+(B.pos*100)+'% - 2px)'}
-function throwCap(){if(!B||B.busy)return;B.busy=true;fx('throw');var mon=bt.querySelector('.mon'),msg=bt.querySelector('.bt-msg'),ok=B.pos>=B.zs&&B.pos<=B.zs+B.zw;
+function battleTick(){if(!BT||BT.busy)return;var t=performance.now()-BT.t0;BT.pos=(Math.sin(t*SPD[BT.m[3]])+1)/2;var c=bt.querySelector('.cur');if(c)c.style.left='calc('+(BT.pos*100)+'% - 2px)'}
+function throwCap(){if(!BT||BT.busy)return;BT.busy=true;fx('throw');var mon=bt.querySelector('.mon'),msg=bt.querySelector('.bt-msg'),ok=BT.pos>=BT.zs&&BT.pos<=BT.zs+BT.zw;
   mon.classList.remove('wob');void mon.offsetWidth;mon.classList.add('wob');
   setTimeout(function(){
-    if(ok){mon.classList.add('caught');var id=B.m[0],d=dexData[id]||{n:0,s:0},isNew=!dexData[id];d.n++;if(B.shiny)d.s=1;dexData[id]=d;saveDex();
+    if(ok){mon.classList.add('caught');var id=BT.m[0],d=dexData[id]||{n:0,s:0},isNew=!dexData[id];d.n++;if(BT.shiny)d.s=1;dexData[id]=d;saveDex();
       var gain=isNew?20:10;xp+=gain;hud();if(Object.keys(dexData).length===1&&isNew)setTimeout(function(){toast(L==='fr'?'📘 Appuie sur I pour voir ton Datadex':'📘 Press I to open your Datadex')},1500);if(NPC.some(function(n){return asked[n.id]&&!done[n.id]&&NEED[n.id].indexOf(id)>=0&&!missing(n.id).length}))toast('✅ '+id+(L==='fr'?' capturé : retourne voir l’habitant !':' caught: go back to the villager!'));fx('heal');pop('+1 ♥','#FF5A6E');pop('+'+gain+' XP','#FFD45E',14);if(isNew)hearts(5);
-      msg.innerHTML='<b>'+(L==='fr'?'Capturé !':'Caught!')+'</b> '+(isNew?(L==='fr'?'Nouveau dans ton Datadex.':'New in your Datadex.'):(L==='fr'?B.m[0]+' passe niveau '+d.n+'.':B.m[0]+' reaches level '+d.n+'.'));
+      msg.innerHTML='<b>'+(L==='fr'?'Capturé !':'Caught!')+'</b> '+(isNew?(L==='fr'?'Nouveau dans ton Datadex.':'New in your Datadex.'):(L==='fr'?BT.m[0]+' passe niveau '+d.n+'.':BT.m[0]+' reaches level '+d.n+'.'));
       setTimeout(endBattle,1400)}
-    else{B.tries--;fx('bump');if(B.tries<=0){mon.classList.add('gone');msg.innerHTML=L==='fr'?'Oh non, il s’est échappé !':'Oh no, it got away!';setTimeout(endBattle,1100)}
-      else{msg.innerHTML=(L==='fr'?'Raté ! Encore ':'Missed! ')+B.tries+(L==='fr'?' essai'+(B.tries>1?'s':'')+'.':' left.');B.busy=false;B.t0=performance.now()-Math.random()*2000}}
+    else{BT.tries--;fx('bump');if(BT.tries<=0){mon.classList.add('gone');msg.innerHTML=L==='fr'?'Oh non, il s’est échappé !':'Oh no, it got away!';setTimeout(endBattle,1100)}
+      else{msg.innerHTML=(L==='fr'?'Raté ! Encore ':'Missed! ')+BT.tries+(L==='fr'?' essai'+(BT.tries>1?'s':'')+'.':' left.');BT.busy=false;BT.t0=performance.now()-Math.random()*2000}}
   },520)}
-function endBattle(){bt.classList.add('hide');bt.innerHTML='';B=null;state='play';tap=null}
+function endBattle(){bt.classList.add('hide');bt.innerHTML='';BT=null;state='play';tap=null}
 var dexEl=document.getElementById('dex');
 function dexSheet(name){var m=MONS.filter(function(x){return x[0]===name})[0],d=dexData[name],box=dexEl.querySelector('.dex-d');if(!m||!box)return;
   dexEl.querySelectorAll('.dex-c').forEach(function(c){c.classList.toggle('sel',c.dataset.n===name)});
