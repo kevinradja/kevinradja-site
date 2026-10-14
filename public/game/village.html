@@ -703,7 +703,7 @@ function throwCap(){if(!BT||BT.busy)return;BT.busy=true;fx('throw');var mon=bt.q
   setTimeout(function(){
     if(ok){mon.classList.add('caught');var id=BT.m[0],d=dexData[id]||{n:0,s:0},isNew=!dexData[id];d.n++;if(BT.shiny)d.s=1;dexData[id]=d;saveDex();
       var gain=isNew?20:10;xp+=gain;hud();if(Object.keys(dexData).length===1&&isNew)setTimeout(function(){toast(L==='fr'?'📘 Appuie sur I pour voir ton Datadex':'📘 Press I to open your Datadex')},1500);if(NPC.some(function(n){return asked[n.id]&&!done[n.id]&&NEED[n.id].indexOf(id)>=0&&!missing(n.id).length}))toast('✅ '+id+(L==='fr'?' capturé : retourne voir l’habitant !':' caught: go back to the villager!'));fx('heal');pop('+1 ♥','#FF5A6E');pop('+'+gain+' XP','#FFD45E',14);if(isNew)hearts(5);
-      msg.innerHTML='<b>'+(L==='fr'?'Capturé !':'Caught!')+'</b> '+(isNew?(L==='fr'?'Nouveau dans ton Datadex.':'New in your Datadex.'):(L==='fr'?BT.m[0]+' passe niveau '+d.n+'.':BT.m[0]+' reaches level '+d.n+'.'));
+      msg.innerHTML='<b>'+(L==='fr'?'Capturé !':'Caught!')+'</b> '+(isNew?(L==='fr'?'Nouveau dans ton Datadex.':'New in your Datadex.'):(L==='fr'?'Déjà dans ton Datadex.':'Already in your Datadex.'));
       setTimeout(endBattle,1400)}
     else{BT.tries--;fx('bump');if(BT.tries<=0){mon.classList.add('gone');msg.innerHTML=L==='fr'?'Oh non, il s’est échappé !':'Oh no, it got away!';setTimeout(endBattle,1100)}
       else{msg.innerHTML=(L==='fr'?'Raté ! Encore ':'Missed! ')+BT.tries+(L==='fr'?' essai'+(BT.tries>1?'s':'')+'.':' left.');BT.busy=false;BT.t0=performance.now()-Math.random()*2000}}
@@ -714,10 +714,10 @@ function dexSheet(name){var m=MONS.filter(function(x){return x[0]===name})[0],d=
   dexEl.querySelectorAll('.dex-c').forEach(function(c){c.classList.toggle('sel',c.dataset.n===name)});
   if(!d){box.innerHTML=monHTML(m,72,false,true)+'<div><h4>???</h4><span class="rr" style="color:'+RCOL[m[3]]+'">'+RAR[m[3]]+'</span><p>'+(L==='fr'?'Pas encore capturé. Cherche-le dans les hautes herbes du village.':'Not caught yet. Look for it in the village’s tall grass.')+'</p></div>';return}
   var info=INFO[name]||['',[],''];
-  box.innerHTML=monHTML(m,72,d.s)+'<div><h4>'+(d.s?'✨ ':'')+name+' <small style="font-weight:600;color:#6B7480">· '+(L==='fr'?'niv. ':'lvl ')+d.n+'</small></h4><span class="rr" style="color:'+RCOL[m[3]]+'">'+RAR[m[3]]+'</span><p>'+info[0]+'</p><b class="lb">'+(L==='fr'?'Où Kevin l’a utilisé':'Where Kevin used it')+'</b><ul>'+info[1].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><div class="res">📈 '+info[2]+'</div></div>'}
+  box.innerHTML=monHTML(m,72,d.s)+'<div><h4>'+(d.s?'✨ ':'')+name+'</h4><span class="rr" style="color:'+RCOL[m[3]]+'">'+RAR[m[3]]+'</span><p>'+info[0]+'</p><b class="lb">'+(L==='fr'?'Où Kevin l’a utilisé':'Where Kevin used it')+'</b><ul>'+info[1].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><div class="res">📈 '+info[2]+'</div></div>'}
 function openDex(){if(state!=='play'&&state!=='end'&&state!=='title')return;dexEl.dataset.prev=state;state='dex';var n=Object.keys(dexData).length;
   dexEl.innerHTML='<div class="dex-in"><h3>📘 Datadex · '+n+'/'+MONS.length+'<button>✕</button></h3><div class="dex-p"><i style="width:'+(n/MONS.length*100)+'%"></i></div><div class="dex-d"></div><p class="dex-tip">'+(L==='fr'?'Clique sur un outil pour voir sa fiche. Touche I ou Échap pour fermer.':'Click a tool to see its sheet. Press I or Esc to close.')+'</p><div class="dex-g">'+
-   MONS.map(function(m){var d=dexData[m[0]];return '<div class="dex-c" data-n="'+m[0]+'">'+monHTML(m,64,d&&d.s,!d)+'<div>'+(d?m[0]:'???')+'</div><small>'+(d?(L==='fr'?'niv. ':'lvl ')+d.n:RAR[m[3]])+'</small></div>'}).join('')+'</div></div>';
+   MONS.map(function(m){var d=dexData[m[0]];return '<div class="dex-c" data-n="'+m[0]+'">'+monHTML(m,64,d&&d.s,!d)+'<div>'+(d?m[0]:'???')+'</div><small>'+(d?'✓ ':'')+RAR[m[3]]+'</small></div>'}).join('')+'</div></div>';
   dexEl.classList.remove('hide');dexEl.querySelector('h3 button').onclick=closeDex;
   dexEl.querySelectorAll('.dex-c').forEach(function(c){c.onclick=function(e){e.stopPropagation();dexSheet(c.dataset.n)}});
   var first=MONS.filter(function(m){return dexData[m[0]]})[0];dexSheet(first?first[0]:MONS[0][0])}
