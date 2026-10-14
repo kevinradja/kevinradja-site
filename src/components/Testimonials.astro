@@ -4,20 +4,23 @@ import { projects } from '../data/projects';
 const { lang } = Astro.props as { lang: 'fr' | 'en' };
 const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
 const base = lang === 'fr' ? '/realisations/' : '/en/work/';
+const slugOf = (n: string) => n.split(' ')[0].toLowerCase();
 ---
 {testimonials.length > 0 && (
 <section class="sec c-avis" id="avis">
   <div class="wrap">
     <div class="c-head"><div class="kicker">{T('Ils en parlent', 'What they say')}</div><h2>{T('Retours de mission.', 'Feedback from the field.')}</h2></div>
-    <div class="avis" data-fan style={`--n:${Math.min(4, testimonials.length)}`}>
+    <div class="avx">
       {testimonials.map((t, i) => {
         const p = t.project ? projects.find(x => x.slug === t.project) : undefined;
         return (
-          <figure class="avis-c" style={`--i:${i}`}>
-            <span class="avis-q" aria-hidden="true">“</span>
-            <blockquote>{t.quote[lang]}</blockquote>
-            <figcaption><span class="avis-av" aria-hidden="true">{t.name.charAt(0)}</span><b>{t.name}</b><span>{t.role[lang]} · {t.company[lang]}</span></figcaption>
-            {p && <a class="avis-p" href={base + p.slug + '/'}><em>{p.kpi.v}</em>{p.title[lang]} →</a>}
+          <figure class="avx-c rv" style={`--d:${i * 0.08}s`}>
+            <div class="avx-who">
+              <img class="avx-av" src={`/avis/${slugOf(t.name)}.svg`} alt="" width="56" height="56" loading="lazy" />
+              <figcaption><b>{t.name}</b><span>{t.role[lang]}</span><em>{t.company[lang]}</em></figcaption>
+            </div>
+            <blockquote>« {t.quote[lang]} »</blockquote>
+            {p && <a class="avx-p" href={base + p.slug + '/'}><strong>{p.kpi.v}</strong><span>{p.title[lang]}</span><i>→</i></a>}
           </figure>
         );
       })}
@@ -25,7 +28,3 @@ const base = lang === 'fr' ? '/realisations/' : '/en/work/';
   </div>
 </section>
 )}
-
-<script is:inline>
-  (function(){var f=document.querySelector('[data-fan]');if(!f)return;var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){f.classList.add('open');io.disconnect()}},{threshold:.35});io.observe(f)})();
-</script>

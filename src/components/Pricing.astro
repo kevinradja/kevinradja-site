@@ -11,6 +11,11 @@ const packs = [
   { k: T('Le plus demandé', 'Most popular'), t: T('Pack PME', 'SME Pack'), p: '1 500 €', hi: true, li: [T('Modèle de données + dashboard multi-pages', 'Data model + multi-page dashboard'), T('Modules : Marketing & Ads, Finance & Compta, Tech & SaaS, Commerce & Ops', 'Modules: Marketing & Ads, Finance & Accounting, Tech & SaaS, Commerce & Ops'), T('Actualisation planifiée', 'Scheduled refresh'), T('Formation de vos équipes', 'Team training')], b: T('Choisir le pack PME', 'Choose the SME pack') },
   { k: T('Sur-mesure', 'Bespoke'), t: T('Cockpit BI', 'BI Cockpit'), p: '4 000 €', li: [T('Cadrage et KPI avec la direction', 'Scoping and KPIs with leadership'), T('Pipelines de données et modèle sémantique', 'Data pipelines and semantic model'), T('Dashboards, reporting automatisé (Power Automate, Python) et outils .exe sur mesure', 'Dashboards, automated reporting (Power Automate, Python) and bespoke .exe tools'), T('Documentation et transfert de compétences', 'Documentation and knowledge transfer')], b: T('Discuter du projet', 'Discuss the project') },
 ];
+const ai = [
+  { t: T('Automatisation', 'Automation'), p: '690 €', d: T('Un workflow n8n, Make ou Power Automate : relances, tri d’e-mails, mises à jour de tableaux, reporting envoyé chaque semaine.', 'One n8n, Make or Power Automate workflow: follow-ups, email triage, sheet updates, weekly reports sent automatically.') },
+  { t: T('Assistant IA', 'AI assistant'), p: '1 500 €', d: T('Un agent branché sur vos documents (Copilot Studio, ChatGPT, Claude) qui répond à l’équipe, cite ses sources et dit quand il ne sait pas.', 'An agent connected to your documents (Copilot Studio, ChatGPT, Claude) that answers your team, cites its sources and says when it does not know.') },
+  { t: T('Agent sur mesure', 'Custom agent'), p: '4 000 €', d: T('Assistant + workflows reliés à votre CRM, Excel ou messagerie, avec tests mesurés, formation et suivi des coûts d’IA.', 'Assistant + workflows connected to your CRM, Excel or inbox, with measured testing, training and AI cost tracking.') },
+];
 const opts = [
   [T('Audit data de 2 h (déduit si projet)', '2-hour data audit (credited if you proceed)'), '150 €'],
   [T('Page de dashboard supplémentaire', 'Extra dashboard page'), '+350 €'],
@@ -28,6 +33,16 @@ const opts = [
       <a class:list={['btn', p.hi ? 'p' : 's']} href={mail(T(`Offre ${p.k === 'Quick-Win' ? 'Quick-Win' : p.t} (${p.p}) : demande`, `${p.k === 'Quick-Win' ? 'Quick-Win' : p.t} offer (${p.p}): enquiry`), body(`${p.k === 'Quick-Win' ? 'Quick-Win' : p.t} (${p.p})`))}>{p.b}</a>
     </div>
   ))}
+</div>
+<div class="card aio rv">
+  <div class="aio-h"><span class="aio-new">{T('Nouveau', 'New')}</span><h3>{T('Agents IA & automatisations', 'AI agents & automations')}</h3><a href={lang === 'fr' ? '/realisations/assistant-ia-portail-formation/' : '/en/work/assistant-ia-portail-formation/'}>{T('Voir le cas pratique : 29/30 à l’évaluation', 'See the case study: 29/30 in evaluation')} →</a></div>
+  <div class="aio-g">
+    {ai.map(x => (
+      <a class="aio-c" href={mail(T(`Offre IA ${x.t} (${x.p}) : demande`, `AI offer ${x.t} (${x.p}): enquiry`), body(`IA ${x.t} (${x.p})`))}>
+        <b>{x.t}</b><small>{T('à partir de', 'from')} <strong>{x.p}</strong></small><p>{x.d}</p>
+      </a>
+    ))}
+  </div>
 </div>
 {!compact && (
   <div class="grid g2" style="margin-top:18px">
