@@ -25,20 +25,19 @@ const featured = [projects[3], projects[4], projects[5]];
   <div class="wrap">
     <div class="kicker">Kevin Radja · {T('Consultant Data & BI freelance', 'Freelance Data & BI consultant')} · Paris</div>
     <h1 class="rv in">{T('Vos données, enfin', 'Your data, finally')}<br /><em>{T('lisibles.', 'readable.')}</em></h1>
-    <p class="lead" style="margin-top:22px">{T('Je transforme vos fichiers Excel, bases SQL et rapports Power BI en tableaux de bord clairs et en reporting automatisé. Plus de 5 ans chez Google France, Coface, Dassault Systèmes et KPMG, au service des PME et des équipes de grands groupes.', 'I turn your Excel files, SQL databases and Power BI reports into clear dashboards and automated reporting. 5+ years at Google France, Coface, Dassault Systèmes and KPMG, now serving SMEs and large-company teams.')}</p>
-    <p class="now"><span class="tag">{T('En parallèle', 'Alongside')}</span><span>{T('Manager Data & Digital dans un grand groupe automobile', 'Data & Digital Manager at a major automotive group')}<span class="mute" style="font-weight:500"> · {T('10+ personnes accompagnées, 1 000+ collaborateurs impactés', '10+ people supported, 1,000+ employees reached')}</span></span></p>
+    <p class="lead" style="margin-top:22px">{T('Je transforme vos fichiers Excel, SQL et Power BI en tableaux de bord clairs et en reporting automatisé.', 'I turn your Excel, SQL and Power BI files into clear dashboards and automated reporting.')}</p>
+    <p class="now"><span class="tag">{T('En parallèle', 'Alongside')}</span><span>{T('Manager Data & Digital dans un grand groupe automobile', 'Data & Digital Manager at a major automotive group')}</span></p>
     <div class="stats">
       <div><b>5+</b><span>{T('années d’expérience data & BI', 'years of data & BI experience')}</span></div>
       <div><b>25 M€+</b><span>{T('de portefeuilles pilotés par mes dashboards', 'of portfolios steered by my dashboards')}</span></div>
       <div><b>5 000+</b><span>{T('utilisateurs formés ou équipés', 'users trained or equipped')}</span></div>
     </div>
     <Logos lang={lang} />
-    {!vitrine && <div class="avail"><span class="dot"></span>{ui.common.available[lang]} · {T('réponse sous 48 à 72 h', 'reply within 48 to 72 hours')}</div>}
+    {!vitrine && <div class="avail"><span class="dot"></span>{T('Disponible à temps partiel · réponse sous 48 à 72 h', 'Available part-time · reply within 48 to 72 hours')}</div>}
     <div class="row">
       {!vitrine && <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel de 30 min', 'Book a 30-min call')}</a>}
       {!vitrine && <a class="btn lk" href={links.linkedin} target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>{T('Me contacter sur LinkedIn', 'Message me on LinkedIn')}</a>}
       <a class="btn s" href={vitrine ? '#work' : r('work', lang)}>{T('Voir les réalisations', 'See the work')}</a>
-      {!vitrine && <a class="btn s" href={r('pricing', lang)}>{T('Les offres', 'Pricing')}</a>}
     </div>
   </div>
 </section>
