@@ -132,8 +132,9 @@ const nav = [
       setTimeout(function(){if(!launchAt)w.classList.add('ask')},2300);
       setTimeout(function(){go(false)},5600);
       function end(){if(done)return;done=true;root.classList.remove('warp');root.classList.add('warp-in');w.remove();setTimeout(function(){root.classList.remove('warp-in')},800)}
-      w.addEventListener('click',function(){if(!launchAt){if(!going)go(true);return}else launchAt=Math.min(launchAt,performance.now()-WARP)});
-      addEventListener('keydown',function(){if(done)return;if(!launchAt){if(!going)go(true);return}else launchAt=Math.min(launchAt,performance.now()-WARP)});
+      function late(){if(!going)go(true);else loud=true}
+      w.addEventListener('click',late);
+      addEventListener('keydown',function(){if(!done)late()});
       function f(now){if(done)return;if(!launchAt){requestAnimationFrame(f);return}var t=now-launchAt;if(rm)t=Math.max(t,WARP);var p=Math.min(1,t/WARP),sp=.003+Math.pow(p,2.4)*.075;
         x.fillStyle='rgba(7,28,30,'+(p<.9?.35:.6)+')';x.fillRect(0,0,W,H);
         var cx=W/2,cy=H/2,k=Math.max(W,H)*.5;
