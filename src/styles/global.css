@@ -833,3 +833,56 @@ a.card:hover{transform:translateY(-3px);border-color:var(--acc)}
 .c-slide .c-viz{max-height:62%}
 .c-slide .c-viz svg{max-height:100%}
 .c-big{white-space:nowrap}
+
+/* ===== project page conversation ===== */
+.pj-mission{display:flex;gap:22px;align-items:flex-start;max-width:820px;margin:0 auto clamp(48px,6vw,80px)}
+.pj-mission span{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;font-size:44px;line-height:1;color:var(--line2)}
+.pj-mission h3{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;text-transform:uppercase;color:var(--acc);font-size:20px;margin-bottom:8px}
+.pj-mission p{font-size:17px;line-height:1.7}
+.chat{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(22px,3vw,36px)}
+.msg{display:flex;align-items:flex-end;gap:16px}
+.msg.r{justify-content:flex-end}
+.msg img{flex:none;width:clamp(56px,6vw,76px);height:auto;border-radius:50%;box-shadow:0 12px 24px -14px rgba(12,58,62,.5)}
+.bub{position:relative;max-width:600px;background:var(--card);border:1px solid var(--line);border-radius:20px 20px 20px 6px;padding:18px 22px}
+.msg.r .bub{border-radius:20px 20px 6px 20px}
+.bub b{display:block;font-size:13px;color:var(--ink)}
+.bub small{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin:4px 0 8px}
+.bub p{font-size:15.5px;line-height:1.65}
+.bub.kev{background:var(--deep);border-color:var(--deep)}
+.bub.kev b{color:#F4EFE4}.bub.kev small{color:#9FE0D8}.bub.kev p{color:rgba(244,239,228,.88)}
+.bub.ok{border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 12%,transparent)}
+.bub.small{padding:12px 18px}
+.chat .rv{transform:translateY(18px) scale(.97)}
+.chat .rv.in{transform:none}
+.chat .msg:nth-child(2).rv{transition-delay:.12s}.chat .msg:nth-child(3).rv{transition-delay:.24s}.chat .msg:nth-child(4).rv{transition-delay:.36s}
+@media(max-width:600px){.msg img{width:44px}.bub{padding:14px 16px}}
+
+/* ===== airier layout everywhere ===== */
+body{line-height:1.65}
+.sec{padding:clamp(80px,11vw,160px) 0}
+.sec[style*="padding-top"]{padding-top:clamp(70px,10vw,140px)!important}
+.kicker{margin-bottom:18px}
+.head,.c-head{margin-bottom:clamp(44px,6vw,80px);gap:18px}
+.pg-title{font-size:clamp(34px,5vw,80px);max-width:16ch;line-height:.95}
+.lead{font-size:clamp(17px,1.5vw,20px);line-height:1.75;max-width:52ch}
+.pj-hero .lead,.ph-c .lead{margin-top:clamp(28px,3vw,44px)!important}
+.ph-c .lead+.lead{margin-top:14px!important}
+.ph-c .row{margin-top:clamp(32px,4vw,48px)!important}
+.pj-hero .meta{margin-top:28px}
+.ab-hero{padding:clamp(70px,10vw,140px) 0 clamp(40px,5vw,70px)}
+.ab-stack{gap:clamp(90px,12vw,170px)}
+.grid{gap:22px}
+.card:not(.cc):not(.pc):not(.gamebox){padding:clamp(22px,2.4vw,32px)}
+.deal.go .deal-bubble{opacity:1;transform:none;transition-delay:.2s}
+.ab-skills,.ab-rules{gap:20px}
+.c-hero-row{gap:clamp(24px,5vw,90px)}
+.c-ctas{margin-top:clamp(44px,5vw,70px)}
+.c-logos .logos{margin-top:clamp(44px,5vw,70px)}
+.c-mission{padding:clamp(100px,13vw,190px) 0}
+.c-final{padding:clamp(100px,13vw,180px) 0}
+.c-final-t{margin:18px 0 clamp(50px,6vw,80px)}
+.pj-next{padding:clamp(90px,12vw,160px) 0}
+.c-band{padding:clamp(48px,7vw,100px)}
+.foot{padding-top:clamp(70px,8vw,110px)}
+.steps .step{padding:28px}
+.faq details{padding:22px 0}

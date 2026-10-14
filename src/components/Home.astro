@@ -234,7 +234,7 @@ const featured = [projects[3], projects[4], projects[5]];
   <div class="wrap">
     <div class="c-head"><div class="kicker">{T('Offres', 'Pricing')}</div><h2>{T('Trois façons de travailler ensemble.', 'Three ways to work together.')}</h2></div>
     <div class="deal" id="deal">
-      <div class="deal-av"><img src="/avatar.svg" alt="" width="400" height="400" /><span class="deal-bubble">{T('Choisissez une carte !', 'Pick a card!')}</span></div>
+      <div class="deal-av"><img src="/avatar-think.svg" alt="" width="400" height="400" /><span class="deal-bubble" data-a={T('Hmm…', 'Hmm…')} data-b={T('Et hop !', 'Here you go!')} data-c={T('Choisissez une carte !', 'Pick a card!')}>{T('Hmm…', 'Hmm…')}</span></div>
       <Pricing lang={lang} compact />
     </div>
     <div style="margin-top:18px;text-align:center"><a class="btn s" href={r('pricing', lang)}>{T('Options, déroulé et questions fréquentes', 'Options, process and FAQ')} →</a></div>
@@ -270,7 +270,7 @@ const featured = [projects[3], projects[4], projects[5]];
       bs.forEach(function(b){b.addEventListener('click',function(){bs.forEach(function(x){x.classList.toggle('on',x===b)});ps.forEach(function(q){q.classList.toggle('on',q.dataset.t===b.dataset.t)})})})});
     // pricing: deal the cards when the section shows up
     var dl=document.getElementById('deal');
-    if(dl){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){dl.classList.add('in');io.disconnect()}})},{threshold:.25});io.observe(dl)}
+    if(dl){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){dl.classList.add('go');if(window.krDeal)krDeal(dl);else dl.classList.add('in');io.disconnect()}})},{threshold:.25});io.observe(dl)}
     // results slider
     document.querySelectorAll('.c-slider').forEach(function(s){var n=s.querySelectorAll('.c-slide').length,i=0,t;
       function go(k){i=(k+n)%n;['.c-slide','.c-slide-txt','.c-dots button'].forEach(function(q){s.querySelectorAll(q).forEach(function(e,j){e.classList.toggle('on',j===i)})})}

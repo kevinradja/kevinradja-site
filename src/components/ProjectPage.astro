@@ -7,6 +7,7 @@ const { p, lang } = Astro.props as { p: Project; lang: Lang };
 const i = projects.indexOf(p);
 const next = projects[(i + 1) % projects.length];
 const C = ui.common;
+const npc = (i % 4) + 1;
 ---
 <section class="pj-hero">
   <div class="wrap">
@@ -20,11 +21,12 @@ const C = ui.common;
 </section>
 <section class="sec">
   <div class="wrap">
-    <div class="pj-four">
-      <div><span>01</span><h3>{C.mission[lang]}</h3><p>{p.mission[lang]}</p></div>
-      <div><span>02</span><h3>{C.challenge[lang]}</h3><p>{p.challenge[lang]}</p></div>
-      <div><span>03</span><h3>{C.solution[lang]}</h3><p>{p.solution[lang]}</p></div>
-      <div class="hl"><span>04</span><h3>{C.result[lang]}</h3><p>{p.result[lang]}</p></div>
+    <div class="pj-mission rv"><span>01</span><div><h3>{C.mission[lang]}</h3><p>{p.mission[lang]}</p></div></div>
+    <div class="chat">
+      <div class="msg l rv"><img src={`/npc${npc}.svg`} alt="" width="400" height="400" /><div class="bub"><b>{lang === 'fr' ? 'Côté client' : 'Client side'} · {p.client[lang]}</b><small>{C.challenge[lang]}</small><p>{p.challenge[lang]}</p></div></div>
+      <div class="msg r rv"><div class="bub kev"><b>Kevin</b><small>{C.solution[lang]}</small><p>{p.solution[lang]}</p></div><img src="/avatar-think.svg" alt="" width="400" height="400" /></div>
+      <div class="msg l rv"><img src={`/npc${npc}-happy.svg`} alt="" width="400" height="400" /><div class="bub ok"><b>{lang === 'fr' ? 'Côté client' : 'Client side'} · {p.client[lang]}</b><small>{C.result[lang]}</small><p>{p.result[lang]}</p></div></div>
+      <div class="msg r rv"><div class="bub kev small"><p>{lang === 'fr' ? 'Avec plaisir. Le dashboard est juste en dessous, testez-le !' : 'My pleasure. The dashboard is right below, give it a try!'}</p></div><img src="/avatar-wink.svg" alt="" width="400" height="400" /></div>
     </div>
     <div class="prose pj-prose">{p.body[lang].map(b => <p>{b}</p>)}</div>
   </div>
