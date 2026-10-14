@@ -131,7 +131,12 @@ function fx(name){if(!AC||muted)return;var t=AC.currentTime;
   if(name==='talk')note(79,t,.06,'triangle',.06);
   if(name==='item'){[72,76,79,84].forEach(function(m,i){note(m,t+i*.07,.14,'square',.05)})}
   if(name==='level'){[67,72,76,79,84].forEach(function(m,i){note(m,t+i*.06,.16,'triangle',.09)})}
-  if(name==='bump')note(45,t,.05,'triangle',.05)}
+  if(name==='bump')note(45,t,.05,'triangle',.05);
+  if(name==='heal'){[76,79,83,88,91].forEach(function(m,i){note(m,t+i*.045,.09,'square',.035)});note(95,t+.24,.22,'triangle',.06);note(100,t+.3,.18,'sine',.03)}
+  if(name==='step')note(stepAlt=!stepAlt?40:43,t,.03,'triangle',.025)}
+var stepAlt=false,pops=[];
+function pop(text,col,dy){pops.push({x:player.px+8,y:player.py-6+(dy||0),t:0,text:text,col:col})}
+function hearts(n){for(var i=0;i<n;i++)pops.push({x:player.px+8+(Math.random()*40-20),y:player.py-4,t:-i*90,text:'♥',col:'#FF5A6E',vx:Math.random()*.03-.015})}
 
 /* ---------- world ---------- */
 var T=16,MW=32,MH=26,VW=16,VH=20;
@@ -236,7 +241,7 @@ var inv=document.getElementById('inv');NPC.forEach(function(n){var s=document.cr
 function count(){return NPC.filter(function(n){return done[n.id]}).length}
 function hud(){var need=50,lv=1+Math.floor(xp/need);document.getElementById('lv').textContent=TX.lv+' '+lv;document.getElementById('xpb').style.width=(xp>=200?100:(xp%need)/need*100)+'%';document.getElementById('xpt').textContent=xp+' XP';
   var n=count();document.getElementById('obj').textContent=finale?TX.objDone:(n===6?TX.objMayor:TX.obj(n));
-  if(lv>lvl){lvl=lv;toast('⭐ '+TX.lvup+lv+' !');fx('level')}}
+  if(lv>lvl){lvl=lv;toast('⭐ '+TX.lvup+lv+' !');fx('level');hearts(7)}}
 var tw=document.getElementById('toasts');function toast(m){var d=document.createElement('div');d.className='toast';d.textContent=m;d.style.top=(12+tw.children.length*40)+'px';tw.appendChild(d);setTimeout(function(){d.remove()},2300)}
 
 /* ---------- dialogue ---------- */
@@ -255,7 +260,7 @@ function talk(n){n.dir={up:'down',down:'up',left:'right',right:'left'}[player.di
   if(n===MAYOR)return talkMayor();
   var lines=n[L].map(function(l){return l[0]==='mem'?{k:'mem',w:memLabel(n),t:l[1]}:{k:'npc',w:n.name+' · '+n.role,t:l[1]}});
   if(done[n.id])return say([{k:'npc',w:n.name+' · '+n.role,t:L==='fr'?'Merci encore ! Va voir la maire quand tu as tous les objets.':'Thanks again! Visit the mayor once you have every item.'}]);
-  say(lines,function(){done[n.id]=1;xp+=25;document.getElementById('i-'+n.id).classList.add('on');fx('item');toast(n.item[0]+' '+n.item[1]+' '+TX.got+' · +25 XP');hud()})}
+  say(lines,function(){done[n.id]=1;xp+=25;document.getElementById('i-'+n.id).classList.add('on');fx('item');setTimeout(function(){fx('heal')},280);pop('+1 ♥','#FF5A6E');pop('+25 XP','#FFD45E',14);toast(n.item[0]+' '+n.item[1]+' '+TX.got+' · +25 XP');hud()})}
 function talkMayor(){var n=count(),M_=MAYOR.name;
   if(finale)return say([{k:'npc',w:M_,t:L==='fr'?'Le village n’a jamais été aussi bien tenu. Profite de la fête !':'The village has never been better run. Enjoy the festival!'}]);
   if(n<6)return say([{k:'npc',w:M_,t:L==='fr'?'Bienvenue, voyageur ! Notre village ne sait plus où passent son eau, ses loyers et ses dépenses.':'Welcome, traveller! Our village no longer knows where its water, rents and spending go.'},{k:'npc',w:M_,t:L==='fr'?'Les habitants marqués d’un « ! » ont chacun un problème… et un objet à te confier. Il t’en manque encore '+(6-n)+'.':'The villagers marked with “!” each have a problem… and an item to give you. You still need '+(6-n)+'.'}]);
@@ -272,7 +277,7 @@ function talkMayor(){var n=count(),M_=MAYOR.name;
     {k:'npc',w:M_,t:'For the first time we know where every drop and every coin goes! And the whole village can read this dashboard.'},
     {k:'npc',w:M_,t:'Tonight, a festival in your honour. And here is the key to the village: come back anytime, there will always be a seat for you.'}
   ];
-  say(F,function(){finale=true;party=true;xp+=50;fx('item');toast('🔑 '+(L==='fr'?'Clé du village':'Key to the village')+' · +50 XP');hud();mode='fan';fanI=0;setTimeout(showEnd,5200)})}
+  say(F,function(){finale=true;party=true;xp+=50;fx('item');setTimeout(function(){fx('heal')},280);hearts(10);pop('+50 XP','#FFD45E',14);toast('🔑 '+(L==='fr'?'Clé du village':'Key to the village')+' · +50 XP');hud();mode='fan';fanI=0;setTimeout(showEnd,5200)})}
 function showDash(cont){var d=document.getElementById('dash');
   d.innerHTML='<h3>'+TX.dashT+'</h3>'+[[TX.d1,'−22 %',22*3,'#3D8FD1'],[TX.d2,'97 %',97,'#3E7D4E'],[TX.d3,'100 %',100,'#E0A030']].map(function(r){return '<div class="r"><span>'+r[0]+'</span><b>'+r[1]+'</b></div><div class="b"><i style="background:'+r[3]+'" data-w="'+r[2]+'"></i></div>'}).join('');
   d.classList.remove('hide');fx('level');setTimeout(function(){d.querySelectorAll('i').forEach(function(e){e.style.width=e.dataset.w+'%'})},60);
@@ -314,7 +319,7 @@ function walkable(x,y){var c=M[y]&&M[y][x];return (c==='g'||c==='p'||c==='f')&&!
 var last=performance.now(),STEP=170,sparks=[],smoke=[],fwT=0,bumpT=0,time=0;
 function update(dt){time+=dt;typeStep(dt);
   if(state==='play'&&!cur&&!dashWait){
-    if(player.moving){player.p+=dt/STEP;if(player.p>=1){player.moving=false;player.x=player.tx;player.y=player.ty;steps++}
+    if(player.moving){player.p+=dt/STEP;if(player.p>=1){player.moving=false;player.x=player.tx;player.y=player.ty;steps++;fx('step')}
       player.px=(player.fx+(player.tx-player.fx)*Math.min(1,player.p))*T;player.py=(player.fy+(player.ty-player.fy)*Math.min(1,player.p))*T}
     if(!player.moving&&(held.length||tap)){var d=held.length?held[held.length-1]:tap;tap=null;player.dir=d;var v=DIRS[d],nx=player.x+v[0],ny=player.y+v[1];
       if(walkable(nx,ny)){player.moving=true;player.p=0;player.fx=player.x;player.fy=player.y;player.tx=nx;player.ty=ny}else if(time-bumpT>350){bumpT=time;fx('bump')}}}
@@ -322,6 +327,7 @@ function update(dt){time+=dt;typeStep(dt);
   smoke.forEach(function(s){s.y-=dt*.012;s.x+=Math.sin((s.y+time*.01)/6)*.15;s.a-=dt/2200});smoke=smoke.filter(function(s){return s.a>0});
   if(party){fwT-=dt;if(fwT<=0){fwT=420+Math.random()*300;var bx=camX+30+Math.random()*196,by=camY+30+Math.random()*120,col=['#FFD45E','#FF8FA3','#3FD3DC','#B48CFF','#8ED65F'][Math.random()*5|0];
     for(var k=0;k<26;k++){var a=k/26*6.283,sp=.03+Math.random()*.05;sparks.push({x:bx,y:by,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,l:1,c:col})}}}
+  pops.forEach(function(p){p.t+=dt;if(p.t>0){p.y-=dt*.03;if(p.vx)p.x+=p.vx*dt}});pops=pops.filter(function(p){return p.t<1300});
   sparks.forEach(function(p){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=.00006*dt;p.l-=dt/1300});sparks=sparks.filter(function(p){return p.l>0})}
 var camX=0,camY=0;
 function render(){var W=VW*T,H=VH*T;
@@ -339,7 +345,8 @@ function render(){var W=VW*T,H=VH*T;
     B.forEach(function(b){(b.win||[]).forEach(function(w){cx.fillStyle='rgba(255,200,90,.55)';cx.fillRect(w[0]-camX,w[1]-camY,8,6);cx.fillStyle='rgba(255,180,60,.12)';cx.fillRect(w[0]-camX-4,w[1]-camY-4,16,14)})});
     var gr=cx.createRadialGradient(player.px-camX+8,player.py-camY+8,2,player.px-camX+8,player.py-camY+8,46);gr.addColorStop(0,'rgba(255,220,150,.22)');gr.addColorStop(1,'rgba(255,220,150,0)');cx.fillStyle=gr;cx.fillRect(0,0,W,H);
     cx.globalCompositeOperation='source-over'}
-  sparks.forEach(function(p){cx.globalAlpha=Math.max(0,p.l);R(cx,p.c,Math.round(p.x-camX),Math.round(p.y-camY),2,2)});cx.globalAlpha=1}
+  sparks.forEach(function(p){cx.globalAlpha=Math.max(0,p.l);R(cx,p.c,Math.round(p.x-camX),Math.round(p.y-camY),2,2)});cx.globalAlpha=1;
+  cx.font='bold 9px monospace';cx.textAlign='center';pops.forEach(function(p){if(p.t<0)return;cx.globalAlpha=Math.max(0,1-p.t/1300);var x=Math.round(p.x-camX),y=Math.round(p.y-camY);cx.fillStyle='#1d2430';cx.fillText(p.text,x+1,y+1);cx.fillStyle=p.col;cx.fillText(p.text,x,y)});cx.globalAlpha=1}
 function loop(now){var dt=Math.min(50,now-last);last=now;update(dt);render();requestAnimationFrame(loop)}
 hud();requestAnimationFrame(loop);
 })();
