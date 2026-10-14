@@ -123,16 +123,18 @@ const nav = [
       function star(z){return{x:(Math.random()-.5)*2,y:(Math.random()-.5)*2,z:z||Math.random()*1+.05,c:Math.random()<.3?'#9FE0D8':'#F4EFE4'}}
       for(var i=0;i<900;i++)S.push(star());
       var PRE=3100,WARP=2000,SPLASH=750,rm=root.classList.contains('warp-rm');
-      var q0=w.querySelector('.wq');if(q0){var full=q0.dataset.t,ci=0,ti;setTimeout(function(){ti=setInterval(function(){ci++;q0.textContent=full.slice(0,ci);if(full[ci-1]&&full[ci-1]!==' ')key();if(ci>=full.length)clearInterval(ti)},48)},350)}
+      var q0=w.querySelector('.wq');
+      /* the question types only after the press, so the keyboard sound is allowed */
+      function typeQ(cb){if(!q0){cb();return}var full=q0.dataset.t,ci=0,ti=setInterval(function(){ci++;q0.textContent=full.slice(0,ci);if(full[ci-1]!==' '&&loud)key();if(ci>=full.length){clearInterval(ti);setTimeout(cb,250)}},45)}
       var launchAt=null,loud=false,plouf=false;
       function key(){try{window.KR&&KR.sfx&&KR.sfx.play('key')}catch(e){}}
       function answer(){var a=w.querySelector('.wq2');if(!a)return;var txt=a.dataset.t,i=0,iv=setInterval(function(){i++;a.textContent=txt.slice(0,i);if(txt[i-1]!==' '&&loud)key();if(i>=txt.length)clearInterval(iv)},55)}
       function snd(n){try{if(loud&&window.KR&&KR.sfx)KR.sfx.playSoon(n)}catch(e){}}
       var going=false;
       function go(user){if(launchAt||going)return;going=true;loud=!!user;w.classList.add('press');snd('padA');
-        setTimeout(function(){w.classList.add('fix');snd('heal');answer()},260);
-        setTimeout(function(){w.classList.add('launch');launchAt=performance.now();snd('warp');setTimeout(end,WARP+SPLASH+1500)},2000)}
-      setTimeout(function(){if(!launchAt)w.classList.add('ask')},2300);
+        setTimeout(function(){typeQ(function(){w.classList.add('fix');snd('heal');answer();
+          setTimeout(function(){w.classList.add('launch');launchAt=performance.now();snd('warp');setTimeout(end,WARP+SPLASH+1500)},1900)})},300)}
+      setTimeout(function(){if(!going)w.classList.add('ask')},900);
       function end(){if(done)return;done=true;root.classList.remove('warp');root.classList.add('warp-in');w.remove();setTimeout(function(){root.classList.remove('warp-in')},800)}
       function late(){if(!going)go(true);else loud=true}
       w.addEventListener('click',late);
