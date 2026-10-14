@@ -1354,7 +1354,3 @@ html::-webkit-scrollbar{width:0;height:0}
 /* hero: keep the dashboard below the title */
 @media(min-width:901px){.c-hero-row{margin-top:clamp(18px,2.5vw,36px)!important}}
 
-/* pricing: pixel emblem avatar that throws the cards */
-.deal-av{width:clamp(240px,30vw,380px)!important}
-.deal-av img{border-radius:0!important;box-shadow:none!important;image-rendering:pixelated;filter:drop-shadow(0 10px 0 rgba(12,58,62,.18))}
-.deal-bubble{left:78%!important;top:-4%!important}
