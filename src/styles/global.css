@@ -377,7 +377,7 @@ a.card:hover{transform:translateY(-2px);border-color:var(--acc)}
 .dg h4{grid-column:1/-1}
 @media(max-width:820px){
   .story{height:300vh}
-  .story-pin{grid-template-columns:1fr;grid-template-rows:auto 1fr;align-content:center;gap:16px;top:60px}
+  .story-pin{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:center;gap:18px;top:60px}
   .story h2{font-size:30px;margin-bottom:10px}
   .st{flex-direction:row;gap:4px}.st li{flex:1;border-left:0;border-top:3px solid var(--line);padding:8px 2px 0}.st li b{font-size:13px}.st li p{display:none}
   .tb{font-size:12px}.tb td,.tb th{padding:7px 6px}
