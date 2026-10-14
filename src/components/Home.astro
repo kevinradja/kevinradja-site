@@ -79,8 +79,8 @@ const featured = [projects[3], projects[4], projects[5]];
 <section class="sec">
   <div class="wrap">
     <div class="head"><div><div class="kicker">{T('Résultats', 'Results')}</div><h2>{T('Ce que ça a donné.', 'What it delivered.')}</h2></div></div>
-    <div class="grid g4">
-      {results.map(x => <div class="card res rv"><div class:list={['v', { sm: x.v.length > 7 }]}>{x.v}</div><div class="l">{x.l}</div><div class="c">{x.c}</div></div>)}
+    <div class="sheet rv">
+      {results.map((x, i) => <div class="res"><span class="ref">{'ABCD'[i]}1</span><div class:list={['v', { sm: x.v.length > 7 }]}>{x.v}</div><div class="l">{x.l}</div><div class="c">{x.c}</div></div>)}
     </div>
   </div>
 </section>
