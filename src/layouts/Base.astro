@@ -45,7 +45,8 @@ const nav = [
   )}
   {!bare && (
   <header class="nav" id="nav">
-    <div class="wrap in">
+    <div class="in">
+      <div class="bar">
       <a class="logo" href={r('home', lang)} aria-label="Kevin Radja">KR<i>.csv</i></a>
       <nav class="links">
         {nav.map(n => <a class:list={['l', { on: path.startsWith(n.h) && n.h !== '/' }]} href={n.h}>{ui.nav[n.k][lang]}</a>)}
@@ -65,8 +66,9 @@ const nav = [
         <span>LinkedIn</span>
       </a>
       </div>
-      <a class="btn p sm cta" href={calendly} target="_blank" rel="noopener">{ui.nav.cta[lang]}</a>
       <button class="ic burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+      <a class="btn p sm cta" href={calendly} target="_blank" rel="noopener">{ui.nav.cta[lang]}</a>
     </div>
   </header>
   )}

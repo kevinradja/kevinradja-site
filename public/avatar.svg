@@ -28,8 +28,6 @@
     <path d="M250 296 L224 400 L280 400 L282 330 Z" fill="#1E2328"/>
     <!-- neck -->
     <path d="M176 238 L176 300 Q200 318 224 300 L224 238 Z" fill="#5E3A28"/>
-    <!-- gold chain -->
-    <path d="M168 300 Q200 350 232 300" fill="none" stroke="#E2B654" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 7"/>
 
     <!-- face -->
     <ellipse cx="200" cy="196" rx="54" ry="66" fill="#6E4430"/>
@@ -38,14 +36,16 @@
     <!-- brows, eyes -->
     <path d="M168 178 Q180 172 192 178" stroke="#140F0D" stroke-width="5" fill="none" stroke-linecap="round"/>
     <path d="M208 178 Q220 172 232 178" stroke="#140F0D" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <ellipse cx="180" cy="192" rx="6" ry="4.5" fill="#140F0D"/>
-    <ellipse cx="220" cy="192" rx="6" ry="4.5" fill="#140F0D"/>
+    <path d="M173 194 Q180 186 187 194" stroke="#140F0D" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+    <path d="M213 194 Q220 186 227 194" stroke="#140F0D" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="166" cy="214" rx="9" ry="5" fill="#8A5440" opacity=".55"/>
+    <ellipse cx="234" cy="214" rx="9" ry="5" fill="#8A5440" opacity=".55"/>
     <!-- nose -->
     <path d="M200 196 Q196 214 188 220 Q200 226 212 220" stroke="#4E2F20" stroke-width="3.5" fill="none" stroke-linecap="round"/>
     <!-- moustache, mouth, goatee -->
-    <path d="M182 232 Q200 224 218 232" stroke="#1B1411" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M188 240 Q200 244 212 240" stroke="#3A2218" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M190 250 Q200 266 210 250 Q206 258 200 258 Q194 258 190 250 Z" fill="#1B1411"/>
+    <path d="M180 230 Q200 222 220 230" stroke="#1B1411" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M180 236 Q200 258 220 236 Q200 244 180 236 Z" fill="#F4EFE4" stroke="#3A2218" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M190 254 Q200 270 210 254 Q206 262 200 262 Q194 262 190 254 Z" fill="#1B1411"/>
 
     <!-- hair front fringe -->
     <g fill="#1B1411">
