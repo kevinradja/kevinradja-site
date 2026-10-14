@@ -1214,3 +1214,10 @@ html::-webkit-scrollbar{width:0;height:0}
 .avis-c figcaption span{font-size:13.5px;color:var(--mute)}
 .avis-p{display:flex;gap:10px;align-items:baseline;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--acc);text-decoration:none}
 .avis-p em{font-style:normal;font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;white-space:nowrap}
+
+/* rail can be dragged */
+.sbar-t{cursor:grab;touch-action:none}
+.sbar.drag .sbar-t{cursor:grabbing}
+.sbar-t:before{inset:-8px -14px}
+.sbar.drag .sbar-t b:after,.sbar-t:hover b:after{width:13px;height:13px;bottom:-6px}
+.sbar.drag .sbar-t b{transition:none}
