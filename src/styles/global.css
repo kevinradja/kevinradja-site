@@ -784,3 +784,52 @@ a.card:hover{transform:translateY(-3px);border-color:var(--acc)}
 .ct-av .deal-bubble{opacity:1;transform:none;transition:none;animation:pop .5s cubic-bezier(.2,1.6,.4,1) .8s both}
 @keyframes pop{from{opacity:0;transform:scale(.5)}}
 .stats b,.c-hero-l b{font-variant-numeric:tabular-nums}
+
+/* mission: words left, audiences right */
+.c-mission{text-align:left}
+.c-mission-in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:center}
+.c-mission-in:has(> :only-child){grid-template-columns:1fr;text-align:center}
+.c-mission-in:has(> :only-child) p{margin:0 auto}
+.c-mission .c-reveal{font-size:clamp(34px,4.6vw,80px)}
+.c-mission-l p{margin:0;max-width:44ch}
+.c-aud-dark{grid-template-columns:1fr;gap:20px}
+.c-aud-dark .c-aud-l button{color:rgba(244,239,228,.22);border-top-color:rgba(244,239,228,.18);font-size:clamp(26px,3vw,46px);padding:12px 0 8px}
+.c-aud-dark .c-aud-l button:hover{color:rgba(244,239,228,.55)}
+.c-aud-dark .c-aud-l button[aria-selected="true"]{color:#9FE0D8}
+.c-aud-dark .c-aud-l .kicker{color:#9FE0D8}
+.c-aud-dark .c-aud-r{min-height:0}
+.c-aud-dark .c-aud-p img,.c-aud-dark .c-aud-dev{height:260px}
+.c-aud-dark .c-aud-p img{border-color:rgba(244,239,228,.12)}
+.c-aud-dark .c-aud-dev{background:rgba(244,239,228,.06);border-color:rgba(244,239,228,.12)}
+.c-aud-dark .c-aud-card{right:14px;bottom:14px}
+@media(max-width:900px){.c-mission-in{grid-template-columns:1fr}.c-aud-dark .c-aud-card{position:relative;right:auto;bottom:auto;margin:-50px 12px 0}}
+
+/* work: auto-scrolling carousel, pauses on hover */
+.c-work-pin{position:static;min-height:0;overflow:visible}
+.c-marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.c-marquee .c-track{display:flex;gap:18px;width:max-content;padding:10px 0 20px;animation:marq 70s linear infinite;transform:none}
+.c-marquee:hover .c-track{animation-play-state:paused}
+.c-slot{flex:none;width:clamp(280px,28vw,400px);display:flex}
+.c-slot .pc{width:100%}
+@keyframes marq{to{transform:translateX(calc(-50% - 9px))}}
+@media(max-width:759px){.c-marquee .c-track{animation-duration:50s}.c-slot{width:78vw}}
+
+/* ===== overflow fixes ===== */
+.foot-giant-box{overflow:hidden;padding:0 2vw}
+.foot-giant{font-size:11.4vw;text-align:center;margin:48px 0 -.06em}
+.split .w{padding:.16em 0 .2em;margin:-.16em 0 -.2em}
+.deal .pr:nth-child(1){--r1:0deg}.deal .pr:nth-child(3){--r1:0deg}
+/* the pinned story must fit the screen height */
+.c-pin{top:74px;height:calc(100vh - 84px);height:calc(100svh - 84px)}
+.c-panel{padding:clamp(10px,2vh,24px) 16px}
+.c-giant{font-size:min(6.4vw,11vh,140px)}
+.c-story-dev{width:min(430px,72vw,58vh)}
+.c-steps{margin-top:min(22px,2vh)}
+.c-explain{margin-top:min(14px,1.5vh)}
+@media(max-height:760px){.c-explain p{font-size:14px}.c-panel .kicker{display:none}}
+/* results slider: room for logo + chart */
+.c-sl-r{min-height:420px}
+.c-slide{inset:9% 9%}
+.c-slide .c-viz{max-height:62%}
+.c-slide .c-viz svg{max-height:100%}
+.c-big{white-space:nowrap}
