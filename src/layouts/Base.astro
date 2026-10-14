@@ -36,6 +36,8 @@ const nav = [
     (function(){try{var force=/[?&]intro(=|&|$)/.test(location.search);if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
   </script>}
   <script is:inline>
+    /* always start at the top after a reload (unless the URL targets a section) */
+    (function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(!location.hash){window.scrollTo(0,0);addEventListener('load',function(){window.scrollTo(0,0)})}}catch(e){}})();
     (function(){try{var t=localStorage.getItem('kr-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);if(localStorage.getItem('kr-sound')==='off')document.documentElement.classList.add('muted')}catch(e){}})();
   </script>
 </head>
