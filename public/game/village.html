@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Le Village des Données</title>
-<link rel="preload" href="/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:'Press Start 2P';font-display:block;src:url(/fonts/press-start-2p.woff2) format('woff2')}</style>
+<link rel="preload" href="/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:'Press Start 2P';font-display:block;src:url(/fonts/press-start-2p.woff2) format('woff2')}.ch-bot{display:flex;align-items:center;gap:14px;margin:10px 0}.ch-robot{font-size:40px;line-height:1;filter:grayscale(1);transition:.3s}.ch-robot.on{filter:none;animation:chb .6s ease 2}
+@keyframes chb{50%{transform:translateY(-6px) rotate(-6deg)}}.ch-slots{display:flex;flex-wrap:wrap;gap:6px}.ch-slots span{font-size:12px;padding:5px 8px;border:2px dashed #9AA4AE;border-radius:4px;opacity:.7}.ch-slots span.ok{border-style:solid;border-color:#3E9A3A;background:#E3F5DD;opacity:1}
+.ch-step{font-weight:700;margin:6px 0}.ch-chat p{margin:6px 0;padding:7px 10px;border-radius:8px;font-size:14px}.ch-chat .u{background:#3D8FD1;color:#fff;margin-left:30%}.ch-chat .b{background:#EEF3F6;color:#1d1d1d;margin-right:15%}
+</style>
 <style>
 :root{--bg:#F7F7F5;--card:#fff;--ink:#0E1116;--mute:#6B7480;--line:#E3E6E8;--acc:#1AA7B0;--gold:#E0A030}
 :root[data-theme="dark"]{--bg:#0E1116;--card:#171B21;--ink:#F3F5F7;--mute:#9AA3AE;--line:#262C34;--acc:#3FD3DC}
@@ -278,8 +281,8 @@ function post(){try{parent.postMessage({krHeight:document.body.getBoundingClient
 if(window.ResizeObserver)new ResizeObserver(post).observe(document.body);addEventListener('load',post);
 
 var TX={
- fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux six habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord. Pour aider chaque habitant, capture d’abord l’outil qu’il te demande : ils se cachent dans les hautes herbes…',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A, ou sur Espace au clavier · I : ouvrir le Datadex',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/6)'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Fête au village 🎉 Complète ton Datadex dans les hautes herbes !',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
- en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the six villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north. To help each villager, first catch the tool they ask for: tools hide in the tall grass…',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A, or Space on a keyboard · I: open the Datadex',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/6)'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'Village festival 🎉 Complete your Datadex in the tall grass!',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
+ fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux sept habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord. Pour aider chaque habitant, capture d’abord l’outil qu’il te demande : ils se cachent dans les hautes herbes…',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A, ou sur Espace au clavier · I : ouvrir le Datadex',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/'+NPC.length+')'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Fête au village 🎉 Complète ton Datadex dans les hautes herbes !',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
+ en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the seven villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north. To help each villager, first catch the tool they ask for: tools hide in the tall grass…',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A, or Space on a keyboard · I: open the Datadex',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/'+NPC.length+')'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'Village festival 🎉 Complete your Datadex in the tall grass!',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
 }[L];
 document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=TX[e.dataset.t]});
 
@@ -364,11 +367,14 @@ var NPC=[
   en:[["npc", "I have more than ten apprentices, and each one writes down the bakery’s spending their own way. Flour, wood, repairs… by month end I no longer know where the money goes."], ["mem", "Today, as a manager, I support more than ten people day to day, and our work reaches over 1,000 colleagues. The secret: the whole team sorts numbers the same way. Let’s sort your spending by category, together."], ["npc", "One marble per coin spent, sorted by category: the apprentices will love it, and I’ll see everything at a glance! Take this bag of marbles."]]},
  {id:'jo',x:10,y:20,dir:'left',name:'Papi Jo',role:L==='fr'?'ancien sensei':'retired sensei',P:{skin:'#D7A47E',hair:'#EDEDED',top:'#FAFAFA',bot:'#FAFAFA',belt:1,rod:1},item:['🥋',L==='fr'?'Ceinture de la régularité':'Belt of consistency'],
   fr:[["npc", "Chut… ça mord. Je tiens le carnet des prises de la pêche pour le village. Une semaine je note tout, puis j’oublie trois semaines… et mes chiffres ne veulent plus rien dire."], ["mem", "Ça, c’est comme au karaté : la régularité bat le talent. Je le vois aussi en coaching, et même en photo ou en montage vidéo : on progresse un peu, mais souvent. Un relevé chaque semaine, comme un entraînement."], ["npc", "Hé hé, un vrai sensei ! Un relevé par semaine, promis. Prends ma vieille ceinture, elle te rappellera la discipline."]],
-  en:[["npc", "Shh… they’re biting. I keep the village’s fishing log. One week I write everything down, then I forget for three… and my numbers stop meaning anything."], ["mem", "That’s like karate: consistency beats talent. I see it in coaching too, and even in photography or video editing: improve a little, but often. One log a week, like training."], ["npc", "Heh, a real sensei! One log a week, I promise. Take my old belt, it will remind you of discipline."]]}
+  en:[["npc", "Shh… they’re biting. I keep the village’s fishing log. One week I write everything down, then I forget for three… and my numbers stop meaning anything."], ["mem", "That’s like karate: consistency beats talent. I see it in coaching too, and even in photography or video editing: improve a little, but often. One log a week, like training."], ["npc", "Heh, a real sensei! One log a week, I promise. Take my old belt, it will remind you of discipline."]]},
+ {id:'theo',x:14,y:11,dir:'down',name:'Théo',role:L==='fr'?'apprenti inventeur':'apprentice inventor',P:{skin:'#F0C7A0',hair:'#E0A030',top:'#2E8C8C',bot:'#3A3550',goggles:1},item:['🤖',L==='fr'?'Petit robot conseiller':'Little helper robot'],
+  fr:[["npc", "Tout le monde vient me poser les mêmes questions : où est la farine, qui a payé, comment marche le puits… Je n’ai plus le temps d’inventer quoi que ce soit !"], ["mem", "En 2026, sur le portail de formation SAP Enable Now d’un grand groupe automobile, personne ne trouvait rien parmi 365 simulations. On a construit un assistant IA qui répond à la place de l’équipe, et qui ose dire « je ne sais pas »."], ["npc", "Un petit robot qui répond pour moi ? Construisons-le ensemble !"]],
+  en:[["npc", "Everyone keeps asking me the same questions: where’s the flour, who paid, how does the well work… I have no time left to invent anything!"], ["mem", "In 2026, on a major automotive group’s SAP Enable Now training portal, nobody could find anything among 365 simulations. We built an AI assistant that answers for the team, and dares to say “I don’t know”."], ["npc", "A little robot that answers for me? Let’s build it together!"]]},
 ];
 var MAYOR={id:'mayor',x:17,y:7,dir:'down',name:L==='fr'?'Mme la Maire':'Madam Mayor',P:{skin:'#E8B793',hair:'#B8B8C8',top:'#C8553D',bot:'#3A3550',sash:1}};
 var ALL=NPC.concat([MAYOR]);
-var player={x:15,y:23,px:15*T,py:23*T,dir:'up',moving:false,fx:0,fy:0,tx:0,ty:0,p:0,P:{skin:'#6E4430',hair:'#1B1411',top:'#14181C',bot:'#14181C',hat:'#0B0D10',long:1}};
+var player={x:15,y:23,px:15*T,py:23*T,dir:'up',moving:false,fx:0,fy:0,tx:0,ty:0,p:0,P:{skin:'#6E4430',hair:'#1B1411',top:'#262D35',bot:'#33404F',long:1,mc:1}};
 var done={},xp=0,lvl=1,steps=0,t0=0,state='title',finale=false,party=false;
 
 /* ---------- static layer ---------- */
@@ -432,12 +438,27 @@ function faceFx(c,o,Y,dir,P,m){var ey=Y+3;
   else if(m.mood==='eager'){R(c,mc,o+5,Y+4,2,2)}
   else R(c,mc,o+5,Y+5,2,1);
   if(m.mood==='happy'||m.mood==='eager'){R(c,'rgba(230,90,90,.7)',o+3,Y+4,1,1);R(c,'rgba(230,90,90,.7)',o+8,Y+4,1,1)}}
-function moodOf(n){if(n===MAYOR)return finale?'happy':(count()===6?'eager':'n');if(done[n.id])return 'happy';if(asked[n.id])return missing(n.id).length?'worried':'eager';return 'n'}
+function moodOf(n){if(n===MAYOR)return finale?'happy':(count()===NPC.length?'eager':'n');if(done[n.id])return 'happy';if(asked[n.id])return missing(n.id).length?'worried':'eager';return 'n'}
 function emote(c,x,y,mood,ph){var t=(time+ph*700)%3000;
   if(mood==='worried'){var d=(t%1200)/1200;if(t<2400){R(c,'#7FC8F5',x+13,y-1+Math.round(d*4),2,2);R(c,'#7FC8F5',x+14,y-2+Math.round(d*4),1,1)}}
   else if(mood==='happy'&&t<900){var k=t/900,hy=y-6-Math.round(k*8),a=1-k;c.globalAlpha=a;R(c,'#FF6B81',x+12,hy,2,1);R(c,'#FF6B81',x+15,hy,2,1);R(c,'#FF6B81',x+12,hy+1,5,1);R(c,'#FF6B81',x+13,hy+2,3,1);R(c,'#FF6B81',x+14,hy+3,1,1);c.globalAlpha=1}
   else if(mood==='eager'&&t<1500&&Math.floor(t/250)%2===0){R(c,'#FFFFFF',x+13,y-3,2,1);R(c,'#FFFFFF',x+12,y-1,1,2);R(c,'#FFFFFF',x+15,y-1,1,2)}}
-function drawPerson(c,X,Y,dir,fr,P,bobY,m){var o=X+2;Y=Y-3+(bobY||0);
+function drawMC(c,X,Y,dir,fr,P,bobY,m){var o=X+2;Y=Y-3+(bobY||0);
+  var H='#1B1411',HL='#3A2A22',CO='#262D35',LP='#46505B',AC='#1AA7B0',SK=P.skin,K='#0B0D10';
+  c.fillStyle='rgba(0,0,0,.22)';c.beginPath();c.ellipse(X+8,Y+17,6,2,0,0,7);c.fill();
+  var l1=fr===1?1:0,l2=fr===2?1:0;R(c,'#33404F',o+3,Y+12,2,3-l1);R(c,'#33404F',o+7,Y+12,2,3-l2);R(c,'#F4F1E6',o+3,Y+15-l1,2,1);R(c,'#F4F1E6',o+7,Y+15-l2,2,1);
+  if(dir!=='up'){R(c,H,o+1,Y+1,2,7);R(c,H,o+9,Y+1,2,7);R(c,HL,o+1,Y+3,1,1);R(c,HL,o+10,Y+5,1,1);R(c,H,o,Y+3,1,3);R(c,H,o+11,Y+3,1,3)}
+  R(c,CO,o+2,Y+6,8,7);R(c,'rgba(0,0,0,.18)',o+2,Y+11,8,2);var sw=fr?1:0;R(c,CO,o+1,Y+7+sw,1,4);R(c,CO,o+10,Y+7+(1-sw),1,4);R(c,SK,o+1,Y+11+sw,1,1);R(c,SK,o+10,Y+12-sw,1,1);
+  if(dir==='down'){R(c,AC,o+5,Y+6,2,4);R(c,LP,o+4,Y+6,1,5);R(c,LP,o+7,Y+6,1,5)}else if(dir==='left'){R(c,LP,o+3,Y+6,1,5);R(c,AC,o+2,Y+6,1,3)}else if(dir==='right'){R(c,LP,o+8,Y+6,1,5);R(c,AC,o+9,Y+6,1,3)}
+  R(c,SK,o+3,Y,6,6);
+  if(dir==='up'){R(c,H,o+2,Y-3,8,10);R(c,H,o+1,Y-1,10,8);R(c,H,o,Y+2,12,4);R(c,HL,o+3,Y,1,1);R(c,HL,o+7,Y+2,1,1);R(c,HL,o+5,Y+5,1,1);R(c,HL,o+9,Y+4,1,1);R(c,K,o+1,Y-1,10,1);return}
+  R(c,H,o+3,Y-3,6,1);R(c,H,o+2,Y-2,8,2);R(c,HL,o+4,Y-3,1,1);R(c,HL,o+7,Y-2,1,1);R(c,K,o+2,Y-1,8,1);
+  var ey=Y+2;
+  if(dir==='down'){R(c,K,o+3,Y-2,2,1);R(c,K,o+7,Y-2,2,1);R(c,'#9FE0D8',o+3,Y-2,1,1);R(c,'#9FE0D8',o+7,Y-2,1,1);R(c,H,o+3,Y,1,2);R(c,H,o+8,Y,1,2);
+    R(c,K,o+4,ey,1,1);R(c,K,o+7,ey,1,1);R(c,H,o+4,Y+4,4,1);R(c,H,o+5,Y+5,2,1);if(m&&m.blink){R(c,SK,o+4,ey,1,1);R(c,SK,o+7,ey,1,1)}}
+  else if(dir==='left'){R(c,K,o+2,Y-2,2,1);R(c,'#9FE0D8',o+2,Y-2,1,1);R(c,H,o+6,Y,3,4);R(c,K,o+4,ey,1,1);R(c,H,o+3,Y+4,2,1);R(c,H,o+3,Y+5,1,1);if(m&&m.blink)R(c,SK,o+4,ey,1,1)}
+  else{R(c,K,o+8,Y-2,2,1);R(c,'#9FE0D8',o+9,Y-2,1,1);R(c,H,o+3,Y,3,4);R(c,K,o+7,ey,1,1);R(c,H,o+7,Y+4,2,1);R(c,H,o+8,Y+5,1,1);if(m&&m.blink)R(c,SK,o+7,ey,1,1)}}
+function drawPerson(c,X,Y,dir,fr,P,bobY,m){if(P.mc)return drawMC(c,X,Y,dir,fr,P,bobY,m);var o=X+2;Y=Y-3+(bobY||0);
   c.fillStyle='rgba(0,0,0,.2)';c.beginPath();c.ellipse(X+8,Y+17,5,2,0,0,7);c.fill();
   var l1=fr===1?1:0,l2=fr===2?1:0;R(c,P.bot,o+3,Y+12,2,3-l1);R(c,P.bot,o+7,Y+12,2,3-l2);R(c,'#2A2320',o+3,Y+15-l1,2,1);R(c,'#2A2320',o+7,Y+15-l2,2,1);
   R(c,P.top,o+2,Y+6,8,7);R(c,'rgba(0,0,0,.12)',o+2,Y+11,8,2);
@@ -453,6 +474,7 @@ function drawPerson(c,X,Y,dir,fr,P,bobY,m){var o=X+2;Y=Y-3+(bobY||0);
     if(P.beard)R(c,P.hair,o+3,Y+4,6,2);if(m)faceFx(c,o,Y,dir,P,m)}
   if(P.long&&dir!=='up'){R(c,P.hair,o+2,Y,1,8);R(c,P.hair,o+9,Y,1,8)}
   if(P.long&&dir==='up')R(c,P.hair,o+2,Y,8,8);
+  if(P.goggles&&dir!=='up'){R(c,'#5A3A22',o+2,Y+1,8,1);if(dir!=='right')R(c,'#7FD8F0',o+3,Y,2,2);if(dir!=='left')R(c,'#7FD8F0',o+7,Y,2,2)}
   if(P.hat&&!P.chef){R(c,P.hat,o+2,Y-2,8,2);R(c,P.hat,o+3,Y-4,6,2)}
   if(P.chef){R(c,'#FFFFFF',o+3,Y-5,6,4);R(c,'#EDEDED',o+2,Y-2,8,1)}
   if(P.rod){c.strokeStyle='#7A4E2D';c.lineWidth=1;c.beginPath();c.moveTo(o+1,Y+9);c.lineTo(o-9,Y-5);c.stroke();c.strokeStyle='rgba(255,255,255,.7)';c.beginPath();c.moveTo(o-9,Y-5);c.lineTo(o-11,Y+12);c.stroke()}}
@@ -461,7 +483,7 @@ function drawPerson(c,X,Y,dir,fr,P,bobY,m){var o=X+2;Y=Y-3+(bobY||0);
 var inv=document.getElementById('inv');NPC.forEach(function(n){var s=document.createElement('span');s.id='i-'+n.id;s.title=n.item[1];s.textContent=n.item[0];inv.appendChild(s)});
 function count(){return NPC.filter(function(n){return done[n.id]}).length}
 function hud(){var need=50,lv=1+Math.floor(xp/need);document.getElementById('lv').textContent=TX.lv+' '+lv;document.getElementById('xpb').style.width=(xp>=200?100:(xp%need)/need*100)+'%';document.getElementById('xpt').textContent=xp+' XP';
-  var n=count(),w=wanted();document.getElementById('obj').textContent=finale?TX.objDone:(w.length?(L==='fr'?'À capturer dans les hautes herbes : ':'Catch in the tall grass: ')+w.join(', '):(n===6?TX.objMayor:TX.obj(n)));
+  var n=count(),w=wanted();document.getElementById('obj').textContent=finale?TX.objDone:(w.length?(L==='fr'?'À capturer dans les hautes herbes : ':'Catch in the tall grass: ')+w.join(', '):(n===NPC.length?TX.objMayor:TX.obj(n)));
   if(lv>lvl){lvl=lv;toast('⭐ '+TX.lvup+lv+' !');fx('level');hearts(7)}}
 var tw=document.getElementById('toasts');function toast(m){var d=document.createElement('div');d.className='toast';d.textContent=m;d.style.top=(12+tw.children.length*40)+'px';tw.appendChild(d);setTimeout(function(){d.remove()},2300)}
 
@@ -482,7 +504,7 @@ function drawFace(now){var c=fcx,P=faceP;if(!P)return;var t=now-faceT0,talk=cur&
   R(c,P.skin,8,14+by,4,3);
   var Y=by;
   // long hair behind the head
-  if(P.long){R(c,P.hair,3,5+Y,3,12);R(c,P.hair,14,5+Y,3,12)}
+  if(P.long){R(c,P.hair,3,5+Y,3,12);R(c,P.hair,14,5+Y,3,12);if(P.mc){R(c,P.hair,2,6+Y,1,10);R(c,P.hair,17,6+Y,1,10);R(c,P.hair,4,2+Y,12,2);R(c,'#3A2A22',3,8+Y,1,1);R(c,'#3A2A22',15,11+Y,1,1);R(c,'#3A2A22',4,14+Y,1,1)}}
   // head
   R(c,P.skin,5,4+Y,10,11);R(c,P.skin,4,7+Y,1,5);R(c,P.skin,15,7+Y,1,5);R(c,shadeC(P.skin,.88),5,13+Y,10,2);
   // hair on top
@@ -490,6 +512,8 @@ function drawFace(now){var c=fcx,P=faceP;if(!P)return;var t=now-faceT0,talk=cur&
   if(P.beard){R(c,P.hair,5,11+Y,10,4);R(c,P.hair,4,10+Y,1,3);R(c,P.hair,15,10+Y,1,3)}
   // hats
   if(P.chef){R(c,'#FFFFFF',5,0+Y,10,4);R(c,'#EDEDED',4,3+Y,12,2)}else if(P.hat){R(c,P.hat,5,1+Y,10,3);R(c,P.hat,3,4+Y,14,1)}
+  if(P.goggles){R(c,'#5A3A22',4,4+Y,12,1);R(c,'#7FD8F0',6,3+Y,3,2);R(c,'#7FD8F0',11,3+Y,3,2);R(c,'#fff',6,3+Y,1,1);R(c,'#fff',11,3+Y,1,1)}
+  if(P.mc){R(c,'#0B0D10',4,4+Y,12,1);R(c,'#0B0D10',5,2+Y,4,2);R(c,'#0B0D10',11,2+Y,4,2);R(c,'#9FE0D8',5,2+Y,1,1);R(c,'#9FE0D8',11,2+Y,1,1);R(c,P.hair,7,12+Y,6,1);R(c,P.hair,9,14+Y,2,1);R(c,'#1AA7B0',9,16,2,4);R(c,'#3A434D',8,16,1,4);R(c,'#3A434D',11,16,1,4)}
   // eyebrows by mood
   var ink='#1d1d1d';if(faceE==='sad'){R(c,ink,6,7+Y,2,1);R(c,ink,8,6+Y,1,1);R(c,ink,12,7+Y,2,1);R(c,ink,11,6+Y,1,1)}
   if(faceE==='wow'){R(c,ink,6,6+Y,3,1);R(c,ink,11,6+Y,3,1)}
@@ -517,7 +541,7 @@ function questPanel(){var h='',fr=L==='fr',open=NPC.filter(function(n){return as
   else if(open.length){h='<b class="q-t">'+(fr?'Mission en cours':'Current mission')+'</b>'+open.map(function(n){var need=NEED[n.id],miss=missing(n.id);
     return '<div class="q-n"><span>'+n.name+'</span><small>'+n.role+'</small></div><div class="q-tools">'+need.map(function(t){var ok=hasTool(t);return '<i class="'+(ok?'ok':'')+'">'+(ok?'✓ ':'')+t+'</i>'}).join('')+'</div>'+
       '<div class="q-go">'+(miss.length?(fr?'→ Cherche dans les hautes herbes':'→ Search the tall grass'):(fr?'→ Retourne voir '+n.name:'→ Go back to '+n.name))+'</div>'}).join('')}
-  else if(count()===6){h='<b class="q-t">'+(fr?'Mission en cours':'Current mission')+'</b><div class="q-go">'+(fr?'→ Va voir la maire, au nord':'→ Visit the mayor, up north')+'</div>'}
+  else if(count()===NPC.length){h='<b class="q-t">'+(fr?'Mission en cours':'Current mission')+'</b><div class="q-go">'+(fr?'→ Va voir la maire, au nord':'→ Visit the mayor, up north')+'</div>'}
   else{h='<b class="q-t">'+(fr?'Mission':'Mission')+'</b><div class="q-go">'+(fr?'Parle à un habitant marqué d’un « ! »':'Talk to a villager marked “!”')+'</div>'}
   if(h===questLast)return;questLast=h;questEl.innerHTML=h;questEl.classList.toggle('hide',!h)}
 setInterval(questPanel,300);
@@ -536,17 +560,30 @@ var CH={
            en:{q:'What is this month’s unpaid rate?',t:[['Rent due','€4,000'],['Rent paid','€3,400'],['Unpaid','€600']],o:['15%','85%','€600'],ok:0,why:'Unpaid rate = unpaid ÷ rent due = 600 ÷ 4,000 = 15%. In Power BI it is a DAX measure: DIVIDE([Unpaid], [Rent due]). A rate compares month to month, an amount does not.'}},
  margot:{fr:{q:'Une ligne de mes ventes est fausse. Laquelle ?',t:[['Janvier','1 200 €'],['Février','1 350 €'],['Mars','1 100 €'],['Total','3 950 €']],o:['Janvier','Mars','Total'],ok:2,why:'1 200 + 1 350 + 1 100 = 3 650 €. Un total tapé à la main finit toujours par mentir : Power Query le recalcule tout seul.'},
          en:{q:'One line of my sales is wrong. Which one?',t:[['January','€1,200'],['February','€1,350'],['March','€1,100'],['Total','€3,950']],o:['January','March','Total'],ok:2,why:'1,200 + 1,350 + 1,100 = 3,650. A hand-typed total always ends up lying: Power Query recalculates it.'}},
+ theo:{fr:{type:'build',q:'Construis le petit robot de Théo, pièce par pièce !',slots:['🧠 Savoir','📜 Consigne','✅ Tests'],steps:[
+   {q:'1. Que met-on dans sa tête ?',o:['📚 Les fiches du village','🌐 Tout Internet, en vrac','🎲 Des réponses au hasard'],ok:0,no:'Trop risqué : il doit répondre avec les fiches du village, pas avec n’importe quoi.'},
+   {q:'2. Quelle consigne lui donner ?',o:['« Invente si tu ne sais pas »','« Cite ta source, et dis quand tu ne sais pas »','« Réponds toujours oui »'],ok:1,no:'Un bon agent ne bluffe jamais : il cite sa source ou avoue qu’il ne sait pas.'},
+   {q:'3. Comment savoir s’il est prêt ?',o:['Le lâcher et croiser les doigts','Lui poser 30 questions de test','Lui demander s’il est content'],ok:1,no:'On le teste d’abord avec de vraies questions, sinon on ne sait pas s’il dit juste.'}],
+   test:['Où est la farine ?','Dans le grenier de la boulangerie, étagère du haut. Source : fiche Boulangerie.'],why:'Des sources fiables, une consigne d’honnêteté, des tests : c’est la recette de l’assistant SAP Enable Now, noté 29/30 avec Copilot Studio.'},
+       en:{type:'build',q:'Build Théo’s little robot, piece by piece!',slots:['🧠 Knowledge','📜 Instruction','✅ Tests'],steps:[
+   {q:'1. What goes in its head?',o:['📚 The village’s info sheets','🌐 The whole Internet, unsorted','🎲 Random answers'],ok:0,no:'Too risky: it must answer from the village’s sheets, not from just anything.'},
+   {q:'2. Which instruction do we give it?',o:['“Make it up if you don’t know”','“Cite your source, and say when you don’t know”','“Always answer yes”'],ok:1,no:'A good agent never bluffs: it cites its source or admits it does not know.'},
+   {q:'3. How do we know it’s ready?',o:['Release it and cross our fingers','Ask it 30 test questions','Ask if it feels happy'],ok:1,no:'Test it first with real questions, otherwise we can’t tell if it’s right.'}],
+   test:['Where is the flour?','In the bakery attic, top shelf. Source: Bakery sheet.'],why:'Reliable sources, an honesty rule, tests: that’s the recipe of the SAP Enable Now assistant, scored 29/30 with Copilot Studio.'}},
  jo:{fr:{type:'order',q:'Trie mes séances par date, de la plus ancienne à la plus récente, comme un tri dans Google Sheets.',items:['Lun. 3 mars · Kata','Mer. 5 mars · Kihon','Ven. 7 mars · Kumite','Lun. 10 mars · Kata'],show:[3,1,0,2],why:'Une ligne par séance, toujours au même format, triée par date : c’est la base d’un suivi régulier. La régularité bat l’intensité.'},
      en:{type:'order',q:'Sort my sessions by date, oldest to newest, like a sort in Google Sheets.',items:['Mon Mar 3 · Kata','Wed Mar 5 · Kihon','Fri Mar 7 · Kumite','Mon Mar 10 · Kata'],show:[3,1,0,2],why:'One row per session, always in the same format, sorted by date: the basis of steady tracking. Consistency beats intensity.'}}};
 var chEl=document.getElementById('ch'),chDone=null,chSel=0;
 function challenge(n,cb){var c=(CH[n.id]||{})[L];if(!c){cb();return}
-  state='quiz';var tries=0,miss=0;chSel=0;var type=c.type||'choice',found={},picked=[];chEl.classList.remove('hide');
-  var nOpt=type==='clean'?c.r.length:type==='order'?c.items.length:c.o.length;
+  state='quiz';var tries=0,miss=0;chSel=0;var type=c.type||'choice',found={},picked=[],stepI=0;chEl.classList.remove('hide');
+  var nOpt=type==='build'?3:type==='clean'?c.r.length:type==='order'?c.items.length:c.o.length;
   function body(ok){
     if(type==='clean'){var nb=c.r.filter(function(r){return r[1]}).length,nf=Object.keys(found).length;
       return '<table class="ch-t ch-clean"><tr>'+c.h.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr>'+c.r.map(function(r,k){var f=found[k];
         return '<tr data-i="'+k+'" class="'+(f?'fixed ':'')+(k===chSel&&!ok?'sel':'')+'">'+(f?'<td colspan="3">✓ '+r[1]+'</td>':r[0].map(function(x){return '<td>'+x+'</td>'}).join(''))+'</tr>'}).join('')+'</table>'+
         '<p class="ch-count">'+nf+' / '+nb+' '+(L==='fr'?'corrigée'+(nf>1?'s':''):'fixed')+'</p>'}
+    if(type==='build'){var st=c.steps[Math.min(stepI,c.steps.length-1)],fin=stepI>=c.steps.length;
+      return '<div class="ch-bot"><div class="ch-robot'+(fin?' on':'')+'">'+(fin?'🤖':'📦')+'</div><div class="ch-slots">'+c.slots.map(function(x,k){return '<span class="'+(k<stepI?'ok':'')+'">'+(k<stepI?'✓ ':'')+x+'</span>'}).join('')+'</div></div>'+
+        (fin?'<div class="ch-chat"><p class="u">'+c.test[0]+'</p><p class="b">🤖 '+c.test[1]+'</p></div>':'<p class="ch-step">'+st.q+'</p><div class="ch-o">'+st.o.map(function(o,k){return '<button data-i="'+k+'" class="'+(k===chSel?'sel':'')+'"><kbd>'+(k+1)+'</kbd>'+o+'</button>'}).join('')+'</div>')}
     if(type==='order'){return '<div class="ch-res'+(c.code?' code':'')+'">'+(picked.length?picked.map(function(k){return '<div>'+c.items[k]+'</div>'}).join(''):'<em>'+(L==='fr'?'Clique sur les morceaux dans le bon ordre…':'Click the pieces in the right order…')+'</em>')+'</div>'+
         '<div class="ch-o'+(c.code?' code':'')+'">'+c.show.map(function(k,pos){var used=picked.indexOf(k)>=0;return '<button data-i="'+pos+'" class="'+(pos===chSel?'sel ':'')+(used?'used':'')+'"'+(used?' disabled':'')+'><kbd>'+(pos+1)+'</kbd>'+c.items[k]+'</button>'}).join('')+'</div>'}
     return (c.t?'<table class="ch-t">'+c.t.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('')+'</table>':'')+
@@ -561,6 +598,7 @@ function challenge(n,cb){var c=(CH[n.id]||{})[L];if(!c){cb();return}
   function act(k){if(chDone)return;chSel=k;
     if(type==='clean'){var r=c.r[k];if(!r||found[k])return;if(r[1]){found[k]=1;fx('item');if(Object.keys(found).length===c.r.filter(function(x){return x[1]}).length)win();else paint(L==='fr'?'Bien vu ! Continue.':'Good catch! Keep going.',false,true)}
       else shake(L==='fr'?'Cette ligne est correcte. Cherche un doublon, une cellule vide ou une date bizarre.':'This row is fine. Look for a duplicate, an empty cell or an odd date.');return}
+    if(type==='build'){var sp=c.steps[stepI];if(!sp)return;if(k===sp.ok){stepI++;chSel=0;fx('item');if(stepI===c.steps.length)win();else paint(L==='fr'?'Pièce installée !':'Part installed!',false,true)}else shake(sp.no);return}
     if(type==='order'){var it=c.show[k];if(it===undefined||picked.indexOf(it)>=0)return;if(it===picked.length){picked.push(it);fx('blip');if(picked.length===c.items.length)win();else paint('',false)}
       else shake(L==='fr'?'Pas encore : quel morceau vient juste après ?':'Not yet: which piece comes right after?');return}
     tries++;if(k===c.ok)win();else shake(L==='fr'?'Pas tout à fait… relis bien et réessaie.':'Not quite… read again and retry.')}
@@ -583,13 +621,13 @@ function advance(){if(!cur)return;if(!full){shown=cur.t.length;tx.textContent=cu
 dlg.addEventListener('click',advance);
 function typeStep(dt){if(!cur||full)return;typeT+=dt;while(typeT>22&&shown<cur.t.length){typeT-=22;shown++;if(shown%3===0)fx('blip')}tx.textContent=cur.t.slice(0,shown);if(shown>=cur.t.length)full=true}
 
-var NEED={ines:['Excel','CSV'],gaspard:['Python','SQL'],lina:['GA4','Looker Studio'],bertrand:['Power BI','DAX'],margot:['Power Query','Excel'],jo:['Google Sheets']},asked={};
+var NEED={ines:['Excel','CSV'],gaspard:['Python','SQL'],lina:['GA4','Looker Studio'],bertrand:['Power BI','DAX'],margot:['Power Query','Excel'],jo:['Google Sheets'],theo:['Copilot Studio','LLM']},asked={};
 function hasTool(t){return !!(typeof dexData!=='undefined'&&dexData[t])}
 function missing(id){return NEED[id].filter(function(t){return !hasTool(t)})}
 function andList(a){return a.length<2?a.join(''):a.slice(0,-1).join(', ')+(L==='fr'?' et ':' and ')+a[a.length-1]}
 function wanted(){var o=[];NPC.forEach(function(n){if(asked[n.id]&&!done[n.id])missing(n.id).forEach(function(t){if(o.indexOf(t)<0)o.push(t)})});return o}
-var FACE={ines:'/npc1.svg',gaspard:'/npc2.svg',lina:'/npc3.svg',bertrand:'/npc4.svg',margot:'/npc1-happy.svg',jo:'/npc4-happy.svg',mayor:'/npc3-happy.svg'};
-function memLabel(n){return 'Kevin · '+({ines:'2022 · KPMG',gaspard:'2023 · Dassault Systèmes',lina:'2024 · Google France',bertrand:'2025 · Coface',margot:TX.now,jo:TX.beyond})[n.id]}
+var FACE={ines:'/npc1.svg',gaspard:'/npc2.svg',lina:'/npc3.svg',bertrand:'/npc4.svg',margot:'/npc1-happy.svg',jo:'/npc4-happy.svg',theo:'/npc2-happy.svg',mayor:'/npc3-happy.svg'};
+function memLabel(n){return 'Kevin · '+({ines:'2022 · KPMG',gaspard:'2023 · Dassault Systèmes',lina:'2024 · Google France',bertrand:'2025 · Coface',margot:TX.now,jo:TX.beyond,theo:'2026 · SAP Enable Now'})[n.id]}
 function talk(n){n.dir={up:'down',down:'up',left:'right',right:'left'}[player.dir];
   if(n===MAYOR)return talkMayor();
   var lines=n[L].map(function(l){return l[0]==='mem'?{k:'mem',w:memLabel(n),t:l[1],f:'/avatar-wink.svg'}:{k:'npc',w:n.name+' · '+n.role,t:l[1],f:FACE[n.id]}});
@@ -605,16 +643,16 @@ function talk(n){n.dir={up:'down',down:'up',left:'right',right:'left'}[player.di
   say(lines,function(){done[n.id]=1;xp+=25;document.getElementById('i-'+n.id).classList.add('on');fx('item');setTimeout(function(){fx('heal')},280);pop('+1 ♥','#FF5A6E');pop('+25 XP','#FFD45E',14);toast(n.item[0]+' '+n.item[1]+' '+TX.got+' · +25 XP');hud()})}
 function talkMayor(){var n=count(),M_=MAYOR.name;
   if(finale)return say([{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Le village n’a jamais été aussi bien tenu. Profite de la fête !':'The village has never been better run. Enjoy the festival!'}]);
-  if(n<6)return say([{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Bienvenue, voyageur ! Notre village ne sait plus où passent son eau, ses loyers et ses dépenses.':'Welcome, traveller! Our village no longer knows where its water, rents and spending go.'},{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Les habitants marqués d’un « ! » ont chacun un problème… et un objet à te confier. Il t’en manque encore '+(6-n)+'.':'The villagers marked with “!” each have a problem… and an item to give you. You still need '+(6-n)+'.'}]);
+  if(n<NPC.length)return say([{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Bienvenue, voyageur ! Notre village ne sait plus où passent son eau, ses loyers et ses dépenses.':'Welcome, traveller! Our village no longer knows where its water, rents and spending go.'},{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Les habitants marqués d’un « ! » ont chacun un problème… et un objet à te confier. Il t’en manque encore '+(6-n)+'.':'The villagers marked with “!” each have a problem… and an item to give you. You still need '+(6-n)+'.'}]);
   var F=L==='fr'?[
-    {k:'npc',w:M_,f:FACE.mayor,t:'Tu as tout ? Le compteur, le registre, la carte, la clé, les billes… et même la ceinture de Papi Jo ? Montre-moi !'},
-    {k:'nar',w:TX.narr,t:'Kevin pose les six objets sur la grande table. Les billes roulent, la carte se déplie, le compteur s’allume, la clé tourne toute seule…'},
+    {k:'npc',w:M_,f:FACE.mayor,t:'Tu as tout ? Le compteur, le registre, la carte, la clé, les billes… la ceinture de Papi Jo… et même le petit robot de Théo ? Montre-moi !'},
+    {k:'nar',w:TX.narr,t:'Kevin pose les sept objets sur la grande table. Les billes roulent, la carte se déplie, le compteur s’allume, la clé tourne toute seule…'},
     {fn:showDash},
     {k:'npc',w:M_,f:FACE.mayor,t:'Pour la première fois, on sait où va chaque goutte et chaque sou ! Et ce tableau, tout le village sait le lire.'},
     {k:'npc',w:M_,f:FACE.mayor,t:'Ce soir, fête au village en ton honneur. Et voici la clé du village : reviens quand tu veux, il y aura toujours une place pour toi.'}
   ]:[
-    {k:'npc',w:M_,f:FACE.mayor,t:'You have everything? The meter, the ledger, the map, the wrench, the marbles… even Papi Jo’s belt? Show me!'},
-    {k:'nar',w:TX.narr,t:'Kevin lays the six items on the big table. The marbles roll, the map unfolds, the meter lights up, the wrench turns by itself…'},
+    {k:'npc',w:M_,f:FACE.mayor,t:'You have everything? The meter, the ledger, the map, the wrench, the marbles… Papi Jo’s belt… even Théo’s little robot? Show me!'},
+    {k:'nar',w:TX.narr,t:'Kevin lays the seven items on the big table. The marbles roll, the map unfolds, the meter lights up, the wrench turns by itself…'},
     {fn:showDash},
     {k:'npc',w:M_,f:FACE.mayor,t:'For the first time we know where every drop and every coin goes! And the whole village can read this dashboard.'},
     {k:'npc',w:M_,f:FACE.mayor,t:'Tonight, a festival in your honour. And here is the key to the village: come back anytime, there will always be a seat for you.'}
@@ -666,7 +704,7 @@ var MONS=[
  ['Excel','XL','#1D6F42',0],['Google Sheets','GS','#0F9D58',0],['CSV','CSV','#7B8794',0],['VBA','VBA','#7A4A2A',0],
  ['Power Query','PQ','#C9A400',1],['SQL','SQL','#336791',1],['Python','PY','#3776AB',1],['Power BI','BI','#D9A400',1],['Looker Studio','LS','#4285F4',1],['GA4','GA4','#E37400',1],
  ['DAX','DAX','#A4373A',2],['BigQuery','BQ','#4F86E8',2],['Tableau','TB','#E97627',2],['Power Automate','PA','#0066FF',2],['dbt','dbt','#FF694B',2],['Dataiku','DKU','#2AB1AC',2],
- ['Snowflake','SF','#29B5E8',3],['IBM TM1','TM1','#054ADA',3],['Copilot','AI','#7F5AF0',3]
+ ['Snowflake','SF','#29B5E8',3],['IBM TM1','TM1','#054ADA',3],['Copilot Studio','CS','#7F5AF0',1],['LLM','LLM','#D97757',1]
 ];
 var INFO_FR={
  'Excel':['Le couteau suisse du reporting : nettoyer, croiser, calculer.',['2026 · grand groupe automobile : registre central des formations','2025 · Coface : reportings automatisés Excel + Power Query','2022 · KPMG : suivi SEO et workflows de publication'],'−30 % de temps de reporting chez Coface · délai de mise en ligne des formations −40 %'],
@@ -687,7 +725,8 @@ var INFO_FR={
  'Dataiku':['Une plateforme pour préparer la donnée et industrialiser l’analyse.',['Certification Dataiku Advanced Datasets'],'Des préparations de données reproductibles'],
  'Snowflake':['L’entrepôt de données cloud moderne.',['Certification Snowflake'],'Prêt pour les architectures data dans le cloud'],
  'IBM TM1':['Les cubes de planification financière.',['2023 · Dassault Systèmes : Global Analytics Model (12 industries, 6 marques)'],'Dashboards CAPEX, OPEX et PIB pour le comité de direction'],
- 'Copilot':['L’IA générative au service de l’analyse.',['Formation « Construire des agents IA »'],'Des assistants qui accélèrent le travail sur la donnée']
+ 'Copilot Studio':['L’atelier de Microsoft pour construire des agents IA et les publier dans Teams.',['2026 · grand groupe automobile : assistant IA du portail SAP Enable Now'],'29/30 à l’évaluation automatisée, 10/10 en honnêteté'],
+ 'LLM':['Le modèle de langage, le « cerveau » qui comprend les questions et rédige les réponses.',['2026 · assistant IA branché sur 365 simulations de formation'],'Comprend les fautes de frappe et répond en français ou en anglais']
 };
 var INFO_EN={
  'Excel':['The Swiss army knife of reporting: clean, join, compute.',['2026 · major automotive group: central training register','2025 · Coface: automated Excel + Power Query reports','2022 · KPMG: SEO tracking and publishing workflows'],'−30% reporting time at Coface · training time-to-market −40%'],
@@ -708,7 +747,8 @@ var INFO_EN={
  'Dataiku':['A platform to prepare data and industrialise analysis.',['Dataiku Advanced Datasets certification'],'Reproducible data preparation'],
  'Snowflake':['The modern cloud data warehouse.',['Snowflake certification'],'Ready for cloud data architectures'],
  'IBM TM1':['Financial planning cubes.',['2023 · Dassault Systèmes: Global Analytics Model (12 industries, 6 brands)'],'CAPEX, OPEX and GDP dashboards for the executive committee'],
- 'Copilot':['Generative AI to speed up analysis.',['“Building AI agents” training'],'Assistants that accelerate data work']
+ 'Copilot Studio':['Microsoft’s workshop to build AI agents and publish them in Teams.',['2026 · major automotive group: AI assistant for the SAP Enable Now portal'],'29/30 in automated evaluation, 10/10 for honesty'],
+ 'LLM':['The language model, the “brain” that understands questions and writes answers.',['2026 · AI assistant connected to 365 training simulations'],'Handles typos and answers in French or English']
 };
 var INFO=L==='fr'?INFO_FR:INFO_EN;
 var RAR=L==='fr'?['Commun','Peu commun','Rare','Légendaire']:['Common','Uncommon','Rare','Legendary'];
@@ -780,7 +820,7 @@ function render(){var W=VW*T,H=VH*T;
   var list=ALL.map(function(n){return{n:n,y:n.y*T}}).concat([{p:1,y:player.py}]).sort(function(a,b){return a.y-b.y});
   list.forEach(function(e){if(e.p){var fr=player.moving?(player.p<.5?1:2):0;drawPerson(cx,Math.round(player.px-camX),Math.round(player.py-camY),player.dir,fr,player.P,0,{mood:'n',blink:(time%3800)<130});if(M[player.y]&&M[player.y][player.x]==='h'&&!player.moving){var gx=player.x*T-camX,gy=player.y*T-camY;for(var q=0;q<5;q++){R(cx,'#3E8E2E',gx+1+q*3,gy+9,2,6);R(cx,'#8ED65F',gx+1+q*3,gy+9,2,2)}}return}
     var n=e.n,mood=moodOf(n),ph=n.x*7+n.y*3,bob=Math.sin(time/400+n.x)>.6?-1:0;if(mood==='happy'&&((time+ph*300)%2600)<220)bob=-2;if(mood==='eager')bob=Math.sin(time/120+n.x)>0?-1:0;var tk=!!(cur&&!full&&cur.w&&cur.w.indexOf(n.name)===0&&Math.floor(time/120)%2===0),bl=((time+ph*977)%3400)<130;drawPerson(cx,n.x*T-camX,n.y*T-camY,n.dir,0,n.P,bob,{mood:mood,talk:tk,blink:bl});emote(cx,n.x*T-camX,n.y*T-camY+bob,mood,ph);
-    var mark=null,col='#FFD45E';if(n===MAYOR){mark=count()===6&&!finale?'!':finale?'♥':'?';col=count()===6&&!finale?'#FFD45E':finale?'#FF8FA3':'#E3E6E8'}else mark=done[n.id]?'✓':'!';if(done[n.id])col='#8ED65F';
+    var mark=null,col='#FFD45E';if(n===MAYOR){mark=count()===NPC.length&&!finale?'!':finale?'♥':'?';col=count()===NPC.length&&!finale?'#FFD45E':finale?'#FF8FA3':'#E3E6E8'}else mark=done[n.id]?'✓':'!';if(done[n.id])col='#8ED65F';
     var bx=n.x*T-camX+4,by=n.y*T-camY-17+(Math.sin(time/250+n.x)*1.5|0);R(cx,col,bx,by,8,9);R(cx,'rgba(0,0,0,.25)',bx,by+8,8,1);cx.fillStyle='#2A2F36';cx.font='bold 8px monospace';cx.textAlign='center';cx.fillText(mark,bx+4,by+8)});
   if(isDark()){cx.fillStyle='rgba(12,20,52,.45)';cx.fillRect(0,0,W,H);cx.globalCompositeOperation='lighter';
     B.forEach(function(b){(b.win||[]).forEach(function(w){cx.fillStyle='rgba(255,200,90,.55)';cx.fillRect(w[0]-camX,w[1]-camY,8,6);cx.fillStyle='rgba(255,180,60,.12)';cx.fillRect(w[0]-camX-4,w[1]-camY-4,16,14)})});
