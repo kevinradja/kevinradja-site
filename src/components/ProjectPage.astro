@@ -8,40 +8,41 @@ const i = projects.indexOf(p);
 const next = projects[(i + 1) % projects.length];
 const C = ui.common;
 ---
-<section class="sec" style="padding-top:clamp(36px,5vw,64px)">
+<section class="pj-hero">
   <div class="wrap">
     <a class="btn s sm vitrine-back" href={r('portfolio', lang)} style="display:none;margin-bottom:22px">{C.back[lang]}</a>
-    <div class="ph">
-      <div>
-        <div class="kicker">{C.caseStudy[lang]} · {p.client[lang]} · {p.year}</div>
-        <h1 style="font-size:clamp(30px,4vw,46px)">{p.title[lang]}</h1>
-        <p class="lead" style="margin-top:18px">{p.intro[lang]}</p>
-        <div class="meta">{p.tags[lang].map(t => <span class="chip">{t}</span>)}<span class="chip a">{p.sector[lang]}</span></div>
-      </div>
-      <img class="card" src={p.thumb} alt={p.title[lang]} width="1920" height="1080" style="border-radius:var(--r)" />
-    </div>
+    <div class="kicker">{C.caseStudy[lang]} · {p.client[lang]} · {p.year}</div>
+    <h1 class="pg-title">{p.title[lang]}</h1>
+    <p class="lead">{p.intro[lang]}</p>
+    <div class="meta">{p.tags[lang].map(t => <span class="chip">{t}</span>)}<span class="chip a">{p.sector[lang]}</span></div>
+    <div class="device pj-dev"><div class="scr"><img src={p.thumb} alt={p.title[lang]} width="1920" height="1080" /></div></div>
   </div>
 </section>
 <section class="sec">
   <div class="wrap">
-    <div class="four">
-      <div class="card"><h3>{C.mission[lang]}</h3><p>{p.mission[lang]}</p></div>
-      <div class="card"><h3>{C.challenge[lang]}</h3><p>{p.challenge[lang]}</p></div>
-      <div class="card"><h3>{C.solution[lang]}</h3><p>{p.solution[lang]}</p></div>
-      <div class="card hl"><h3>{C.result[lang]}</h3><p>{p.result[lang]}</p></div>
+    <div class="pj-four">
+      <div><span>01</span><h3>{C.mission[lang]}</h3><p>{p.mission[lang]}</p></div>
+      <div><span>02</span><h3>{C.challenge[lang]}</h3><p>{p.challenge[lang]}</p></div>
+      <div><span>03</span><h3>{C.solution[lang]}</h3><p>{p.solution[lang]}</p></div>
+      <div class="hl"><span>04</span><h3>{C.result[lang]}</h3><p>{p.result[lang]}</p></div>
     </div>
-    <div class="prose" style="max-width:72ch;margin-top:36px">{p.body[lang].map(b => <p>{b}</p>)}</div>
+    <div class="prose pj-prose">{p.body[lang].map(b => <p>{b}</p>)}</div>
   </div>
 </section>
 <section class="sec">
   <div class="wrap">
+    <div class="c-head"><div class="kicker">Dashboard</div><h2>{lang === 'fr' ? 'Testez-le vous-même.' : 'Try it yourself.'}</h2></div>
     <Dashboard id={p.dash} lang={lang} title={lang === 'fr' ? 'Testez le dashboard' : 'Try the dashboard'} />
   </div>
 </section>
-<section class="sec">
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
-    <a class="btn s" href={r('work', lang)}>← {C.allProjects[lang]}</a>
-    <a class="btn p" href={url(next.slug, lang)} data-next>{C.next[lang]} : {next.title[lang]} →</a>
+<section class="pj-next">
+  <div class="wrap">
+    <a class="pj-next-in" href={url(next.slug, lang)} data-next>
+      <span class="kicker">{C.next[lang]}</span>
+      <span class="pj-next-t">{next.title[lang]}</span>
+      <span class="btn p">{lang === 'fr' ? 'Voir le projet' : 'See the project'} →</span>
+    </a>
+    <div style="text-align:center;margin-top:22px"><a class="btn s" href={r('work', lang)}>← {C.allProjects[lang]}</a></div>
   </div>
 </section>
 <script is:inline>

@@ -1,93 +1,202 @@
 ---
 import type { Lang } from '../data/projects';
 import { projects } from '../data/projects';
-import { r, calendly, ui, links } from '../i18n';
+import { r, calendly, links } from '../i18n';
 import Logos from './Logos.astro';
 import ProjectCard from './ProjectCard.astro';
 import Pricing from './Pricing.astro';
 import ContactCard from './ContactCard.astro';
 const { lang, vitrine = false } = Astro.props as { lang: Lang; vitrine?: boolean };
 const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
-const doors = [
-  { e: '🏪', s: T('À la tête d’une PME', 'Running an SME'), k: T('Je dirige une PME', 'I run an SME'), h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Un reporting mensuel qui tourne seul, un dashboard que vous ouvrez le lundi matin, un prix annoncé d’avance.', 'A monthly report that runs itself, a dashboard you open on Monday morning, an upfront price.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
-  { e: '📊', s: T('Une équipe data ou finance', 'A data or finance team'), k: T('Je suis une équipe data ou finance', 'I’m a data or finance team'), h: T('Un renfort qui connaît les grands groupes.', 'Extra hands who know large organisations.'), p: T('Power BI, SQL, Python, clôtures et qualité de données : j’ai livré chez Google, Coface, Dassault Systèmes et KPMG.', 'Power BI, SQL, Python, closes and data quality: delivered at Google, Coface, Dassault Systèmes and KPMG.'), to: r('work', lang), c: T('Voir les réalisations', 'See the work') },
-  { e: '🤝', s: T('En recherche d’un freelance', 'Hiring a freelancer'), k: T('Je cherche un freelance', 'I’m hiring a freelancer'), h: T('L’essentiel, en trente secondes.', 'The essentials, in thirty seconds.'), p: T('Parcours, outils, façon de travailler et disponibilité : tout ce qu’il faut pour décider d’un premier appel.', 'Background, tools, ways of working and availability: all you need to decide on a first call.'), to: r('about', lang), c: T('Voir le parcours', 'See the background') },
+
+const audiences = [
+  { w: T('PME', 'SMEs'), img: '', h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Un reporting mensuel qui tourne seul, un tableau de bord que vous ouvrez le lundi matin, un prix annoncé d’avance.', 'A monthly report that runs itself, a dashboard you open on Monday morning, an upfront price.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
+  { w: T('Équipes data', 'Data teams'), img: '/thumbs/04.png', h: T('Un renfort qui connaît les grands groupes.', 'Extra hands who know large organisations.'), p: T('Power BI, SQL, Python, clôtures et qualité de données : j’ai livré chez Google, Coface, Dassault Systèmes et KPMG.', 'Power BI, SQL, Python, closes and data quality: delivered at Google, Coface, Dassault Systèmes and KPMG.'), to: r('work', lang), c: T('Voir les réalisations', 'See the work') },
+  { w: T('Recruteurs', 'Recruiters'), img: '/kevin.jpg', h: T('L’essentiel, en trente secondes.', 'The essentials, in thirty seconds.'), p: T('Parcours, compétences, certifications et disponibilité : tout ce qu’il faut pour décider d’un premier appel.', 'Background, skills, certifications and availability: everything you need to decide on a first call.'), to: r('about', lang), c: T('Voir le parcours', 'See the background') },
 ];
+
 const results = [
-  { v: '−30 %', l: T('de temps de production du reporting', 'reporting production time'), c: 'Coface · 12 ' + T('pays', 'countries') + ' · 500+ ' + T('utilisateurs', 'users') },
-  { v: '68,7 %', l: T('d’adoption GA4 sur 180 grands comptes', 'GA4 adoption across 180 key accounts'), c: 'Google France · ' + T('objectifs dépassés dès nov. 2023', 'goals beaten by Nov. 2023') },
-  { v: '100 h → 3 h', l: T('de traitement des données', 'of data processing'), c: 'Dassault Systèmes · ' + T('pipelines Python', 'Python pipelines') },
-  { v: '−40 %', l: T('de délai de mise en ligne des formations', 'training time-to-market'), c: T('Groupe automobile · outil partagé RH/data', 'Automotive group · shared HR/data tool') },
+  { v: '−30 %', t: T('de temps de reporting', 'less reporting time'), p: T('Des tableaux de bord Power BI pour piloter la performance commerciale, déployés auprès de plus de 500 utilisateurs.', 'Power BI dashboards to steer sales performance, rolled out to 500+ users.'), c: 'Coface · 12 ' + T('pays', 'countries') },
+  { v: '68,7 %', t: T('d’adoption GA4', 'GA4 adoption'), p: T('Un cockpit de mesure pour suivre 180 grands comptes, objectifs dépassés dès novembre 2023.', 'A measurement cockpit tracking 180 key accounts, goals beaten by November 2023.'), c: 'Google France' },
+  { v: '100 h → 3 h', t: T('de traitement', 'of processing'), p: T('Des pipelines Python qui ont automatisé la préparation des modèles financiers pour le comité de direction.', 'Python pipelines that automated the financial models prepared for the executive committee.'), c: 'Dassault Systèmes' },
+  { v: '−40 %', t: T('de délai de mise en ligne', 'faster time-to-market'), p: T('Un outil partagé entre RH et data pour publier les formations plus vite, sans perdre le fil.', 'A tool shared by HR and data to publish training faster, without losing track.'), c: T('Grand groupe automobile', 'Major automotive group') },
+];
+const viz = [
+  `<svg viewBox="0 0 200 110" preserveAspectRatio="none"><line x1="0" y1="18" x2="200" y2="18" stroke="var(--line2)" stroke-dasharray="4 5" /><polyline class="draw" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" points="0,18 30,22 60,20 90,38 120,56 150,72 175,80 200,84" /><circle class="fade" cx="200" cy="84" r="6" fill="var(--acc)" /></svg>`,
+  `<svg viewBox="0 0 200 110"><path d="M30,100 A70,70 0 0 1 170,100" fill="none" stroke="var(--line)" stroke-width="16" stroke-linecap="round" /><path class="gauge" d="M30,100 A70,70 0 0 1 170,100" fill="none" stroke="var(--acc)" stroke-width="16" stroke-linecap="round" pathLength="400" style="--len:274.8" /></svg>`,
+  `<svg viewBox="0 0 200 110"><text x="0" y="30" font-size="13" fill="var(--mute)">100 h</text><rect class="grow" x="44" y="16" width="156" height="20" rx="3" fill="var(--line2)" /><text x="0" y="78" font-size="13" fill="var(--mute)">3 h</text><rect class="grow" x="44" y="64" width="6" height="20" rx="3" fill="var(--acc)" /><text class="fade" x="60" y="79" font-size="14" font-weight="700" fill="var(--acc)">−97 %</text></svg>`,
+  `<svg viewBox="0 0 200 110"><rect class="growy" x="40" y="10" width="46" height="84" rx="3" fill="var(--line2)" /><rect class="growy" x="114" y="44" width="46" height="50" rx="3" fill="var(--acc)" /><line x1="0" y1="94" x2="200" y2="94" stroke="var(--line2)" /><text x="63" y="109" font-size="11" text-anchor="middle" fill="var(--mute)">${T('AVANT', 'BEFORE')}</text><text x="137" y="109" font-size="11" text-anchor="middle" fill="var(--mute)">${T('APRÈS', 'AFTER')}</text></svg>`,
 ];
 const featured = [projects[3], projects[4], projects[5]];
 ---
-<section class="hero">
+<!-- 1. HERO : giant centered title, the "device" rises over it -->
+<section class="c-hero">
   <div class="wrap">
-    <div class="kicker">Kevin Radja · {T('Consultant Data & BI freelance', 'Freelance Data & BI consultant')} · Paris</div>
-    <h1 class="rv in">{T('Vos données, enfin', 'Your data, finally')}<br /><em>{T('lisibles.', 'readable.')}</em></h1>
-    <p class="lead" style="margin-top:22px">{T('Je transforme vos fichiers Excel, SQL et Power BI en tableaux de bord clairs et en reporting automatisé.', 'I turn your Excel, SQL and Power BI files into clear dashboards and automated reporting.')}</p>
-    <p class="now"><span class="tag">{T('En parallèle', 'Alongside')}</span><span>{T('Manager Data & Digital dans un grand groupe automobile', 'Data & Digital Manager at a major automotive group')}</span></p>
-    <div class="stats">
-      <div><b>5+</b><span>{T('années d’expérience data & BI', 'years of data & BI experience')}</span></div>
-      <div><b>25 M€+</b><span>{T('de portefeuilles pilotés par mes dashboards', 'of portfolios steered by my dashboards')}</span></div>
-      <div><b>5 000+</b><span>{T('utilisateurs formés ou équipés', 'users trained or equipped')}</span></div>
+    <h1 class="c-title">{T('Vos données,', 'Your data,')}<br />{T('enfin', 'finally')}<br />{T('lisibles.', 'readable.')}</h1>
+    <div class="c-hero-row">
+      <div class="c-hero-l">
+        <div><b>5+</b><span>{T('ans de data & BI', 'years of data & BI')}</span></div>
+        <div><b>25 M€+</b><span>{T('de portefeuilles pilotés', 'of portfolios steered')}</span></div>
+        <div><b>5 000+</b><span>{T('utilisateurs équipés', 'users equipped')}</span></div>
+      </div>
+      <div class="device c-hero-dev" aria-hidden="true">
+        <div class="scr">
+          <div class="dg mini">
+            <div class="t"><small>{T('CA du mois', 'Revenue')}</small><b>48,2 k€</b><em>▲ 12 %</em></div>
+            <div class="t"><small>Clients</small><b>128</b><em>▲ 9</em></div>
+            <div class="t"><small>{T('Panier', 'Basket')}</small><b>376 €</b><em>▲ 4 %</em></div>
+            <div class="w"><svg viewBox="0 0 200 60"><polyline fill="none" stroke="var(--acc)" stroke-width="3" points="0,48 25,44 50,46 75,36 100,38 125,28 150,24 175,16 200,10" /></svg></div>
+            <div class="d"><svg viewBox="0 0 42 42" width="64" height="64"><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--line)" stroke-width="6" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc)" stroke-width="6" stroke-dasharray="64 36" transform="rotate(-90 21 21)" /></svg></div>
+          </div>
+        </div>
+      </div>
+      <div class="c-hero-r">
+        <p>{T('Kevin Radja, consultant Data & BI freelance à Paris. Je transforme vos fichiers Excel, SQL et Power BI en tableaux de bord clairs et en reporting automatisé.', 'Kevin Radja, freelance Data & BI consultant in Paris. I turn your Excel, SQL and Power BI files into clear dashboards and automated reporting.')}</p>
+        <p class="c-now">{T('En parallèle : Manager Data & Digital dans un grand groupe automobile.', 'Alongside: Data & Digital Manager at a major automotive group.')}</p>
+        {!vitrine && <p class="c-avail"><span class="dot"></span>{T('Disponible à temps partiel', 'Available part-time')}</p>}
+      </div>
     </div>
-    <Logos lang={lang} />
-    {!vitrine && <div class="avail"><span class="dot"></span>{T('Disponible à temps partiel · réponse sous 48 à 72 h', 'Available part-time · reply within 48 to 72 hours')}</div>}
-    <div class="row">
-      {!vitrine && <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel de 30 min', 'Book a 30-min call')}</a>}
-      {!vitrine && <a class="btn lk" href={links.linkedin} target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>{T('Me contacter sur LinkedIn', 'Message me on LinkedIn')}</a>}
-      <a class="btn s" href={vitrine ? '#work' : r('work', lang)}>{T('Voir les réalisations', 'See the work')}</a>
+    {!vitrine && (
+      <div class="c-ctas">
+        <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel', 'Book a call')} →</a>
+        <a class="btn s" href={links.linkedin} target="_blank" rel="noopener">LinkedIn →</a>
+      </div>
+    )}
+    <div class="c-logos"><Logos lang={lang} /></div>
+  </div>
+</section>
+
+<!-- 2. STORY : white panel, giant words, the device morphs while scrolling -->
+<section class="c-story" id="story" aria-label={T('Mon métier en quatre étapes', 'What I do, in four steps')}>
+  <div class="c-pin">
+    <div class="c-panel">
+      <div class="kicker">{T('Mon métier', 'What I do')}</div>
+      <div class="c-giant">{T('De l’Excel', 'From Excel')}</div>
+      <div class="device c-story-dev">
+        <div class="scr stage" data-step="0">
+          <div class="bar"></div>
+          <div class="cap">ventes_mars_FINAL_v3(2).xlsx</div>
+          <div class="ly ly0">
+            <table class="tb"><thead><tr><th>Client</th><th>Date</th><th>{T('Montant', 'Amount')}</th></tr></thead><tbody>
+              <tr><td>Dupont SA</td><td>12/03/24</td><td>1 200 €</td></tr>
+              <tr><td class="dup">DUPONT sa</td><td>2024-03-12</td><td>1200</td></tr>
+              <tr><td>Martin &amp; Fils</td><td class="bad">#N/A</td><td>980 €</td></tr>
+              <tr><td class="bad">&nbsp;</td><td>15 mars</td><td class="bad">—</td></tr>
+              <tr><td>Leroy</td><td>03-18-2024</td><td>2,4k</td></tr>
+            </tbody></table>
+            <span class="note r">{T('5 lignes · 4 problèmes', '5 rows · 4 issues')}</span>
+          </div>
+          <div class="ly ly1">
+            <table class="tb"><thead><tr><th>Client</th><th>Date</th><th>{T('Montant', 'Amount')}</th></tr></thead><tbody>
+              <tr><td>Dupont SA</td><td>12/03/2024</td><td>1 200 €</td></tr>
+              <tr><td>Martin &amp; Fils</td><td>14/03/2024</td><td>980 €</td></tr>
+              <tr><td>Bernard</td><td>15/03/2024</td><td>1 650 €</td></tr>
+              <tr><td>Leroy</td><td>18/03/2024</td><td>2 400 €</td></tr>
+            </tbody></table>
+            <span class="note g">✓ {T('0 doublon · 0 cellule vide', '0 duplicates · 0 empty cells')}</span>
+          </div>
+          <div class="ly ly2">
+            <h4>{T('Chiffre d’affaires mensuel', 'Monthly revenue')}</h4>
+            <div class="bars"><i style="--h:42%"><span>{T('Janv', 'Jan')}</span></i><i style="--h:55%"><span>{T('Févr', 'Feb')}</span></i><i style="--h:48%"><span>{T('Mars', 'Mar')}</span></i><i style="--h:66%"><span>{T('Avr', 'Apr')}</span></i><i style="--h:74%"><span>{T('Mai', 'May')}</span></i><i style="--h:88%"><span>{T('Juin', 'Jun')}</span></i></div>
+          </div>
+          <div class="ly ly3">
+            <div class="dg">
+              <h4>{T('Tableau de bord · lundi 8 h', 'Dashboard · Monday 8 am')}</h4>
+              <div class="t"><small>{T('CA du mois', 'Revenue')}</small><b>48,2 k€</b><em>▲ 12 %</em></div>
+              <div class="t"><small>Clients</small><b>128</b><em>▲ 9</em></div>
+              <div class="t"><small>{T('Panier moyen', 'Avg. basket')}</small><b>376 €</b><em>▲ 4 %</em></div>
+              <div class="w"><svg viewBox="0 0 200 60"><polyline fill="none" stroke="var(--acc)" stroke-width="2.5" points="0,48 25,44 50,46 75,36 100,38 125,28 150,24 175,16 200,10" /><polyline fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="4 4" points="0,40 200,40" /></svg></div>
+              <div class="d"><svg viewBox="0 0 42 42" width="84" height="84"><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--line)" stroke-width="6" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc)" stroke-width="6" stroke-dasharray="64 36" transform="rotate(-90 21 21)" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc2)" stroke-width="6" stroke-dasharray="22 78" stroke-dashoffset="-64" transform="rotate(-90 21 21)" /></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="c-giant">{T('au dashboard', 'to dashboard')}</div>
+      <ol class="c-steps">
+        <li class="on">{T('Collecter', 'Collect')}</li><li>{T('Nettoyer', 'Clean')}</li><li>{T('Visualiser', 'Visualise')}</li><li>{T('Décider', 'Decide')}</li>
+      </ol>
     </div>
   </div>
 </section>
 
 {!vitrine && (
-<section class="sec" id="jeu" style="padding-top:0">
+<section class="c-game" id="jeu">
   <div class="wrap">
-    <a class="card gamebox rv" href={r('game', lang)}>
-      <div class="gb-art" aria-hidden="true">🏡<span>🧑‍💼</span></div>
-      <div>
+    <a class="c-game-in" href={r('game', lang)}>
+      <div class="c-game-art" aria-hidden="true"><span>🏡</span><span>🧑‍💼</span><span>💧</span><span>📒</span></div>
+      <div class="c-game-txt">
         <div class="kicker">{T('Une pause ?', 'Need a break?')}</div>
-        <h3>{T('Le Village des Données', 'Data Village')}</h3>
-        <p class="mute">{T('Un petit RPG en 8-bit : aidez un village à gérer son eau, ses loyers et ses dépenses, et croisez au passage les étapes de mon parcours.', 'A tiny 8-bit RPG: help a village manage its water, rents and spending, and meet the steps of my journey along the way.')}</p>
+        <h2>{T('Le Village des Données', 'Data Village')}</h2>
+        <p>{T('Un petit RPG en 8-bit : aidez un village à gérer son eau, ses loyers et ses dépenses, et croisez au passage les étapes de mon parcours.', 'A tiny 8-bit RPG: help a village manage its water, rents and spending, and meet the steps of my journey along the way.')}</p>
+        <span class="btn p">{T('Jouer', 'Play')} →</span>
       </div>
-      <span class="btn s sm">{T('Jouer', 'Play')} →</span>
     </a>
   </div>
 </section>
 )}
 
-{!vitrine && (
-<section class="sec">
+<!-- 3. RESULTS : Caeli-style slider panel -->
+<section class="sec c-results" id="resultats">
   <div class="wrap">
-    <div class="pick rv">
-      <div class="pick-top">
-        <p class="pick-q">{T('Vous êtes…', 'You are…')}</p>
-        <div class="pick-tabs" role="tablist">{doors.map((d, i) => <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-i={i}><span aria-hidden="true">{d.e}</span>{d.s}</button>)}</div>
+    <div class="c-slider rv">
+      <div class="c-sl-l">
+        <div class="c-dots" role="tablist">{results.map((_, i) => <button type="button" aria-label={String(i + 1)} class:list={[{ on: i === 0 }]} data-i={i}></button>)}</div>
+        <div class="kicker">{T('Résultats', 'Results')}</div>
+        {results.map((x, i) => (
+          <div class:list={['c-slide-txt', { on: i === 0 }]} data-i={i}>
+            <div class:list={['c-big', { sm: x.v.length > 7 }]}>{x.v}</div>
+            <h3>{x.t}</h3>
+            <p>{x.p}</p>
+            <span class="c-client">{x.c}</span>
+          </div>
+        ))}
+        <div class="c-arrows"><button type="button" class="prev" aria-label={T('Précédent', 'Previous')}>←</button><button type="button" class="next" aria-label={T('Suivant', 'Next')}>→</button></div>
       </div>
-      {doors.map((d, i) => <div class:list={['pick-p', { on: i === 0 }]} data-i={i} role="tabpanel"><div><h3>{d.h}</h3><p class="mute">{d.p}</p></div><a class="btn p" href={d.to}>{d.c} →</a></div>)}
+      <div class="c-sl-r">
+        {results.map((_, i) => <div class:list={['c-slide', { on: i === 0 }]} data-i={i} set:html={viz[i]} />)}
+      </div>
     </div>
   </div>
 </section>
-<script is:inline>
-  document.querySelectorAll('.pick').forEach(function(pk){var bs=pk.querySelectorAll('.pick-tabs button'),ps=pk.querySelectorAll('.pick-p');
-    bs.forEach(function(b){b.addEventListener('click',function(){bs.forEach(function(x){x.setAttribute('aria-selected',x===b?'true':'false')});ps.forEach(function(p){p.classList.toggle('on',p.dataset.i===b.dataset.i)})})})});
-</script>
+
+<!-- 4. MISSION : full-bleed petrol, words light up while scrolling -->
+<section class="c-mission">
+  <div class="wrap">
+    <div class="kicker">{T('Ma mission', 'My mission')}</div>
+    <h2 class="c-reveal">
+      <span>{T('Rendre vos', 'Make your')}</span>
+      <span>{T('données', 'data')}</span>
+      <span>{T('lisibles, fiables', 'readable, reliable')}</span>
+      <span>{T('et utiles.', 'and useful.')}</span>
+    </h2>
+    <p>{T('Plus de 5 ans chez Google France, Coface, Dassault Systèmes et KPMG. Aujourd’hui Manager Data & Digital dans un grand groupe automobile, et freelance à temps partiel pour les PME et les équipes de grands groupes.', '5+ years at Google France, Coface, Dassault Systèmes and KPMG. Today Data & Digital Manager at a major automotive group, and part-time freelancer for SMEs and large-company teams.')}</p>
+  </div>
+</section>
+
+<!-- 5. AUDIENCES : big stacked words left, visual + text card right -->
+{!vitrine && (
+<section class="sec c-aud-sec">
+  <div class="wrap c-aud">
+    <div class="c-aud-l" role="tablist">
+      <div class="kicker">{T('Vous êtes…', 'You are…')}</div>
+      {audiences.map((a, i) => <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-i={i}>{a.w}</button>)}
+    </div>
+    <div class="c-aud-r">
+      {audiences.map((a, i) => (
+        <div class:list={['c-aud-p', { on: i === 0 }]} data-i={i} role="tabpanel">
+          {a.img ? <img src={a.img} alt="" loading="lazy" /> : <div class="c-aud-dev"><div class="device"><div class="scr"><div class="dg mini"><div class="t"><small>{T('Trésorerie', 'Cash')}</small><b>62 k€</b><em>▲ 8 %</em></div><div class="t"><small>{T('Marge', 'Margin')}</small><b>31 %</b><em>▲ 2 pts</em></div><div class="t"><small>{T('Factures', 'Invoices')}</small><b>14</b><em>{T('à relancer', 'to chase')}</em></div><div class="w"><svg viewBox="0 0 200 60"><polyline fill="none" stroke="var(--acc)" stroke-width="3" points="0,40 25,42 50,34 75,36 100,26 125,30 150,20 175,18 200,12" /></svg></div><div class="d"><svg viewBox="0 0 42 42" width="64" height="64"><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--line)" stroke-width="6" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc)" stroke-width="6" stroke-dasharray="72 28" transform="rotate(-90 21 21)" /></svg></div></div></div></div></div>}
+          <div class="c-aud-card"><h3>{a.h}</h3><p>{a.p}</p><a class="btn p sm" href={a.to}>{a.c} →</a></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 )}
 
-<section class="sec">
-  <div class="wrap">
-    <div class="head"><div><div class="kicker">{T('Résultats', 'Results')}</div><h2>{T('Ce que ça a donné.', 'What it delivered.')}</h2></div></div>
-    <div class="sheet rv">
-      {results.map((x, i) => <div class="res"><div class:list={['v', { sm: x.v.length > 7 }]}>{x.v}</div><div class="l">{x.l}</div><div class="c">{x.c}</div></div>)}
-    </div>
-  </div>
-</section>
-
+<!-- 6. WORK -->
 <section class="sec" id="work">
   <div class="wrap">
-    <div class="head"><div><div class="kicker">{T('Réalisations', 'Work')}</div><h2>{T('Des études de cas, avec les dashboards à tester.', 'Case studies, with live dashboards to try.')}</h2></div>{!vitrine && <a class="btn s" href={r('work', lang)}>{ui.common.allProjects[lang]} →</a>}</div>
+    <div class="c-head"><div class="kicker">{T('Réalisations', 'Work')}</div><h2>{T('Des études de cas, avec les dashboards à tester.', 'Case studies, with live dashboards to try.')}</h2>{!vitrine && <a class="btn s" href={r('work', lang)}>{T('Toutes les réalisations', 'All case studies')} →</a>}</div>
     <div class="grid g3">
       {(vitrine ? projects : featured).map(p => <ProjectCard p={p} lang={lang} vitrine={vitrine} />)}
     </div>
@@ -97,15 +206,44 @@ const featured = [projects[3], projects[4], projects[5]];
 {!vitrine && (
 <section class="sec">
   <div class="wrap">
-    <div class="head"><div><div class="kicker">{T('Offres', 'Pricing')}</div><h2>{T('Trois façons de travailler ensemble.', 'Three ways to work together.')}</h2></div><p class="mute">{T('Des forfaits clairs, un prix annoncé d’avance, un livrable que vous gardez.', 'Clear packs, an upfront price, a deliverable you keep.')}</p></div>
+    <div class="c-head"><div class="kicker">{T('Offres', 'Pricing')}</div><h2>{T('Trois façons de travailler ensemble.', 'Three ways to work together.')}</h2></div>
     <Pricing lang={lang} compact />
-    <div style="margin-top:14px"><a class="btn s" href={r('pricing', lang)}>{T('Options, déroulé et questions fréquentes', 'Options, process and FAQ')} →</a></div>
+    <div style="margin-top:18px;text-align:center"><a class="btn s" href={r('pricing', lang)}>{T('Options, déroulé et questions fréquentes', 'Options, process and FAQ')} →</a></div>
   </div>
 </section>
-<section class="sec" id="contact">
+
+
+
+<!-- 7. FINAL CALL : giant words -->
+<section class="c-final" id="contact">
   <div class="wrap">
-    <div class="head"><div><div class="kicker">Contact</div><h2>{T('Parlons de votre projet.', 'Let’s talk about your project.')}</h2></div></div>
+    <div class="kicker">Contact</div>
+    <h2 class="c-final-t">{T('Parlons de', 'Let’s talk')}<br />{T('vos données.', 'data.')}</h2>
     <ContactCard lang={lang} />
   </div>
 </section>
 )}
+
+<script is:inline>
+  (function(){
+    // story: the device changes state while the section is pinned
+    var sec=document.getElementById('story');
+    if(sec){var st=sec.querySelector('.stage'),li=sec.querySelectorAll('.c-steps li'),cap=sec.querySelector('.cap');
+      var caps=['ventes_mars_FINAL_v3(2).xlsx','ventes_mars_propre.csv','ca_mensuel.pbix','dashboard · live'];
+      var upd=function(){var r=sec.getBoundingClientRect(),h=sec.offsetHeight-innerHeight,p=h>0?Math.min(1,Math.max(0,-r.top/h)):1,k=Math.min(3,Math.floor(p*4.2));
+        st.style.setProperty('--p',p.toFixed(3));if(st.dataset.step!=String(k)){st.dataset.step=k;cap.textContent=caps[k];li.forEach(function(e,i){e.classList.toggle('on',i===k)})}};
+      addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd()}
+    // results slider
+    document.querySelectorAll('.c-slider').forEach(function(s){var n=s.querySelectorAll('.c-slide').length,i=0,t;
+      function go(k){i=(k+n)%n;['.c-slide','.c-slide-txt','.c-dots button'].forEach(function(q){s.querySelectorAll(q).forEach(function(e,j){e.classList.toggle('on',j===i)})})}
+      s.querySelectorAll('.c-dots button').forEach(function(b,j){b.onclick=function(){go(j);stop()}});
+      s.querySelector('.prev').onclick=function(){go(i-1);stop()};s.querySelector('.next').onclick=function(){go(i+1);stop()};
+      function stop(){clearInterval(t)}t=setInterval(function(){go(i+1)},6000);s.addEventListener('mouseenter',stop)});
+    // mission: lines light up one by one
+    var m=document.querySelector('.c-reveal');
+    if(m){var sp=m.querySelectorAll('span');var rv=function(){var r=m.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(r.height+innerHeight*.35)));sp.forEach(function(e,j){e.classList.toggle('lit',p>(j+.4)/sp.length)})};addEventListener('scroll',rv,{passive:true});rv()}
+    // audiences
+    document.querySelectorAll('.c-aud').forEach(function(a){var bs=a.querySelectorAll('.c-aud-l button'),ps=a.querySelectorAll('.c-aud-p');
+      bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.setAttribute('aria-selected',x===b?'true':'false')});ps.forEach(function(p){p.classList.toggle('on',p.dataset.i===b.dataset.i)})}})});
+  })();
+</script>

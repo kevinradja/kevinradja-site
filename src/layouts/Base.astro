@@ -30,7 +30,7 @@ const nav = [
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet" />
   {intro && <script is:inline>
     /* Entry animation (home only): once per browser session, skipped for reduced motion. */
     (function(){try{var force=/[?&]intro(=|&|$)/.test(location.search);if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
@@ -74,12 +74,17 @@ const nav = [
   {!bare && (
   <footer class="foot">
     <div class="wrap in">
-      <div><b style="color:var(--ink)">Kevin Radja</b> · {ui.footer.line[lang]}<br /><span style="font-size:12.5px">{ui.footer.siret[lang]}</span></div>
+      <div class="foot-tag">{lang === 'fr' ? 'Vos données, enfin lisibles.' : 'Your data, finally readable.'}</div>
       <div class="links">
-        <a href={r('work', lang)}>{ui.nav.work[lang]}</a><a href={r('pricing', lang)}>{ui.nav.pricing[lang]}</a><a href={r('contact', lang)}>{ui.nav.contact[lang]}</a>
+        <a href={r('work', lang)}>{ui.nav.work[lang]}</a><a href={r('pricing', lang)}>{ui.nav.pricing[lang]}</a><a href={r('about', lang)}>{ui.nav.about[lang]}</a><a href={r('game', lang)}>{ui.nav.game[lang]}</a><a href={r('contact', lang)}>{ui.nav.contact[lang]}</a>
+      </div>
+      <div class="links">
+        <a href={links.linkedin} target="_blank" rel="noopener">LinkedIn</a><a href={links.malt} target="_blank" rel="noopener">Malt</a>
         <a href={r('legal', lang)}>{ui.footer.legal[lang]}</a><a href={r('privacy', lang)}>{ui.footer.privacy[lang]}</a>
       </div>
-      <div>© {new Date().getFullYear()} Kevin Radja</div>
+    </div>
+    <div class="wrap"><span class="foot-giant" aria-hidden="true">Kevin Radja</span>
+      <div class="foot-bot"><span>{ui.footer.siret[lang]}</span><span>© {new Date().getFullYear()} Kevin Radja · {ui.footer.line[lang]}</span></div>
     </div>
   </footer>
   )}
