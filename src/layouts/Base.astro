@@ -34,7 +34,7 @@ const nav = [
   <script is:inline data-intro={intro ? '1' : undefined}>
     (function(){try{var t=localStorage.getItem('kr-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
     /* Entry animation (home only): once per browser session, skipped for reduced motion. */
-    (function(){try{if(!document.currentScript.dataset.intro)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
+    (function(){try{if(!document.currentScript.dataset.intro)return;var force=/[?&]intro/.test(location.search);if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
   </script>
 </head>
 <body>
