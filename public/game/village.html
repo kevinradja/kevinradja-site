@@ -25,6 +25,8 @@ html.wide .dash{left:50%;right:auto;width:min(520px,80%);transform:translateX(-5
 .stage{position:relative;aspect-ratio:4/5;background:#7EC850;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 18px 50px rgba(14,17,22,.12);touch-action:none;user-select:none;-webkit-user-select:none}
 canvas{width:100%;height:100%;display:block;image-rendering:pixelated;image-rendering:crisp-edges}
 .dlg{position:absolute;left:10px;right:10px;bottom:10px;background:rgba(255,253,246,.97);color:#1d2430;border:3px solid #2A2F36;border-radius:12px;padding:12px 14px 14px;font-size:14.5px;line-height:1.45;min-height:92px;box-shadow:0 6px 0 rgba(0,0,0,.18);cursor:pointer}
+.dlg.hasface{padding-left:84px}
+.dlg .face{position:absolute;left:12px;top:12px;width:60px;height:60px;border-radius:50%;border:3px solid #2A2F36;background:#fff}
 .dlg .who{position:absolute;top:-14px;left:12px;background:#2A2F36;color:#fff;font-size:12px;font-weight:800;padding:3px 10px;border-radius:8px;letter-spacing:.02em}
 .dlg.mem{background:rgba(232,250,251,.97);border-color:#1AA7B0}
 .dlg.mem .who{background:#1AA7B0}
@@ -96,7 +98,7 @@ html.embed #snd,html.embed #theme{display:none}
   <div class="top"><span><b id="lv">Niv. 1</b></span><div class="xp"><i id="xpb"></i></div><span id="xpt">0 XP</span><button class="dexbtn" id="dexb">📘 Datadex <b id="dexn">0</b></button><button id="snd" aria-label="sound">🔊</button><button id="theme" aria-label="theme">◐</button></div>
   <div class="stage" id="stage">
     <canvas id="c" width="256" height="320"></canvas>
-    <div class="dlg hide" id="dlg"><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
+    <div class="dlg hide" id="dlg"><img class="face hide" id="face" alt="" /><span class="who" id="who"></span><div class="tx" id="tx"></div><span class="nx">▼</span></div>
     <div class="dash hide" id="dash"></div>
     <div id="toasts"></div>
     <div class="ov" id="start">
@@ -140,8 +142,8 @@ function post(){try{parent.postMessage({krHeight:document.body.getBoundingClient
 if(window.ResizeObserver)new ResizeObserver(post).observe(document.body);addEventListener('load',post);
 
 var TX={
- fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux six habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord. Et attention aux hautes herbes : des outils sauvages s’y cachent…',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A, ou sur la barre Espace au clavier',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/6)'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Fête au village 🎉 Complète ton Datadex dans les hautes herbes !',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
- en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the six villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north. And watch the tall grass: wild tools are hiding there…',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A, or the Space bar on a keyboard',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/6)'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'Village festival 🎉 Complete your Datadex in the tall grass!',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
+ fr:{title:'Le Village des Données',intro:'Le village ne sait plus où passent son eau, ses loyers et ses dépenses. Parle aux six habitants marqués d’un « ! », gagne de l’expérience et récupère leurs objets. Puis va voir la maire, au nord. Pour aider chaque habitant, capture d’abord l’outil qu’il te demande : ils se cachent dans les hautes herbes…',play:'Jouer',keys:'Flèches, ZQSD ou WASD pour marcher · Espace ou Entrée pour parler',kb:'Approche-toi d’un habitant puis appuie sur A, ou sur la barre Espace au clavier',lv:'Niv.',obj:function(n){return 'Parle aux habitants marqués d’un « ! » ('+n+'/6)'},objMayor:'Tout est réuni ! Va voir la maire, devant la mairie au nord.',objDone:'Fête au village 🎉 Complète ton Datadex dans les hautes herbes !',got:'obtenu',lvup:'Niveau ',endT:'Fête au village !',endP:'Chaque habitant représentait une étape du parcours de Kevin : KPMG, Dassault Systèmes, Google, Coface, son poste actuel… et le karaté.',again:'Rejouer',stLv:'niveau',stSteps:'pas',stTime:'temps',best:'record',dashT:'📊 Tableau de bord du village',d1:'Eau économisée',d2:'Loyers payés à l’heure',d3:'Dépenses classées',mem:'Souvenir',now:'Aujourd’hui',beyond:'En dehors des données',narr:'Récit'},
+ en:{title:'Data Village',intro:'The village no longer knows where its water, rents and spending go. Talk to the six villagers marked with “!”, gain experience and collect their items. Then visit the mayor, up north. To help each villager, first catch the tool they ask for: tools hide in the tall grass…',play:'Play',keys:'Arrows or WASD to walk · Space or Enter to talk',kb:'Walk up to a villager, then press A, or the Space bar on a keyboard',lv:'Lvl',obj:function(n){return 'Talk to the villagers marked with “!” ('+n+'/6)'},objMayor:'You have everything! Visit the mayor, outside the town hall up north.',objDone:'Village festival 🎉 Complete your Datadex in the tall grass!',got:'collected',lvup:'Level ',endT:'Village festival!',endP:'Each villager stood for a step of Kevin’s journey: KPMG, Dassault Systèmes, Google, Coface, his current role… and karate.',again:'Play again',stLv:'level',stSteps:'steps',stTime:'time',best:'best',dashT:'📊 Village dashboard',d1:'Water saved',d2:'Rents paid on time',d3:'Spending categorised',mem:'Memory',now:'Today',beyond:'Beyond data',narr:'Story'}
 }[L];
 document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=TX[e.dataset.t]});
 
@@ -284,7 +286,7 @@ function drawPerson(c,X,Y,dir,fr,P,bobY){var o=X+2;Y=Y-3+(bobY||0);
 var inv=document.getElementById('inv');NPC.forEach(function(n){var s=document.createElement('span');s.id='i-'+n.id;s.title=n.item[1];s.textContent=n.item[0];inv.appendChild(s)});
 function count(){return NPC.filter(function(n){return done[n.id]}).length}
 function hud(){var need=50,lv=1+Math.floor(xp/need);document.getElementById('lv').textContent=TX.lv+' '+lv;document.getElementById('xpb').style.width=(xp>=200?100:(xp%need)/need*100)+'%';document.getElementById('xpt').textContent=xp+' XP';
-  var n=count();document.getElementById('obj').textContent=finale?TX.objDone:(n===6?TX.objMayor:TX.obj(n));
+  var n=count(),w=wanted();document.getElementById('obj').textContent=finale?TX.objDone:(w.length?(L==='fr'?'À capturer dans les hautes herbes : ':'Catch in the tall grass: ')+w.join(', '):(n===6?TX.objMayor:TX.obj(n)));
   if(lv>lvl){lvl=lv;toast('⭐ '+TX.lvup+lv+' !');fx('level');hearts(7)}}
 var tw=document.getElementById('toasts');function toast(m){var d=document.createElement('div');d.className='toast';d.textContent=m;d.style.top=(12+tw.children.length*40)+'px';tw.appendChild(d);setTimeout(function(){d.remove()},2300)}
 
@@ -294,32 +296,45 @@ function say(list,cb){Q=list.slice();onDone=cb||null;next()}
 function next(){cur=Q.shift();if(!cur){tap=null;dlg.classList.add('hide');var f=onDone;onDone=null;cur=null;if(f)f();return}
   if(cur.fn){var fn=cur.fn;cur=null;fn(next);return}
   dlg.classList.remove('hide','mem','nar');if(cur.k==='mem')dlg.classList.add('mem');if(cur.k==='nar')dlg.classList.add('nar');
+  var fc=document.getElementById('face');if(cur.f){fc.src=cur.f;fc.classList.remove('hide');dlg.classList.add('hasface')}else{fc.classList.add('hide');dlg.classList.remove('hasface')}
   who.textContent=cur.w;shown=0;full=false;tx.textContent='';fx('talk')}
 function advance(){if(!cur)return;if(!full){shown=cur.t.length;tx.textContent=cur.t;full=true;return}next()}
 dlg.addEventListener('click',advance);
 function typeStep(dt){if(!cur||full)return;typeT+=dt;while(typeT>22&&shown<cur.t.length){typeT-=22;shown++;if(shown%3===0)fx('blip')}tx.textContent=cur.t.slice(0,shown);if(shown>=cur.t.length)full=true}
 
+var NEED={ines:['Excel','CSV'],gaspard:['Python','SQL'],lina:['GA4','Looker Studio'],bertrand:['Power BI','DAX'],margot:['Power Query','Excel'],jo:['Google Sheets']},asked={};
+function hasTool(t){return !!(typeof dexData!=='undefined'&&dexData[t])}
+function missing(id){return NEED[id].filter(function(t){return !hasTool(t)})}
+function andList(a){return a.length<2?a.join(''):a.slice(0,-1).join(', ')+(L==='fr'?' et ':' and ')+a[a.length-1]}
+function wanted(){var o=[];NPC.forEach(function(n){if(asked[n.id]&&!done[n.id])missing(n.id).forEach(function(t){if(o.indexOf(t)<0)o.push(t)})});return o}
+var FACE={ines:'/npc1.svg',gaspard:'/npc2.svg',lina:'/npc3.svg',bertrand:'/npc4.svg',margot:'/npc1-happy.svg',jo:'/npc4-happy.svg',mayor:'/npc3-happy.svg'};
 function memLabel(n){return 'Kevin · '+({ines:'2022 · KPMG',gaspard:'2023 · Dassault Systèmes',lina:'2024 · Google France',bertrand:'2025 · Coface',margot:TX.now,jo:TX.beyond})[n.id]}
 function talk(n){n.dir={up:'down',down:'up',left:'right',right:'left'}[player.dir];
   if(n===MAYOR)return talkMayor();
-  var lines=n[L].map(function(l){return l[0]==='mem'?{k:'mem',w:memLabel(n),t:l[1]}:{k:'npc',w:n.name+' · '+n.role,t:l[1]}});
-  if(done[n.id])return say([{k:'npc',w:n.name+' · '+n.role,t:L==='fr'?'Merci encore ! Va voir la maire quand tu as tous les objets.':'Thanks again! Visit the mayor once you have every item.'}]);
+  var lines=n[L].map(function(l){return l[0]==='mem'?{k:'mem',w:memLabel(n),t:l[1],f:'/avatar-wink.svg'}:{k:'npc',w:n.name+' · '+n.role,t:l[1],f:FACE[n.id]}});
+  if(done[n.id])return say([{k:'npc',w:n.name+' · '+n.role,f:FACE[n.id],t:L==='fr'?'Merci encore ! Va voir la maire quand tu as tous les objets.':'Thanks again! Visit the mayor once you have every item.'}]);
+  var miss=missing(n.id),tool=andList(NEED[n.id]),nm=n.name+' · '+n.role;
+  if(miss.length){var first=!asked[n.id];asked[n.id]=1;hud();
+    return say((first?[lines[0]]:[]).concat([
+      {k:'npc',w:nm,f:FACE[n.id],t:L==='fr'?'Pour régler ça, il nous faudrait '+andList(miss)+'… On dit que ces outils traînent dans les hautes herbes du village.':'To fix this, we’d need '+andList(miss)+'… They say these tools roam the tall grass around the village.'},
+      {k:'nar',w:TX.narr,t:L==='fr'?'Objectif : capture '+andList(miss)+' dans les hautes herbes, puis reviens voir '+n.name+'.':'Goal: catch '+andList(miss)+' in the tall grass, then come back to '+n.name+'.'}]))}
+  lines.splice(1,0,{k:'nar',w:TX.narr,t:L==='fr'?'Kevin sort '+tool+' de son Datadex. Les outils se mettent au travail !':'Kevin takes '+tool+' out of the Datadex. The tools get to work!'});
   say(lines,function(){done[n.id]=1;xp+=25;document.getElementById('i-'+n.id).classList.add('on');fx('item');setTimeout(function(){fx('heal')},280);pop('+1 ♥','#FF5A6E');pop('+25 XP','#FFD45E',14);toast(n.item[0]+' '+n.item[1]+' '+TX.got+' · +25 XP');hud()})}
 function talkMayor(){var n=count(),M_=MAYOR.name;
-  if(finale)return say([{k:'npc',w:M_,t:L==='fr'?'Le village n’a jamais été aussi bien tenu. Profite de la fête !':'The village has never been better run. Enjoy the festival!'}]);
-  if(n<6)return say([{k:'npc',w:M_,t:L==='fr'?'Bienvenue, voyageur ! Notre village ne sait plus où passent son eau, ses loyers et ses dépenses.':'Welcome, traveller! Our village no longer knows where its water, rents and spending go.'},{k:'npc',w:M_,t:L==='fr'?'Les habitants marqués d’un « ! » ont chacun un problème… et un objet à te confier. Il t’en manque encore '+(6-n)+'.':'The villagers marked with “!” each have a problem… and an item to give you. You still need '+(6-n)+'.'}]);
+  if(finale)return say([{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Le village n’a jamais été aussi bien tenu. Profite de la fête !':'The village has never been better run. Enjoy the festival!'}]);
+  if(n<6)return say([{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Bienvenue, voyageur ! Notre village ne sait plus où passent son eau, ses loyers et ses dépenses.':'Welcome, traveller! Our village no longer knows where its water, rents and spending go.'},{k:'npc',w:M_,f:FACE.mayor,t:L==='fr'?'Les habitants marqués d’un « ! » ont chacun un problème… et un objet à te confier. Il t’en manque encore '+(6-n)+'.':'The villagers marked with “!” each have a problem… and an item to give you. You still need '+(6-n)+'.'}]);
   var F=L==='fr'?[
-    {k:'npc',w:M_,t:'Tu as tout ? Le compteur, le registre, la carte, la clé, les billes… et même la ceinture de Papi Jo ? Montre-moi !'},
+    {k:'npc',w:M_,f:FACE.mayor,t:'Tu as tout ? Le compteur, le registre, la carte, la clé, les billes… et même la ceinture de Papi Jo ? Montre-moi !'},
     {k:'nar',w:TX.narr,t:'Kevin pose les six objets sur la grande table. Les billes roulent, la carte se déplie, le compteur s’allume, la clé tourne toute seule…'},
     {fn:showDash},
-    {k:'npc',w:M_,t:'Pour la première fois, on sait où va chaque goutte et chaque sou ! Et ce tableau, tout le village sait le lire.'},
-    {k:'npc',w:M_,t:'Ce soir, fête au village en ton honneur. Et voici la clé du village : reviens quand tu veux, il y aura toujours une place pour toi.'}
+    {k:'npc',w:M_,f:FACE.mayor,t:'Pour la première fois, on sait où va chaque goutte et chaque sou ! Et ce tableau, tout le village sait le lire.'},
+    {k:'npc',w:M_,f:FACE.mayor,t:'Ce soir, fête au village en ton honneur. Et voici la clé du village : reviens quand tu veux, il y aura toujours une place pour toi.'}
   ]:[
-    {k:'npc',w:M_,t:'You have everything? The meter, the ledger, the map, the wrench, the marbles… even Papi Jo’s belt? Show me!'},
+    {k:'npc',w:M_,f:FACE.mayor,t:'You have everything? The meter, the ledger, the map, the wrench, the marbles… even Papi Jo’s belt? Show me!'},
     {k:'nar',w:TX.narr,t:'Kevin lays the six items on the big table. The marbles roll, the map unfolds, the meter lights up, the wrench turns by itself…'},
     {fn:showDash},
-    {k:'npc',w:M_,t:'For the first time we know where every drop and every coin goes! And the whole village can read this dashboard.'},
-    {k:'npc',w:M_,t:'Tonight, a festival in your honour. And here is the key to the village: come back anytime, there will always be a seat for you.'}
+    {k:'npc',w:M_,f:FACE.mayor,t:'For the first time we know where every drop and every coin goes! And the whole village can read this dashboard.'},
+    {k:'npc',w:M_,f:FACE.mayor,t:'Tonight, a festival in your honour. And here is the key to the village: come back anytime, there will always be a seat for you.'}
   ];
   say(F,function(){finale=true;party=true;xp+=50;fx('item');setTimeout(function(){fx('heal')},280);hearts(10);pop('+50 XP','#FFD45E',14);toast('🔑 '+(L==='fr'?'Clé du village':'Key to the village')+' · +50 XP');hud();mode='fan';fanI=0;setTimeout(showEnd,5200)})}
 function showDash(cont){var d=document.getElementById('dash');
@@ -330,8 +345,10 @@ function showDash(cont){var d=document.getElementById('dash');
 var dashWait=null,stage=document.getElementById('stage');
 function showEnd(){var s=Math.round((performance.now()-t0)/1000),best=0;try{best=+localStorage.getItem('kr-village-best')||0}catch(e){}if(!best||s<best){best=s;try{localStorage.setItem('kr-village-best',s)}catch(e){}}
   function f(v){return Math.floor(v/60)+':'+('0'+v%60).slice(-2)}
-  var e=document.getElementById('end');e.innerHTML='<div class="em">🎉</div><h2>'+TX.endT+'</h2><p>'+TX.endP+'</p><div class="st"><div><b>'+lvl+'</b>'+TX.stLv+'</div><div><b>'+steps+'</b>'+TX.stSteps+'</div><div><b>'+f(s)+'</b>'+TX.stTime+'</div><div><b>'+f(best)+'</b>'+TX.best+'</div></div><button class="go" id="again">'+TX.again+'</button>';
-  e.classList.remove('hide');state='end';document.getElementById('again').onclick=reset}
+  var e=document.getElementById('end');e.innerHTML='<div class="em">🎉</div><h2>'+TX.endT+'</h2><p>'+TX.endP+'</p><div class="st"><div><b>'+lvl+'</b>'+TX.stLv+'</div><div><b>'+steps+'</b>'+TX.stSteps+'</div><div><b>'+f(s)+'</b>'+TX.stTime+'</div><div><b>'+f(best)+'</b>'+TX.best+'</div></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="go" id="share" target="_blank" rel="noopener" style="text-decoration:none;background:#0A66C2;color:#fff">'+(L==='fr'?'Partager sur LinkedIn':'Share on LinkedIn')+'</a><button class="go" id="again">'+TX.again+'</button></div>';
+  e.classList.remove('hide');state='end';var dn=Object.keys(dexData).length,msg=(L==='fr'?'🏡 J’ai sauvé le Village des Données en '+f(s)+' (niveau '+lvl+', Datadex '+dn+'/'+MONS.length+') ! Le petit RPG data de Kevin Radja, à tester ici : ':'🏡 I saved Data Village in '+f(s)+' (level '+lvl+', Datadex '+dn+'/'+MONS.length+')! Kevin Radja’s little data RPG, try it here: ')+'https://kevinradja-site.vercel.app'+(L==='fr'?'/jeu/':'/en/game/');
+  document.getElementById('share').href='https://www.linkedin.com/feed/?shareActive=true&text='+encodeURIComponent(msg);
+  document.getElementById('again').onclick=reset}
 function reset(){done={};xp=0;lvl=1;steps=0;finale=false;party=false;sparks=[];player.x=15;player.y=23;player.px=15*T;player.py=23*T;player.dir='up';player.moving=false;
   document.querySelectorAll('.inv span').forEach(function(s){s.classList.remove('on')});document.getElementById('end').classList.add('hide');hud();state='play';t0=performance.now()}
 
@@ -373,7 +390,7 @@ function saveDex(){try{localStorage.setItem('kr-datadex',JSON.stringify(dexData)
 function paintDexN(){document.getElementById('dexn').textContent=Object.keys(dexData).length+'/'+MONS.length}
 function monHTML(m,size,shiny,unk){return '<span class="mon'+(shiny?' shiny':'')+(unk?' unk':'')+'" style="--c:'+m[2]+';--s:'+size+'px"><span>'+(unk?'?':m[1])+'</span></span>'}
 var bt=document.getElementById('bt'),B=null;
-function pickMon(){var r=Math.random()*100,acc=0,tier=0;for(var i=0;i<4;i++){acc+=RW[i];if(r<acc){tier=i;break}}var pool=MONS.filter(function(m){return m[3]===tier});return pool[Math.random()*pool.length|0]}
+function pickMon(){var w=wanted();if(w.length&&Math.random()<.45){var t=w[Math.random()*w.length|0];return MONS.filter(function(m){return m[0]===t})[0]}var r=Math.random()*100,acc=0,tier=0;for(var i=0;i<4;i++){acc+=RW[i];if(r<acc){tier=i;break}}var pool=MONS.filter(function(m){return m[3]===tier});return pool[Math.random()*pool.length|0]}
 function encounter(){var m=pickMon(),shiny=Math.random()<1/30,z=ZONE[m[3]];state='battle';held=[];tap=null;
   B={m:m,shiny:shiny,tries:3,zs:.1+Math.random()*(.8-z),zw:z,pos:0,t0:performance.now(),busy:false};
   fx('enc');var nm=(shiny?'✨ ':'')+m[0];
@@ -387,7 +404,7 @@ function throwCap(){if(!B||B.busy)return;B.busy=true;fx('throw');var mon=bt.quer
   mon.classList.remove('wob');void mon.offsetWidth;mon.classList.add('wob');
   setTimeout(function(){
     if(ok){mon.classList.add('caught');var id=B.m[0],d=dexData[id]||{n:0,s:0},isNew=!dexData[id];d.n++;if(B.shiny)d.s=1;dexData[id]=d;saveDex();
-      var gain=isNew?20:10;xp+=gain;hud();fx('heal');pop('+1 ♥','#FF5A6E');pop('+'+gain+' XP','#FFD45E',14);if(isNew)hearts(5);
+      var gain=isNew?20:10;xp+=gain;hud();if(NPC.some(function(n){return asked[n.id]&&!done[n.id]&&NEED[n.id].indexOf(id)>=0&&!missing(n.id).length}))toast('✅ '+id+(L==='fr'?' capturé : retourne voir l’habitant !':' caught: go back to the villager!'));fx('heal');pop('+1 ♥','#FF5A6E');pop('+'+gain+' XP','#FFD45E',14);if(isNew)hearts(5);
       msg.innerHTML='<b>'+(L==='fr'?'Capturé !':'Caught!')+'</b> '+(isNew?(L==='fr'?'Nouveau dans ton Datadex.':'New in your Datadex.'):(L==='fr'?B.m[0]+' passe niveau '+d.n+'.':B.m[0]+' reaches level '+d.n+'.'));
       setTimeout(endBattle,1400)}
     else{B.tries--;fx('bump');if(B.tries<=0){mon.classList.add('gone');msg.innerHTML=L==='fr'?'Oh non, il s’est échappé !':'Oh no, it got away!';setTimeout(endBattle,1100)}
