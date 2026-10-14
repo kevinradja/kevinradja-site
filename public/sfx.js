@@ -59,7 +59,7 @@
     if(el.classList.contains('cta')||el.classList.contains('p')){tone(523.25,0,.1,'triangle',.07);tone(783.99,.05,.1,'triangle',.06);tone(1046.5,.1,.16,'sine',.05);return}
     if(el.classList.contains('ic')){tone(rnd(700,820),0,.05,'sine',.06,rnd(1100,1300));return}
     var f=rnd(470,580);tone(f,0,.06,'triangle',.07);tone(f*2,.02,.05,'sine',.04)}
-  document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('a,button');if(!el||el.dataset.silent!=null||el.closest('.foot,[data-silent]'))return;uiClick(el)},true);
+  document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('a,button');if(!el||el.dataset.silent!=null||el.closest('.foot,[data-silent],.c-marquee'))return;uiClick(el)},true);
   /* Hover sounds only on the top menu, never while the page is scrolling (it fired by itself under the cursor). */
   var lastScroll=0;window.addEventListener('scroll',function(){lastScroll=Date.now()},{passive:true});
   document.addEventListener('mouseover',function(e){if(Date.now()-lastScroll<500)return;var cd=e.target.closest&&e.target.closest('.c-game-in');if(cd&&!cd._a&&!(e.relatedTarget&&cd.contains(e.relatedTarget))){cd._a=1;setTimeout(function(){cd._a=0},600);tone(988,0,.07,'square',.03);tone(1319,.07,.22,'square',.028)}},true);
