@@ -1150,3 +1150,10 @@ body{overflow-x:clip}
 .wask{max-width:min(560px,90vw);margin:0 auto;line-height:1.5}
 .wask small{display:block;margin-top:8px;font-size:12px;font-weight:600;letter-spacing:.02em;color:#9FB0AE}
 .wask{bottom:clamp(14px,3.5vh,44px)}
+/* story: the title words stay readable, hearts get their own room above the table */
+.c-giant{font-size:min(6vw,9vh,120px)}
+.c-story-dev{width:min(430px,72vw,50vh);margin:48px 0 18px}
+@media(max-width:700px){.c-story-dev{width:100%;margin:46px 0 14px}}
+.c-giant{font-size:min(6vw,8.2vh,120px)}
+.c-story-dev{width:min(440px,72vw,56vh);margin:46px 0 26px}
+@media(max-width:700px){.c-story-dev{width:100%;margin:46px 0 26px}}
