@@ -9,14 +9,14 @@ const base = lang === 'fr' ? '/realisations/' : '/en/work/';
 <section class="sec c-avis" id="avis">
   <div class="wrap">
     <div class="c-head"><div class="kicker">{T('Ils en parlent', 'What they say')}</div><h2>{T('Retours de mission.', 'Feedback from the field.')}</h2></div>
-    <div class="avis">
-      {testimonials.map(t => {
+    <div class="avis" data-fan style={`--n:${Math.min(4, testimonials.length)}`}>
+      {testimonials.map((t, i) => {
         const p = t.project ? projects.find(x => x.slug === t.project) : undefined;
         return (
-          <figure class="avis-c rv">
+          <figure class="avis-c" style={`--i:${i}`}>
             <span class="avis-q" aria-hidden="true">“</span>
             <blockquote>{t.quote[lang]}</blockquote>
-            <figcaption><b>{t.name}</b><span>{t.role[lang]} · {t.company[lang]}</span></figcaption>
+            <figcaption><span class="avis-av" aria-hidden="true">{t.name.charAt(0)}</span><b>{t.name}</b><span>{t.role[lang]} · {t.company[lang]}</span></figcaption>
             {p && <a class="avis-p" href={base + p.slug + '/'}><em>{p.kpi.v}</em>{p.title[lang]} →</a>}
           </figure>
         );
@@ -25,3 +25,7 @@ const base = lang === 'fr' ? '/realisations/' : '/en/work/';
   </div>
 </section>
 )}
+
+<script is:inline>
+  (function(){var f=document.querySelector('[data-fan]');if(!f)return;var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){f.classList.add('open');io.disconnect()}},{threshold:.35});io.observe(f)})();
+</script>
