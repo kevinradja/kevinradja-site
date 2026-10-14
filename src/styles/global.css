@@ -1009,3 +1009,34 @@ body{line-height:1.65}
 html.warp #warp{background:#071C1E}
 #warp .wl{font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;color:#F4EFE4;letter-spacing:-.02em}
 #warp .wl i{color:#9FE0D8}
+
+/* ===== entry scene: messy dashboard + controller, then hyperspace ===== */
+html.warp #warp{background:#FAF7F0;transition:background .5s}
+#warp.launch{background:#071C1E}
+#warp canvas{opacity:0;transition:opacity .4s}
+#warp.launch canvas{opacity:1}
+#warp .wl{animation-delay:2.3s}
+.wsc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.4vh,26px);transition:transform .55s cubic-bezier(.6,0,.4,1),opacity .45s}
+#warp.launch .wsc{transform:scale(2.6);opacity:0}
+.wq{min-height:1.2em;font-family:var(--disp);font-weight:800;font-stretch:125%;font-variation-settings:"wdth" 125;text-transform:uppercase;color:#0E5257;font-size:clamp(20px,3.4vw,44px);letter-spacing:-.01em;text-align:center;padding:0 16px}
+.wq:after{content:"_";animation:blink .7s steps(2) infinite;color:#2A8C8C}
+@keyframes blink{50%{opacity:0}}
+.wdev{width:min(460px,80vw);background:#fff;border-radius:26px;padding:10px;box-shadow:0 40px 70px -30px rgba(12,58,62,.45),0 0 0 1px rgba(12,58,62,.06);animation:jit 2.2s ease-in-out infinite}
+@keyframes jit{0%,100%{transform:rotate(-.6deg)}50%{transform:rotate(.8deg) translateY(-2px)}}
+.wscr{position:relative;aspect-ratio:16/10;border-radius:18px;background:#F1ECE1;border:1px solid #E8E1D3;padding:14px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto 1fr;gap:10px;overflow:hidden}
+.wt,.wbars,.wnote{transform:rotate(var(--r))}
+.wt{background:#fff;border:1px solid #E8E1D3;border-radius:8px;padding:8px 10px;font:600 10px/1.2 Archivo,sans-serif;color:#72807E}
+.wt b{display:block;margin-top:4px;font-size:clamp(14px,2vw,20px);color:#0C3A3E}
+.wt b.bad,.wnote{color:#B5432F}
+.wt b.bad{background:rgba(181,67,47,.12);border-radius:4px;padding:2px 4px;display:inline-block}
+.wbars{grid-column:1/3;background:#fff;border:1px solid #E8E1D3;border-radius:8px;display:flex;align-items:flex-end;gap:6%;padding:10px 12px}
+.wbars i{flex:1;background:#0E5257;border-radius:2px 2px 0 0}.wbars i:nth-child(2n){background:#2A8C8C}.wbars i.bad{background:#B5432F}
+.wnote{align-self:center;justify-self:center;background:#FFE58A;color:#5a4a00;font:700 10px/1.2 ui-monospace,Menlo,monospace;padding:10px 8px;box-shadow:0 6px 12px -6px rgba(0,0,0,.3)}
+.wpad{width:min(210px,46vw);height:auto;filter:drop-shadow(0 14px 18px rgba(12,58,62,.3))}
+.wpad .wa{transform-origin:192px 60px;transform-box:view-box;transition:transform .12s}
+#warp.press .wpad .wa{transform:scale(.82)}
+.wpad .wring{opacity:0;transform-origin:192px 60px;transform-box:view-box}
+#warp.press .wpad .wring{animation:ring .5s ease-out forwards}
+@keyframes ring{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(2.6)}}
+#warp.press .wdev{animation:none;transform:none}
+html.warp-rm #warp.launch canvas{opacity:0}

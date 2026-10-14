@@ -33,7 +33,7 @@ const nav = [
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet" />
   {intro && <script is:inline>
     /* Entry animation (home only): once per browser session, skipped for reduced motion. */
-    (function(){try{var force=/[?&]intro(=|&|$)/.test(location.search);if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
+    (function(){try{var force=/[?&]intro(=|&|$)/.test(location.search);if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('warp-rm');if(!force&&sessionStorage.getItem('kr-intro'))return;sessionStorage.setItem('kr-intro','1');document.documentElement.classList.add('warp')}catch(e){}})();
   </script>}
   <script is:inline>
     /* always start at the top after a reload (unless the URL targets a section) */
@@ -43,7 +43,19 @@ const nav = [
 </head>
 <body>
   {intro && (
-  <div id="warp" aria-hidden="true"><canvas></canvas><div class="wl"><span>KR<i>.csv</i></span></div></div>
+  <div id="warp" aria-hidden="true"><canvas></canvas>
+    <div class="wsc">
+      <p class="wq" data-t={lang === 'fr' ? 'On veut décider avec la donnée ?' : 'Want to decide with data?'}></p>
+      <div class="wdev"><div class="wscr">
+        <div class="wt" style="--r:-5deg"><small>CA ???</small><b class="bad">#N/A</b></div>
+        <div class="wt" style="--r:4deg"><small>Clients</small><b>12O</b></div>
+        <div class="wt" style="--r:-2deg"><small>Marge</small><b class="bad">ERREUR</b></div>
+        <div class="wbars" style="--r:3deg"><i style="height:30%"></i><i style="height:85%"></i><i style="height:12%"></i><i class="bad" style="height:60%"></i><i style="height:44%"></i><i style="height:95%"></i></div>
+        <div class="wnote" style="--r:-7deg">v3_FINAL(2).xlsx</div>
+      </div></div>
+      <svg class="wpad" viewBox="0 0 240 130"><path d="M50 18h140c26 0 44 22 48 56 4 34-10 52-28 52-14 0-22-10-32-26H62c-10 16-18 26-32 26-18 0-32-18-28-52C6 40 24 18 50 18z" fill="#0E5257"/><rect x="52" y="52" width="12" height="36" rx="3" fill="#F4EFE4"/><rect x="40" y="64" width="36" height="12" rx="3" fill="#F4EFE4"/><circle cx="170" cy="84" r="11" fill="#2A8C8C"/><g class="wa"><circle cx="192" cy="60" r="13" fill="#F4EFE4"/><text x="192" y="65" text-anchor="middle" font-size="14" font-weight="800" fill="#0E5257" font-family="Archivo,sans-serif">A</text></g><circle class="wring" cx="192" cy="60" r="13" fill="none" stroke="#9FE0D8" stroke-width="3"/><rect x="104" y="44" width="14" height="6" rx="3" fill="#2A8C8C"/><rect x="122" y="44" width="14" height="6" rx="3" fill="#2A8C8C"/></svg>
+    </div>
+    <div class="wl"><span>KR<i>.csv</i></span></div></div>
   )}
   {!bare && (
   <header class="nav" id="nav">
@@ -101,10 +113,12 @@ const nav = [
       function rs(){W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0)}rs();addEventListener('resize',rs);
       function star(z){return{x:(Math.random()-.5)*2,y:(Math.random()-.5)*2,z:z||Math.random()*1+.05,c:Math.random()<.3?'#9FE0D8':'#F4EFE4'}}
       for(var i=0;i<520;i++)S.push(star());
-      var WARP=1500,SPLASH=650;
+      var PRE=2300,WARP=1300,SPLASH=650,rm=root.classList.contains('warp-rm');
+      var q0=w.querySelector('.wq');if(q0){var full=q0.dataset.t,ci=0,ti=setInterval(function(){ci++;q0.textContent=full.slice(0,ci);if(ci>=full.length)clearInterval(ti)},38)}
+      setTimeout(function(){w.classList.add('press')},1550);setTimeout(function(){w.classList.add('launch')},1850);
       function end(){if(done)return;done=true;root.classList.remove('warp');root.classList.add('warp-in');w.remove();setTimeout(function(){root.classList.remove('warp-in')},800)}
-      w.addEventListener('click',function(){t0=performance.now()-WARP});addEventListener('keydown',function(){if(!done)t0=performance.now()-WARP},{once:true});
-      function f(now){if(done)return;var t=now-t0,p=Math.min(1,t/WARP),sp=.004+Math.pow(p,3)*.09;
+      w.addEventListener('click',function(){t0=performance.now()-PRE-WARP;w.classList.add('launch')});addEventListener('keydown',function(){if(!done){t0=performance.now()-PRE-WARP;w.classList.add('launch')}},{once:true});
+      function f(now){if(done)return;var t=now-t0-PRE;if(t<0){requestAnimationFrame(f);return}if(rm)t=Math.max(t,WARP);var p=Math.min(1,t/WARP),sp=.004+Math.pow(p,3)*.09;
         x.fillStyle='rgba(7,28,30,'+(p<.9?.35:.6)+')';x.fillRect(0,0,W,H);
         var cx=W/2,cy=H/2,k=Math.max(W,H)*.5;
         for(var i=0;i<S.length;i++){var s=S[i],px=cx+s.x/s.z*k,py=cy+s.y/s.z*k;s.z-=sp;if(s.z<=.02){S[i]=star(1);continue}
@@ -115,7 +129,7 @@ const nav = [
           for(var j=0;j<3;j++){var r2=R*(1+j*.18)+4;x.strokeStyle='rgba(159,224,216,'+(1-q)*(.9-j*.25)+')';x.lineWidth=6-j*2;x.beginPath();x.arc(cx,cy,r2,0,7);x.stroke()}
           if(q>=1)return end()}
         requestAnimationFrame(f)}
-      requestAnimationFrame(f);setTimeout(end,WARP+SPLASH+1500);
+      requestAnimationFrame(f);setTimeout(end,PRE+WARP+SPLASH+1500);
     })();
   </script>}
   <script is:inline src="/sfx.js"></script>
