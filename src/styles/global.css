@@ -383,7 +383,7 @@ a.card:hover{transform:translateY(-2px);border-color:var(--acc)}
   .tb{font-size:12px}.tb td,.tb th{padding:7px 6px}
   .dg .t b{font-size:22px}
 }
-@media(prefers-reduced-motion:reduce){.story{height:auto}.story-pin{position:static;height:auto;padding:40px 0}.st li{opacity:1}.st li p{max-height:none}}
+@media(prefers-reduced-motion:reduce){.ly,.bars i,.st li,.st li p,.kpi .draw,.kpi .gauge,.kpi .grow,.kpi .growy,.kpi .fade{transition:none!important}}
 
 /* results: Seda-like cards with live mini charts */
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
