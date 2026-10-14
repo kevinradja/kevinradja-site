@@ -42,7 +42,7 @@
     var b=document.createElement('button');b.id='kr-snd-hint';b.type='button';b.setAttribute('data-silent','');b.textContent=fr?'🔊 Cliquez pour activer le son':'🔊 Click to turn sound on';
     var st=document.createElement('style');st.textContent='#kr-snd-hint{position:fixed;left:16px;bottom:16px;z-index:60;border:1px solid rgba(12,58,62,.18);background:#FAF7F0;color:#0C3A3E;font:600 13px/1 Archivo,system-ui,sans-serif;padding:10px 14px;border-radius:999px;box-shadow:0 10px 24px -12px rgba(12,58,62,.45);cursor:pointer;animation:krh .5s 1.2s both;transition:opacity .35s,transform .35s}#kr-snd-hint.bye{opacity:0;transform:translateY(10px)}@keyframes krh{from{opacity:0;transform:translateY(10px)}}';
     document.head.appendChild(st);document.body.appendChild(b)}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hint);else hint();
+
   window.KR=window.KR||{};
   window.KR.sfx={cloud:{start:cloudStart,set:cloudSet,stop:cloudStop},play:function(n,a,b){try{S[n]&&S[n](a,b)}catch(e){}},mute:function(m){muted=!!m;try{localStorage.setItem('kr-sound',m?'off':'on')}catch(e){}},isMuted:function(){return muted}};
   /* UI sounds on the site. Nav links each get their own note of a pentatonic scale,
