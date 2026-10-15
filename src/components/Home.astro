@@ -97,7 +97,7 @@ import Testimonials from './Testimonials.astro';
           </div>
           <div class="ly ly3">
             <div class="db">
-              <div class="db-tabs" role="tablist">
+              <div class="db-tabs" role="group">
                 <button type="button" class="on" data-t="0">{T('Vue d’ensemble', 'Overview')}</button>
                 <button type="button" data-t="1">Clients</button>
                 <button type="button" data-t="2">{T('Décisions', 'Decisions')}</button>
@@ -178,7 +178,7 @@ import Testimonials from './Testimonials.astro';
   <div class="wrap">
     <div class="c-slider rv">
       <div class="c-sl-l">
-        <div class="c-dots" role="tablist">{results.map((_, i) => <button type="button" aria-label={String(i + 1)} class:list={[{ on: i === 0 }]} data-i={i}></button>)}</div>
+        <div class="c-dots" role="group">{results.map((_, i) => <button type="button" aria-label={String(i + 1)} class:list={[{ on: i === 0 }]} data-i={i}></button>)}</div>
         <div class="kicker">{T('Résultats', 'Results')}</div>
         {results.map((x, i) => (
           <div class:list={['c-slide-txt', { on: i === 0 }]} data-i={i}>

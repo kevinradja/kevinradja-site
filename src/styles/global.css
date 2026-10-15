@@ -1363,3 +1363,6 @@ html::-webkit-scrollbar{width:0;height:0}
 @keyframes aioshine{0%,30%{background-position:100% 0}70%,100%{background-position:0 0}}
 .aio-new{background:linear-gradient(120deg,#C9D3E0,#FFFFFF,#9FE0D8,#7A8A99);color:#0B2A2C;box-shadow:0 0 0 1px rgba(255,255,255,.4) inset}
 @media(prefers-reduced-motion:reduce){.aio,.aio-h h3{animation:none}}
+
+/* a11y: bigger tap target for slider dots */
+.c-dots{gap:4px}.c-dots button{box-sizing:content-box;border:8px solid transparent!important;background-clip:padding-box!important}

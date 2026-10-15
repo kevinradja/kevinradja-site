@@ -106,7 +106,7 @@ const nav = [
   <header class="nav" id="nav">
     <div class="in">
       <div class="bar">
-      <a class="logo" href={r('home', lang)} aria-label="Kevin Radja">KR<i>.csv</i></a>
+      <a class="logo" href={r('home', lang)} aria-label="KR.csv, Kevin Radja">KR<i>.csv</i></a>
       <nav class="links">
         {nav.map(n => <a class:list={['l', { on: path.startsWith(n.h) && n.h !== '/' }]} href={n.h}>{ui.nav[n.k][lang]}</a>)}
       </nav>
