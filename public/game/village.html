@@ -804,16 +804,16 @@ function saveDex(){paintDexN()}
 function paintDexN(){document.getElementById('dexn').textContent=Object.keys(dexData).length+'/'+MONS.length}
 function monHTML(m,size,shiny,unk){return '<span class="mon'+(shiny?' shiny':'')+(unk?' unk':'')+'" style="--c:'+m[2]+';--s:'+size+'px"><span>'+(unk?'?':m[1])+'</span></span>'}
 var bt=document.getElementById('bt'),BT=null;
-function pickMon(){var w=wanted();if(w.length&&Math.random()<.45){var t=w[Math.random()*w.length|0];return MONS.filter(function(m){return m[0]===t})[0]}var r=Math.random()*100,acc=0,tier=0;for(var i=0;i<4;i++){acc+=RW[i];if(r<acc){tier=i;break}}var pool=MONS.filter(function(m){return m[3]===tier});return pool[Math.random()*pool.length|0]}
-function encounter(){var m=pickMon(),shiny=Math.random()<1/30,z=ZONE[m[3]];state='battle';held=[];tap=null;
-  BT={m:m,shiny:shiny,tries:3,zs:.1+Math.random()*(.8-z),zw:z,pos:0,t0:performance.now(),busy:false};
+function pickMon(){var w=wanted();if(w.length){var t=w[Math.random()*w.length|0];return MONS.filter(function(m){return m[0]===t})[0]}var r=Math.random()*100,acc=0,tier=0;for(var i=0;i<4;i++){acc+=RW[i];if(r<acc){tier=i;break}}var pool=MONS.filter(function(m){return m[3]===tier});return pool[Math.random()*pool.length|0]}
+function encounter(){var m=pickMon(),shiny=Math.random()<1/30,want=wanted().indexOf(m[0])>=0,z=want?.45:ZONE[m[3]];state='battle';held=[];tap=null;
+  BT={m:m,shiny:shiny,want:want,tries:3,zs:.1+Math.random()*(.8-z),zw:z,pos:0,t0:performance.now(),busy:false};
   fx('enc');var nm=(shiny?'✨ ':'')+m[0];
   bt.innerHTML='<div class="bt-in">'+monHTML(m,96,shiny)+'<h3>'+(L==='fr'?'Un '+nm+' sauvage apparaît !':'A wild '+nm+' appears!')+'</h3><div class="bt-rar" style="color:'+RCOL[m[3]]+'">'+RAR[m[3]]+'</div>'+
    '<div class="bt-bar"><i class="z" style="left:'+(BT.zs*100)+'%;width:'+(BT.zw*100)+'%"></i><b class="cur"></b></div>'+
-   '<div class="bt-msg">'+(L==='fr'?'Appuie sur A ou Espace quand le curseur est dans la zone verte. 3 essais.':'Press A or Space when the cursor is in the green zone. 3 tries.')+'</div>'+
+   '<div class="bt-msg">'+(L==='fr'?(want?'C’est l’outil qu’il te faut ! Appuie sur A ou Espace dans la zone verte. Il ne peut pas s’enfuir.':'Appuie sur A ou Espace quand le curseur est dans la zone verte. 3 essais.'):(want?'The tool you need! Press A or Space in the green zone. It can’t run away.':'Press A or Space when the cursor is in the green zone. 3 tries.'))+'</div>'+
    '<div class="bt-btns"><button class="cap">'+(L==='fr'?'Capturer':'Catch')+'</button><button class="run">'+(L==='fr'?'Fuir':'Run')+'</button></div></div>';
   bt.classList.remove('hide');bt.querySelector('.cap').onclick=function(e){e.stopPropagation();throwCap()};bt.querySelector('.run').onclick=function(e){e.stopPropagation();endBattle()}}
-function battleTick(){if(!BT||BT.busy)return;var t=performance.now()-BT.t0;BT.pos=(Math.sin(t*SPD[BT.m[3]])+1)/2;var c=bt.querySelector('.cur');if(c)c.style.left='calc('+(BT.pos*100)+'% - 2px)'}
+function battleTick(){if(!BT||BT.busy)return;var t=performance.now()-BT.t0;BT.pos=(Math.sin(t*SPD[BT.m[3]]*(BT.want?.6:1))+1)/2;var c=bt.querySelector('.cur');if(c)c.style.left='calc('+(BT.pos*100)+'% - 2px)'}
 function throwCap(){if(!BT||BT.busy)return;BT.busy=true;fx('throw');var mon=bt.querySelector('.mon'),msg=bt.querySelector('.bt-msg'),ok=BT.pos>=BT.zs&&BT.pos<=BT.zs+BT.zw;
   mon.classList.remove('wob');void mon.offsetWidth;mon.classList.add('wob');
   setTimeout(function(){
@@ -821,7 +821,7 @@ function throwCap(){if(!BT||BT.busy)return;BT.busy=true;fx('throw');var mon=bt.q
       var gain=isNew?20:10;xp+=gain;hud();if(Object.keys(dexData).length===1&&isNew)setTimeout(function(){toast(L==='fr'?'📘 Appuie sur I pour voir ton Datadex':'📘 Press I to open your Datadex')},1500);if(NPC.some(function(n){return asked[n.id]&&!done[n.id]&&NEED[n.id].indexOf(id)>=0&&!missing(n.id).length}))toast('✅ '+id+(L==='fr'?' capturé : retourne voir l’habitant !':' caught: go back to the villager!'));fx('heal');pop('+1 ♥','#FF5A6E');pop('+'+gain+' XP','#FFD45E',14);if(isNew)hearts(5);
       msg.innerHTML='<b>'+(L==='fr'?'Capturé !':'Caught!')+'</b> '+(isNew?(L==='fr'?'Nouveau dans ton Datadex.':'New in your Datadex.'):(L==='fr'?'Déjà dans ton Datadex.':'Already in your Datadex.'));
       setTimeout(endBattle,1400)}
-    else{BT.tries--;fx('bump');if(BT.tries<=0){mon.classList.add('gone');msg.innerHTML=L==='fr'?'Oh non, il s’est échappé !':'Oh no, it got away!';setTimeout(endBattle,1100)}
+    else{if(!BT.want)BT.tries--;fx('bump');if(BT.tries<=0){mon.classList.add('gone');msg.innerHTML=L==='fr'?'Oh non, il s’est échappé !':'Oh no, it got away!';setTimeout(endBattle,1100)}
       else{msg.innerHTML=(L==='fr'?'Raté ! Encore ':'Missed! ')+BT.tries+(L==='fr'?' essai'+(BT.tries>1?'s':'')+'.':' left.');BT.busy=false;BT.t0=performance.now()-Math.random()*2000}}
   },520)}
 function endBattle(){bt.classList.add('hide');bt.innerHTML='';BT=null;state='play';tap=null}
@@ -845,7 +845,7 @@ paintDexN();
 var last=performance.now(),STEP=170,sparks=[],smoke=[],fwT=0,bumpT=0,time=0;
 function update(dt){time+=dt;typeStep(dt);
   if(state==='play'&&!cur&&!dashWait){
-    if(player.moving){player.p+=dt/STEP;if(player.p>=1){player.moving=false;player.x=player.tx;player.y=player.ty;steps++;fx('step');if(M[player.y][player.x]==='h'&&Math.random()<.16)encounter()}
+    if(player.moving){player.p+=dt/STEP;if(player.p>=1){player.moving=false;player.x=player.tx;player.y=player.ty;steps++;fx('step');if(M[player.y][player.x]==='h'&&Math.random()<(wanted().length?.5:.16))encounter()}
       player.px=(player.fx+(player.tx-player.fx)*Math.min(1,player.p))*T;player.py=(player.fy+(player.ty-player.fy)*Math.min(1,player.p))*T}
     if(!player.moving&&(held.length||tap)){var d=held.length?held[held.length-1]:tap;tap=null;player.dir=d;var v=DIRS[d],nx=player.x+v[0],ny=player.y+v[1];
       if(walkable(nx,ny)){player.moving=true;player.p=0;player.fx=player.x;player.fy=player.y;player.tx=nx;player.ty=ny}else if(time-bumpT>350){bumpT=time;fx('bump')}}}
