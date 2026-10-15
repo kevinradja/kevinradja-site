@@ -20,6 +20,22 @@ const nav = [
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={site + path} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'Person', '@id': site + '/#kevin', name: 'Kevin Radja', url: site + '/', image: site + '/og.png',
+        jobTitle: lang === 'fr' ? 'Consultant Data & BI freelance' : 'Freelance Data & BI Consultant',
+        address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' },
+        knowsAbout: ['Power BI', 'Excel', 'SQL', 'Python', 'Looker Studio', 'Business Intelligence', 'Copilot Studio', 'AI agents', 'n8n'],
+        alumniOf: ['EFREI Paris', 'Université Paris-Saclay'],
+        sameAs: ['https://www.linkedin.com/in/kevin-radja/', 'https://www.malt.fr/profile/kevinradja', 'https://www.upwork.com/freelancers/~01b7d421a89e7225f7', 'https://www.fiverr.com/kevin_desu'] },
+      { '@type': 'ProfessionalService', '@id': site + '/#krcsv', name: 'KR.csv', url: site + '/', founder: { '@id': site + '/#kevin' },
+        description: lang === 'fr' ? 'Tableaux de bord Power BI, fiabilisation Excel, reporting automatisé, agents IA et automatisations.' : 'Power BI dashboards, Excel clean-up, automated reporting, AI agents and automations.',
+        areaServed: ['FR', 'EU'], address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' } },
+      { '@type': 'WebSite', '@id': site + '/#site', url: site + '/', name: 'Kevin Radja · KR.csv', inLanguage: ['fr', 'en'], publisher: { '@id': site + '/#kevin' } }
+    ]
+  })} />
+
   <link rel="alternate" hreflang={lang === 'fr' ? 'en' : 'fr'} href={site + other} />
   <link rel="alternate" hreflang={lang} href={site + path} />
   <meta property="og:title" content={title} />
