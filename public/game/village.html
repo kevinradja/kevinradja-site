@@ -21,33 +21,14 @@
 .keysbox kbd{font:inherit;font-weight:700;background:rgba(244,241,230,.16);border-radius:3px;padding:0 4px}
 @media(max-width:560px){.keysbox{display:none}}
 
-/* ---- mons mignons : petites créatures rondes (exception à la règle pixel) ---- */
-.mon,.mon.shiny{background:none!important;box-shadow:none!important;border:0!important;text-shadow:none;animation:monbob 1.8s ease-in-out infinite;transform-origin:50% 100%}
+/* ---- mons en pixel art (exception à la règle pixel pour le conteneur) ---- */
+.mon,.mon.shiny{background:none!important;box-shadow:none!important;border:0!important;text-shadow:none;animation:monbob 1.2s steps(2,jump-none) infinite;transform-origin:50% 100%}
 .mon:before,.mon:after{display:none!important}
-.mon i{position:absolute;display:block;pointer-events:none}
-.mon .bod{inset:6% 4% 4% 4%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.45) 0 14%,transparent 34%),radial-gradient(circle at 70% 85%,rgba(0,0,0,.18),transparent 55%),var(--c);border-radius:50% 50% 46% 46%/56% 56% 44% 44%!important;box-shadow:0 calc(var(--s)*.05) 0 rgba(0,0,0,.18)}
-.mon .eye{top:34%;width:15%;height:19%;background:radial-gradient(circle at 36% 30%,#fff 0 24%,#1d2430 27%);border-radius:50%!important;animation:monblink 4.2s infinite}
-.mon .eye.l{left:27%}.mon .eye.r{right:27%}
-.mon .blush{top:53%;width:13%;height:7%;background:#FF8FA3;opacity:.75;border-radius:50%!important}
-.mon .blush.l{left:14%}.mon .blush.r{right:14%}
-.mon .mouth{top:52%;left:50%;width:11%;height:7%;transform:translateX(-50%);border:calc(var(--s)*.028) solid #1d2430;border-top:0;border-radius:0 0 999px 999px!important}
-.mon b{position:absolute;left:50%;bottom:15%;transform:translateX(-50%);background:rgba(255,255,255,.93);color:#1d2430;font:800 calc(var(--s)*.13)/1 ui-monospace,Menlo,Consolas,monospace;padding:.22em .45em;border-radius:999px!important;white-space:nowrap;letter-spacing:-.02em}
-.mon .foot{bottom:0;width:24%;height:13%;background:var(--c);filter:brightness(.78);border-radius:50% 50% 40% 40%!important}
-.mon .foot.l{left:20%}.mon .foot.r{right:20%}
-/* oreilles selon la rareté */
-.mon .ear{top:-2%;width:26%;height:28%;background:var(--c);filter:brightness(.86);border-radius:50%!important}
-.mon .ear.l{left:8%}.mon .ear.r{right:8%}
-.mon.t1 .ear{top:-12%;width:24%;height:34%;border-radius:0!important;clip-path:polygon(50% 0,100% 100%,0 100%);filter:brightness(.9)}
-.mon.t1 .ear.l{left:12%;transform:rotate(-14deg)}.mon.t1 .ear.r{right:12%;transform:rotate(14deg)}
-.mon.t2 .ear{top:-16%;width:14%;height:30%;filter:none;border-radius:0!important;background:radial-gradient(circle at 50% calc(var(--s)*.05),#FFD45E 0 calc(var(--s)*.05),transparent calc(var(--s)*.056)),linear-gradient(#1d2430,#1d2430) 50% 100%/22% 64% no-repeat}
-.mon.t2 .ear.l{left:30%;transform:rotate(-16deg)}.mon.t2 .ear.r{right:30%;transform:rotate(16deg)}
-.mon.t3 .ear{top:-10%;width:18%;height:26%;filter:none;border-radius:0!important;background:#FFD45E;clip-path:polygon(50% 0,100% 100%,0 100%)}
-.mon.t3 .ear.l{left:22%}.mon.t3 .ear.r{right:22%}
-.mon.shiny .bod{box-shadow:0 0 0 calc(var(--s)*.04) #FFD45E,0 0 calc(var(--s)*.3) #FFD45E}
-.mon.unk .bod,.mon.unk .ear,.mon.unk .foot{background:#c9c2b6}
-.mon.unk .blush{display:none}
-@keyframes monbob{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-5%) scale(1.02,.97)}}
-@keyframes monblink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.mon img.px{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;pointer-events:none}
+.mon b{position:absolute;left:50%;bottom:-16%;transform:translateX(-50%);background:#fff;color:#1d2430;font:400 calc(var(--s)*.085)/1 'Press Start 2P',ui-monospace,monospace;padding:calc(var(--s)*.03) calc(var(--s)*.04);border:calc(var(--s)*.025) solid #1d2430;white-space:nowrap}
+.mon.shiny img.px{filter:drop-shadow(0 0 calc(var(--s)*.06) #FFD45E) drop-shadow(0 0 calc(var(--s)*.02) #FFD45E)}
+.mon.unk{opacity:.55}
+@keyframes monbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4%)}}
 </style>
 <style>
 :root{--bg:#F7F7F5;--card:#fff;--ink:#0E1116;--mute:#6B7480;--line:#E3E6E8;--acc:#1AA7B0;--gold:#E0A030}
@@ -830,7 +811,32 @@ var RCOL=['#6B7480','#1AA7B0','#8A5CC2','#E0A030'],RW=[60,28,10,2],ZONE=[.34,.24
 var dexData={};try{localStorage.removeItem('kr-datadex')}catch(e){}
 function saveDex(){paintDexN()}
 function paintDexN(){document.getElementById('dexn').textContent=Object.keys(dexData).length+'/'+MONS.length}
-function monHTML(m,size,shiny,unk){return '<span class="mon t'+m[3]+(shiny?' shiny':'')+(unk?' unk':'')+'" style="--c:'+m[2]+';--s:'+size+'px"><i class="ear l"></i><i class="ear r"></i><i class="foot l"></i><i class="foot r"></i><i class="bod"></i><i class="eye l"></i><i class="eye r"></i><i class="blush l"></i><i class="blush r"></i><i class="mouth"></i><b>'+(unk?'?':m[1])+'</b></span>'}
+/* créatures en pixel art : dessinées pixel par pixel sur une grille 24×24, agrandies sans lissage */
+var MONPX={};
+function monSprite(col,t,unk){var key=col+t+(unk?'u':'');if(MONPX[key])return MONPX[key];
+  var N=24,K=20/N,g=[],c=unk?'#c9c2b6':col,i,x,y;
+  function sh(h,f){var n=parseInt(h.slice(1),16),r=n>>16,gg=n>>8&255,b=n&255;if(f>1){r+=(255-r)*(f-1);gg+=(255-gg)*(f-1);b+=(255-b)*(f-1)}else{r*=f;gg*=f;b*=f}return 'rgb('+(r|0)+','+(gg|0)+','+(b|0)+')'}
+  function tri(X,Y,a,b,cc){function s(p,q,r){return (p[0]-r[0])*(q[1]-r[1])-(q[0]-r[0])*(p[1]-r[1])}var P=[X,Y],d1=s(P,a,b),d2=s(P,b,cc),d3=s(P,cc,a);return !((d1<0||d2<0||d3<0)&&(d1>0||d2>0||d3>0))}
+  for(y=0;y<N;y++){g[y]=[];for(x=0;x<N;x++){var X=(x+.5)*K,Y=(y+.5)*K,v=null;
+    if((Math.abs(X-6.2)<1.6||Math.abs(X-13.8)<1.6)&&Y>16.6&&Y<19.4)v=sh(c,.72);
+    if(t==0&&(Math.hypot(X-4.8,Y-4.6)<2.4||Math.hypot(X-15.2,Y-4.6)<2.4))v=sh(c,.85);
+    if(t==1&&(tri(X,Y,[3.6,.6],[2.4,7.5],[8.2,5])||tri(X,Y,[16.4,.6],[17.6,7.5],[11.8,5])))v=sh(c,.88);
+    if(t==3&&(tri(X,Y,[5.4,.6],[3.8,5.6],[8,5])||tri(X,Y,[14.6,.6],[16.2,5.6],[12,5])))v='#FFD45E';
+    var e=((X-10)/7.6)*((X-10)/7.6)+((Y-11.4)/7)*((Y-11.4)/7);
+    if(e<=1){v=c;if(((X-7)/2.6)*((X-7)/2.6)+((Y-7.8)/2)*((Y-7.8)/2)<=1)v=sh(c,1.38);else if(((X-13.2)/5.5)*((X-13.2)/5.5)+((Y-16.2)/3.6)*((Y-16.2)/3.6)<=1)v=sh(c,.8)}
+    g[y][x]=v}}
+  var o=g.map(function(r){return r.slice()});
+  for(y=0;y<N;y++)for(x=0;x<N;x++)if(!g[y][x]&&((g[y-1]&&g[y-1][x])||(g[y+1]&&g[y+1][x])||g[y][x-1]||g[y][x+1]))o[y][x]='#1d2430';
+  for(y=0;y<N;y++)for(x=0;x<N;x++){var X=(x+.5)*K,Y=(y+.5)*K;
+    if(t==2){if((X>6.4&&X<7.9||X>12.1&&X<13.6)&&Y>1.6&&Y<5.4)o[y][x]='#1d2430';if(Math.hypot(X-7.1,Y-1.3)<1.4||Math.hypot(X-12.9,Y-1.3)<1.4)o[y][x]='#FFD45E'}
+    if(!g[y][x])continue;
+    if(((X>6.2&&X<8.8)||(X>11.2&&X<13.8))&&Y>7.9&&Y<11.4)o[y][x]=(((X>6.2&&X<7.5)||(X>11.2&&X<12.5))&&Y<9.2)?'#fff':'#1d2430';
+    if(((X>4.2&&X<6.6)||(X>13.4&&X<15.8))&&Y>11.6&&Y<12.9)o[y][x]='#FF8FA3';
+    if(Math.abs(X-10)<1.6&&Y>11.7&&Y<13.4&&(Y>12.55?Math.abs(X-10)<.95:Math.abs(X-10)>.7))o[y][x]='#1d2430'}
+  var cv=document.createElement('canvas');cv.width=cv.height=N;var cx=cv.getContext('2d');
+  for(y=0;y<N;y++)for(x=0;x<N;x++)if(o[y][x]){cx.fillStyle=o[y][x];cx.fillRect(x,y,1,1)}
+  return MONPX[key]=cv.toDataURL()}
+function monHTML(m,size,shiny,unk){return '<span class="mon t'+m[3]+(shiny?' shiny':'')+(unk?' unk':'')+'" style="--c:'+m[2]+';--s:'+size+'px"><img class="px" alt="" src="'+monSprite(m[2],m[3],unk)+'"><b>'+(unk?'?':m[1])+'</b></span>'}
 var bt=document.getElementById('bt'),BT=null;
 function pickMon(){var w=wanted();if(w.length){var t=w[Math.random()*w.length|0];return MONS.filter(function(m){return m[0]===t})[0]}var r=Math.random()*100,acc=0,tier=0;for(var i=0;i<4;i++){acc+=RW[i];if(r<acc){tier=i;break}}var pool=MONS.filter(function(m){return m[3]===tier});return pool[Math.random()*pool.length|0]}
 function encounter(){var m=pickMon(),shiny=Math.random()<1/30,want=wanted().indexOf(m[0])>=0,z=want?.45:ZONE[m[3]];state='battle';held=[];tap=null;
