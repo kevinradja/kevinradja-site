@@ -5,3 +5,21 @@ const { id, lang, title } = Astro.props as { id: string; lang: Lang; title: stri
 ---
 <p class="mute dash-note">{ui.common.dashNote[lang]}</p>
 <div class="dash"><iframe src={`/dashboards/${id}.html?lang=${lang}`} title={title} loading="lazy"></iframe></div>
+<script>
+  // Le cadre fait 900 px par défaut : on le réduit à la hauteur réelle du dashboard pour éviter un grand vide.
+  const frames = document.querySelectorAll<HTMLIFrameElement>('.dash iframe');
+  const fit = (f: HTMLIFrameElement) => {
+    try {
+      const b = f.contentDocument?.body;
+      if (!b) return;
+      const h = Math.ceil(b.getBoundingClientRect().height);
+      f.style.height = h > 200 && h < 900 ? h + 'px' : '';
+    } catch (e) {}
+  };
+  frames.forEach((f) => {
+    f.addEventListener('load', () => fit(f));
+    if (f.contentDocument?.readyState === 'complete') fit(f);
+  });
+  let t: number | undefined;
+  addEventListener('resize', () => { clearTimeout(t); t = window.setTimeout(() => frames.forEach((f) => { f.style.height = ''; requestAnimationFrame(() => fit(f)); }), 200); });
+</script>
