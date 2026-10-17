@@ -7,13 +7,13 @@ const fr = lang === 'fr';
 {compact ? (
   <a class="cbx" href={href} aria-label={fr ? 'Voir mes certifications' : 'See my certifications'}>
     <span class="cbx-l">{fr ? 'Certifié' : 'Certified'}</span>
-    {[...new Set(certs.map(c => c.by))].map(by => { const c = certs.find(x => x.by === by)!; return <span class="cbx-c" style={`--bc:${c.c}`}><i>{c.i}</i>{by}</span>; })}
+    {[...new Set(certs.map(c => c.by))].map(by => { const c = certs.find(x => x.by === by)!; return <span class="cbx-c" style={`--bc:${c.c}`}><i><img src={c.logo} alt="" width="14" height="14" loading="lazy" /></i>{by}</span>; })}
     <span class="cbx-a">→</span>
   </a>
 ) : (
   <div class="cb-grid">
     {certs.map(c => {
-      const inner = <><span class="cb-ic">{c.i}</span><span class="cb-t"><b>{fr ? c.n : (c.en || c.n)}</b><small>{c.by} · {c.y}</small></span>{c.url ? <span class="cb-v">✓ {fr ? 'Vérifier' : 'Verify'} ↗</span> : <span class="cb-v off">{fr ? 'Obtenu' : 'Earned'}</span>}</>;
+      const inner = <><span class="cb-ic"><img src={c.logo} alt={c.by} width="24" height="24" loading="lazy" /></span><span class="cb-t"><b>{fr ? c.n : (c.en || c.n)}</b><small>{c.by} · {c.y}</small></span>{c.url ? <span class="cb-v">✓ {fr ? 'Vérifier' : 'Verify'} ↗</span> : <span class="cb-v off">{fr ? 'Obtenu' : 'Earned'}</span>}</>;
       return c.url
         ? <a class="cb" style={`--bc:${c.c}`} href={c.url} target="_blank" rel="noopener" title={fr ? 'Vérifier ce certificat chez l’émetteur' : 'Verify this certificate with the issuer'}>{inner}</a>
         : <div class="cb" style={`--bc:${c.c}`}>{inner}</div>;
