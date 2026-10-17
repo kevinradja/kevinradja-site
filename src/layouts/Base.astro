@@ -160,7 +160,7 @@ import LogoPx from '../components/LogoPx.astro';
       function rs(){W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0)}rs();addEventListener('resize',rs);
       function star(z){return{x:(Math.random()-.5)*2,y:(Math.random()-.5)*2,z:z||Math.random()*1+.05,c:Math.random()<.3?'#9FE0D8':'#F4EFE4'}}
       for(var i=0;i<900;i++)S.push(star());
-      var PRE=3100,WARP=2000,SPLASH=750,rm=root.classList.contains('warp-rm');
+      var PRE=3100,WARP=2700,SPLASH=950,rm=root.classList.contains('warp-rm');
       var q0=w.querySelector('.wq');
       /* the question types only after the press, so the keyboard sound is allowed */
       function typeQ(cb){if(!q0){cb();return}var full=q0.dataset.t,ci=0,ti=setInterval(function(){ci++;q0.textContent=full.slice(0,ci);if(full[ci-1]!==' '&&loud)key();if(ci>=full.length){clearInterval(ti);setTimeout(cb,250)}},45)}
@@ -184,14 +184,14 @@ import LogoPx from '../components/LogoPx.astro';
       addEventListener('wheel',nudge,{passive:true});addEventListener('touchmove',nudge,{passive:true});
       var sk=w.querySelector('.wskip');if(sk)sk.addEventListener('click',function(e){e.stopPropagation();end()});
       function f(now){if(done)return;if(!launchAt){requestAnimationFrame(f);return}var t=now-launchAt;if(rm)t=Math.max(t,WARP);var p=Math.min(1,t/WARP),sp=.003+Math.pow(p,2.4)*.075;
-        x.fillStyle='rgba(7,28,30,'+(p<.9?.35:.6)+')';x.fillRect(0,0,W,H);
         var cx=W/2,cy=H/2,k=Math.max(W,H)*.5;
+        if(t<=WARP){x.fillStyle='rgba(7,28,30,'+(p<.9?.35:.6)+')';x.fillRect(0,0,W,H);
         for(var i=0;i<S.length;i++){var s=S[i],px=cx+s.x/s.z*k,py=cy+s.y/s.z*k;s.z-=sp;if(s.z<=.02){S[i]=star(1);continue}
-          var nx=cx+s.x/s.z*k,ny=cy+s.y/s.z*k;x.strokeStyle=s.c;x.globalAlpha=Math.min(1,(1-s.z)*1.4);x.lineWidth=Math.min(3,(1-s.z)*2.6);x.beginPath();x.moveTo(px,py);x.lineTo(nx,ny);x.stroke()}
+          var nx=cx+s.x/s.z*k,ny=cy+s.y/s.z*k;x.strokeStyle=s.c;x.globalAlpha=Math.min(1,(1-s.z)*1.4);x.lineWidth=Math.min(3,(1-s.z)*2.6);x.beginPath();x.moveTo(px,py);x.lineTo(nx,ny);x.stroke()}}
         x.globalAlpha=1;
-        if(t>WARP){if(!plouf){plouf=true;snd('plouf')}var q=Math.min(1,(t-WARP)/SPLASH),e=1-Math.pow(1-q,3),R=e*Math.hypot(W,H)*.6;
+        if(t>WARP){if(!plouf){plouf=true;snd('plouf');var wl=w.querySelector('.wl');if(wl)wl.remove();x.fillStyle='#071C1E';x.fillRect(0,0,W,H)}var q=Math.min(1,(t-WARP)/SPLASH),e=q<.5?4*q*q*q:1-Math.pow(-2*q+2,3)/2,R=e*Math.hypot(W,H)*.6;
           w.style.webkitMaskImage=w.style.maskImage='radial-gradient(circle at 50% 50%, transparent '+R+'px, #000 '+(R+2)+'px)';
-          for(var j=0;j<3;j++){var r2=R*(1+j*.18)+4;x.strokeStyle='rgba(159,224,216,'+(1-q)*(.9-j*.25)+')';x.lineWidth=6-j*2;x.beginPath();x.arc(cx,cy,r2,0,7);x.stroke()}
+          x.fillStyle='#071C1E';x.fillRect(0,0,W,H);for(var j=0;j<3;j++){var r2=R*(1+j*.18)+4;x.strokeStyle='rgba(159,224,216,'+(1-q)*(.9-j*.25)+')';x.lineWidth=6-j*2;x.beginPath();x.arc(cx,cy,r2,0,7);x.stroke()}
           if(q>=1)return end()}
         requestAnimationFrame(f)}
       requestAnimationFrame(f);
