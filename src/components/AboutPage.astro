@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../data/projects';
 import { r, calendly, links } from '../i18n';
+import CertBadges from './CertBadges.astro';
 const { lang } = Astro.props as { lang: Lang };
 const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
 const tl = [
@@ -99,8 +100,8 @@ const how = [
         ))}
       </div>
       </div>
-      <div class="skx-strips">
-        <div class="skx-s"><div class="kicker">{T('Diplôme & certifications', 'Degree & certifications')}</div><div class="skx-t"><span class="key">{degree}</span>{certs.map(c => <span>{c}</span>)}</div></div>
+      <div class="skx-s cb-wrap" id="certifs"><div class="cb-head"><div class="kicker">{T('Diplôme & certifications', 'Degree & certifications')}</div><span class="cb-deg">🎓 {degree}</span></div><CertBadges lang={lang} /></div>
+      <div class="skx-strips cb-strips">
         <div class="skx-s"><div class="kicker">{T('Langues', 'Languages')}</div><div class="skx-t">{langs.map(l => <span>{l[0]}</span>)}</div></div>
         <div class="skx-s"><div class="kicker">{T('En dehors des données', 'Beyond data')}</div><div class="skx-t">{hobbies.map(h => <span>{h[1]}</span>)}</div></div>
       </div>

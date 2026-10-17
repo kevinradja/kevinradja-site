@@ -3,6 +3,7 @@ import type { Lang } from '../data/projects';
 import { projects } from '../data/projects';
 import { r, calendly, links } from '../i18n';
 import Logos from './Logos.astro';
+import CertBadges from './CertBadges.astro';
 import ProjectCard from './ProjectCard.astro';
 import Pricing from './Pricing.astro';
 import ContactCard from './ContactCard.astro';
@@ -66,6 +67,7 @@ import Testimonials from './Testimonials.astro';
       </div>
     )}
     <div class="c-logos"><Logos lang={lang} /></div>
+    <div class="c-certs"><CertBadges lang={lang} compact href={lang === 'fr' ? '/parcours/#certifs' : '/en/about/#certifs'} /></div>
   </div>
 </section>
 
