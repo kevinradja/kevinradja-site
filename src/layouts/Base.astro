@@ -11,6 +11,7 @@ const site = Astro.site?.origin ?? '';
 const nav = [
   { k: 'work', h: r('work', lang) }, { k: 'pricing', h: r('pricing', lang) }, { k: 'about', h: r('about', lang) }, { k: 'game', h: r('game', lang) }, { k: 'contact', h: r('contact', lang) },
 ] as const;
+import LogoPx from '../components/LogoPx.astro';
 ---
 <!doctype html>
 <html lang={lang}>
@@ -47,6 +48,7 @@ const nav = [
   <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_GB'} />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="google-site-verification" content="FtAuPADJK2NBeqQlpfsNBLrkuEiJv9SCDy-PySNsQQA" />
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin />
   {intro && <link rel="preload" href="/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin />}
@@ -100,13 +102,13 @@ const nav = [
     </div>
     <p class="wask">{lang === 'fr' ? 'Appuyez sur A pour décoller' : 'Press A to take off'} <kbd>A</kbd><small>{lang === 'fr' ? 'ou Espace, Entrée, clic gauche ou clic droit' : 'or Space, Enter, left or right click'}</small></p>
     <button class="wskip" type="button">{lang === 'fr' ? 'Passer' : 'Skip'} ›</button>
-    <div class="wl"><span>KR<i>.csv</i></span></div></div>
+    <div class="wl"><LogoPx /><span>KR<i>.csv</i></span></div></div>
   )}
   {!bare && (
   <header class="nav" id="nav">
     <div class="in">
       <div class="bar">
-      <a class="logo" href={r('home', lang)} aria-label="KR.csv, Kevin Radja">KR<i>.csv</i></a>
+      <a class="logo" href={r('home', lang)} aria-label="KR.csv, Kevin Radja"><img class="lg-ic" src="/logo-kr.svg" width="30" height="30" alt="" />KR<i>.csv</i></a>
       <nav class="links">
         {nav.map(n => <a class:list={['l', { on: path.startsWith(n.h) && n.h !== '/' }]} href={n.h}>{ui.nav[n.k][lang]}</a>)}
       </nav>
