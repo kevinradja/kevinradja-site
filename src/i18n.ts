@@ -28,11 +28,11 @@ export const altPath = (path: string, lang: Lang): string => {
 };
 
 export const ui = {
-  nav: { work: { fr: 'Réalisations', en: 'Work' }, pricing: { fr: 'Offres', en: 'Pricing' }, about: { fr: 'Parcours', en: 'About' }, contact: { fr: 'Contact', en: 'Contact' }, game: { fr: 'Jeu', en: 'Game' }, cta: { fr: 'Réserver un appel', en: 'Book a call' } },
+  nav: { work: { fr: 'Réalisations', en: 'Work' }, pricing: { fr: 'Offres', en: 'Pricing' }, about: { fr: 'Parcours', en: 'About' }, contact: { fr: 'Contact', en: 'Contact' }, game: { fr: 'Jeu', en: 'Game' }, cta: { fr: 'Me contacter', en: 'Get in touch' } },
   theme: { fr: 'Changer de thème', en: 'Toggle theme' },
   sound: { fr: 'Activer / couper le son', en: 'Sound on / off' },
   footer: {
-    line: { fr: 'Consultant Data & BI freelance · Paris, France', en: 'Freelance Data & BI consultant · Paris, France' },
+    line: { fr: 'Data & BI · Paris, France', en: 'Data & BI · Paris, France' },
     legal: { fr: 'Mentions légales', en: 'Legal notice' },
     privacy: { fr: 'Confidentialité', en: 'Privacy' },
     siret: { fr: 'Entreprise individuelle · SIRET 130 405 574 00018', en: 'Sole trader (EI) · SIRET 130 405 574 00018' },
@@ -47,7 +47,7 @@ export const ui = {
     back: { fr: '← Retour au portfolio', en: '← Back to portfolio' },
     next: { fr: 'Projet suivant', en: 'Next project' },
     trusted: { fr: 'Ils me font confiance', en: 'Trusted by teams at' },
-    available: { fr: 'Disponible à temps partiel pour de nouvelles missions', en: 'Available part-time for new projects' },
+    available: { fr: 'Ouvert aux échanges autour de la data', en: 'Happy to talk data' },
   },
 };
 

@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /portfolio/
 Disallow: /en/portfolio/
+Disallow: /offres/
+Disallow: /en/pricing/
 
 Sitemap: https://kevinradja-site.vercel.app/sitemap-index.xml

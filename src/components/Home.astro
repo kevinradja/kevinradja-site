@@ -1,20 +1,14 @@
 ---
 import type { Lang } from '../data/projects';
 import { projects } from '../data/projects';
-import { r, calendly, links } from '../i18n';
+import { r, links } from '../i18n';
 import Logos from './Logos.astro';
 import CertBadges from './CertBadges.astro';
 import ProjectCard from './ProjectCard.astro';
-import Pricing from './Pricing.astro';
 import ContactCard from './ContactCard.astro';
 const { lang, vitrine = false } = Astro.props as { lang: Lang; vitrine?: boolean };
 const T = (fr: string, en: string) => (lang === 'fr' ? fr : en);
 
-const audiences = [
-  { w: T('PME', 'SMEs'), img: '', h: T('Des chiffres fiables, sans embaucher.', 'Reliable numbers, without hiring.'), p: T('Sans recruter de data analyst : un prix annoncé d’avance, un livrable que vous gardez, et une équipe formée pour s’en servir.', 'Without hiring a data analyst: an upfront price, a deliverable you keep, and a team trained to use it.'), to: r('pricing', lang), c: T('Voir les offres', 'See the packs') },
-  { w: T('Équipes data', 'Data teams'), img: '/thumbs/04.png', h: T('Un renfort qui connaît les grands groupes.', 'Extra hands who know large organisations.'), p: T('Power BI, SQL, Python, clôtures et qualité de données : j’ai livré chez Google, Coface, Dassault Systèmes et KPMG.', 'Power BI, SQL, Python, closes and data quality: delivered at Google, Coface, Dassault Systèmes and KPMG.'), to: r('work', lang), c: T('Voir les réalisations', 'See the work') },
-  { w: T('Recruteurs', 'Recruiters'), img: '/avatar.svg', h: T('L’essentiel, en trente secondes.', 'The essentials, in thirty seconds.'), p: T('Parcours, compétences, certifications et disponibilité : tout ce qu’il faut pour décider d’un premier appel.', 'Background, skills, certifications and availability: everything you need to decide on a first call.'), to: r('about', lang), c: T('Voir le parcours', 'See the background') },
-];
 
 const results = [
   { v: '−30 %', t: T('de temps de reporting', 'less reporting time'), p: T('Les équipes commerciales passent moins de temps à compiler leurs chiffres, et plus de temps à vendre.', 'Sales teams spend less time compiling numbers, and more time selling.'), c: 'Coface · 12 ' + T('pays', 'countries'), logo: '/logos/coface.svg' },
@@ -55,14 +49,13 @@ import Testimonials from './Testimonials.astro';
         </div>
       </div>
       <div class="c-hero-r">
-        <p>{T('Kevin Radja, consultant Data & BI freelance à Paris. Je transforme vos fichiers Excel, SQL et Power BI en tableaux de bord clairs et en reporting automatisé.', 'Kevin Radja, freelance Data & BI consultant in Paris. I turn your Excel, SQL and Power BI files into clear dashboards and automated reporting.')}</p>
-        <p class="c-now">{T('En parallèle : Manager Data & Digital dans un grand groupe automobile.', 'Alongside: Data & Digital Manager at a major automotive group.')}</p>
-        {!vitrine && <p class="c-avail"><span class="dot"></span>{T('Disponible à temps partiel', 'Available part-time')}</p>}
+        <p>{vitrine ? T('Kevin Radja, consultant Data & BI à Paris. Je transforme vos fichiers Excel, SQL et Power BI en tableaux de bord clairs et en reporting automatisé.', 'Kevin Radja, Data & BI consultant in Paris. I turn your Excel, SQL and Power BI files into clear dashboards and automated reporting.') : T('Kevin Radja, Manager Data & Digital à Paris, ex-Google. Je transforme des données complexes en tableaux de bord clairs et en décisions.', 'Kevin Radja, Data & Digital Manager in Paris, ex-Google. I turn complex data into clear dashboards and decisions.')}</p>
+        <p class="c-now">{vitrine ? T('En parallèle : Manager Data & Digital dans un grand groupe automobile.', 'Alongside: Data & Digital Manager at a major automotive group.') : T('Aujourd’hui dans un grand groupe automobile. Avant : Google, Coface, Dassault Systèmes, KPMG.', 'Today at a major automotive group. Before: Google, Coface, Dassault Systèmes, KPMG.')}</p>
       </div>
     </div>
     {!vitrine && (
       <div class="c-ctas">
-        <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver un appel', 'Book a call')} →</a>
+        <a class="btn p" href={r('work', lang)}>{T('Voir les réalisations', 'See the work')} →</a>
         <a class="btn s" href={links.linkedin} target="_blank" rel="noopener">LinkedIn →</a>
       </div>
     )}
@@ -128,7 +121,7 @@ import Testimonials from './Testimonials.astro';
                   <li><em class="w">!</em>{T('Marge en baisse sur la gamme B : revoir les prix', 'Margin falling on range B: review prices')}</li>
                   <li><em class="g">✓</em>{T('Stock suffisant pour juin, pas de commande urgente', 'Enough stock for June, no urgent order')}</li>
                 </ul>
-                <p class="db-cta">{T('Un tableau de bord ne sert à rien s’il ne fait pas décider. Et sur vos chiffres, qu’est-ce qu’il dirait ?', 'A dashboard is useless if it does not drive decisions. What would it say about your numbers?')}{!vitrine && <span> {T('Un audit de 2 h suffit pour le savoir.', 'A 2-hour audit is enough to find out.')}</span>}</p>
+                <p class="db-cta">{T('Un tableau de bord ne sert à rien s’il ne fait pas décider.', 'A dashboard is useless if it does not drive decisions.')}</p>
               </div>
             </div>
           </div>
@@ -214,22 +207,6 @@ import Testimonials from './Testimonials.astro';
     </h2>
     <p>{T('Pas de jargon, pas d’usine à gaz : des chiffres justes, que toute l’équipe comprend du premier coup.', 'No jargon, no overbuilt systems: accurate numbers the whole team gets at first glance.')}</p>
     </div>
-    {!vitrine && (
-    <div class="c-aud c-aud-dark">
-    <div class="c-aud-l" role="tablist">
-      <div class="kicker">{T('Vous êtes…', 'You are…')}</div>
-      {audiences.map((a, i) => <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-i={i}>{a.w}</button>)}
-    </div>
-    <div class="c-aud-r">
-      {audiences.map((a, i) => (
-        <div class:list={['c-aud-p', { on: i === 0 }]} data-i={i} role="tabpanel">
-          {a.img ? <img class:list={[{ avatar: a.img.endsWith('.svg') }]} src={a.img} alt="" loading="lazy" /> : <div class="c-aud-dev"><div class="device"><div class="scr"><div class="dg mini"><div class="t"><small>{T('Trésorerie', 'Cash')}</small><b>62 k€</b><em>▲ 8 %</em></div><div class="t"><small>{T('Marge', 'Margin')}</small><b>31 %</b><em>▲ 2 pts</em></div><div class="t"><small>{T('Factures', 'Invoices')}</small><b>14</b><em>{T('à relancer', 'to chase')}</em></div><div class="w"><svg viewBox="0 0 200 60"><polyline fill="none" stroke="var(--acc)" stroke-width="3" points="0,40 25,42 50,34 75,36 100,26 125,30 150,20 175,18 200,12" /></svg></div><div class="d"><svg viewBox="0 0 42 42" width="64" height="64"><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--line)" stroke-width="6" /><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--acc)" stroke-width="6" stroke-dasharray="72 28" transform="rotate(-90 21 21)" /></svg></div></div></div></div></div>}
-          <div class="c-aud-card"><h3>{a.h}</h3><p>{a.p}</p><a class="btn p sm" href={a.to}>{a.c} →</a></div>
-        </div>
-      ))}
-    </div>
-    </div>
-    )}
   </div>
 </section>
 
@@ -250,44 +227,16 @@ import Testimonials from './Testimonials.astro';
 </section>
 
 {!vitrine && (
-<section class="sec c-how">
-  <div class="wrap">
-    <div class="c-head"><div class="kicker">{T('Comment je travaille', 'How I work')}</div><h2>{T('Trois étapes, une date ferme.', 'Three steps, one firm date.')}</h2></div>
-    <ol class="how">
-      <li class="rv"><span class="how-n">01</span><b>{T('Appel de 30 min', '30-min call')}</b><em>{T('Réponse sous 48 à 72 h · sans engagement', 'Reply within 48–72 h · no commitment')}</em><p>{T('On regarde votre fichier ou votre outil ensemble. Je vous dis ce qu’il faut faire, et à quel prix.', 'We look at your file or tool together. I tell you what needs doing, and at what price.')}</p></li>
-      <li class="rv"><span class="how-n">02</span><b>{T('Diagnostic & cadrage', 'Diagnosis & scoping')}</b><em>{T('Une page à valider · 50 % à la commande', 'One page to approve · 50% upfront')}</em><p>{T('Les indicateurs, les sources de données, le livrable et la date de livraison. Vous validez, je démarre.', 'The KPIs, the data sources, the deliverable and the delivery date. You approve, I start.')}</p></li>
-      <li class="rv"><span class="how-n">03</span><b>{T('Livraison', 'Delivery')}</b><em>{T('1 à 10 semaines selon l’offre', '1 to 10 weeks depending on the offer')}</em><p>{T('Quick-Win en 1 à 2 semaines, Pack PME en 3 à 5, Cockpit BI en 6 à 10. Livrable documenté, formation de votre équipe, 30 jours de corrections inclus.', 'Quick-Win in 1–2 weeks, SME Pack in 3–5, BI Cockpit in 6–10. Documented deliverable, team training, 30 days of fixes included.')}</p></li>
-    </ol>
-  </div>
-</section>
-)}
-
-{!vitrine && (
-<section class="sec">
-  <div class="wrap">
-    <div class="c-head"><div class="kicker">{T('Offres', 'Pricing')}</div><h2>{T('Trois façons de travailler ensemble.', 'Three ways to work together.')}</h2></div>
-    <div class="deal" id="deal">
-      <div class="deal-av"><img src="/avatar-think.svg" alt="" width="400" height="400" /><span class="deal-bubble" data-a={T('Hmm…', 'Hmm…')} data-b={T('Et hop !', 'Here you go!')} data-c={T('Choisissez une carte !', 'Pick a card!')}>{T('Hmm…', 'Hmm…')}</span></div>
-      <Pricing lang={lang} compact />
-    </div>
-    <div class="card" style="margin-top:22px;padding:24px 28px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap">
-      <div><div class="kicker" style="margin-bottom:6px">{T('Première marche', 'First step')}</div><h3>{T('Audit data de 2 h · 150 €, déduits si on travaille ensemble.', '2-hour data audit · €150, credited if we work together.')}</h3><p style="font-size:14.5px;margin-top:6px">{T('Vous repartez avec un diagnostic écrit de votre reporting et trois actions concrètes.', 'You leave with a written diagnosis of your reporting and three concrete actions.')}</p></div>
-      <a class="btn p" href={calendly} target="_blank" rel="noopener">{T('Réserver l’audit', 'Book the audit')}</a>
-    </div>
-    <div style="margin-top:18px;text-align:center"><a class="btn s" href={r('pricing', lang)}>{T('Options, déroulé et questions fréquentes', 'Options, process and FAQ')} →</a></div>
-  </div>
-</section>
-
-
-
+<>
 <!-- 7. FINAL CALL : giant words -->
 <section class="c-final" id="contact">
   <div class="wrap">
     <div class="kicker">Contact</div>
-    <h2 class="c-final-t">{T('Parlons de', 'Let’s talk')}<br />{T('vos données.', 'data.')}</h2>
+    <h2 class="c-final-t">{T('Parlons', 'Let’s talk')}<br />{T('data.', 'data.')}</h2>
     <ContactCard lang={lang} />
   </div>
 </section>
+</>
 )}
 
 <script is:inline>

@@ -2,14 +2,14 @@
 import '../styles/global.css';
 import type { Lang } from '../data/projects';
 import { r, altPath, ui, calendly, links } from '../i18n';
-interface Props { lang: Lang; title: string; description: string; bare?: boolean; image?: string; path?: string }
-const { lang, title, description, bare = false, image = '/og.png' } = Astro.props;
+interface Props { lang: Lang; title: string; description: string; bare?: boolean; image?: string; path?: string; noindex?: boolean }
+const { lang, title, description, bare = false, image = '/og.png', noindex = false } = Astro.props;
 const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/';
 const other = altPath(path, lang);
 const intro = !bare && (path === '/' || path === '/en/');
 const site = Astro.site?.origin ?? '';
 const nav = [
-  { k: 'work', h: r('work', lang) }, { k: 'pricing', h: r('pricing', lang) }, { k: 'about', h: r('about', lang) }, { k: 'game', h: r('game', lang) }, { k: 'contact', h: r('contact', lang) },
+  { k: 'work', h: r('work', lang) }, { k: 'about', h: r('about', lang) }, { k: 'game', h: r('game', lang) }, { k: 'contact', h: r('contact', lang) },
 ] as const;
 import LogoPx from '../components/LogoPx.astro';
 ---
@@ -21,19 +21,17 @@ import LogoPx from '../components/LogoPx.astro';
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={site + path} />
+  {noindex && <meta name="robots" content="noindex" />}
   <script type="application/ld+json" set:html={JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'Person', '@id': site + '/#kevin', name: 'Kevin Radja', url: site + '/', image: site + '/og.png',
-        jobTitle: lang === 'fr' ? 'Consultant Data & BI freelance' : 'Freelance Data & BI Consultant',
+        jobTitle: lang === 'fr' ? 'Manager Data & Digital' : 'Data & Digital Manager',
         address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' },
         knowsAbout: ['Power BI', 'Excel', 'SQL', 'Python', 'Looker Studio', 'Business Intelligence', 'Copilot Studio', 'AI agents', 'n8n'],
         alumniOf: ['EFREI Paris', 'Université Paris-Saclay'],
-        sameAs: ['https://www.linkedin.com/in/kevin-radja/', 'https://www.malt.fr/profile/kevinradja', 'https://www.upwork.com/freelancers/~01b7d421a89e7225f7', 'https://www.fiverr.com/kevin_desu', 'https://comeup.com/fr/@kevinradja', 'https://befreelancr.com/profile/31250/kevin'] },
-      { '@type': 'ProfessionalService', '@id': site + '/#krcsv', name: 'KR.csv', url: site + '/', founder: { '@id': site + '/#kevin' },
-        description: lang === 'fr' ? 'Tableaux de bord Power BI, fiabilisation Excel, reporting automatisé, agents IA et automatisations.' : 'Power BI dashboards, Excel clean-up, automated reporting, AI agents and automations.',
-        areaServed: ['FR', 'EU'], address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' } },
-      { '@type': 'WebSite', '@id': site + '/#site', url: site + '/', name: 'Kevin Radja · KR.csv', inLanguage: ['fr', 'en'], publisher: { '@id': site + '/#kevin' } }
+        sameAs: ['https://www.linkedin.com/in/kevin-radja/'] },
+      { '@type': 'WebSite', '@id': site + '/#site', url: site + '/', name: 'Kevin Radja · Portfolio data', inLanguage: ['fr', 'en'], publisher: { '@id': site + '/#kevin' } }
     ]
   })} />
 
@@ -129,7 +127,7 @@ import LogoPx from '../components/LogoPx.astro';
       </div>
       <button class="ic burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       </div>
-      <a class="btn p sm cta" href={calendly} target="_blank" rel="noopener">{ui.nav.cta[lang]}</a>
+      <a class="btn p sm cta" href={r('contact', lang)}>{ui.nav.cta[lang]}</a>
     </div>
   </header>
   )}
@@ -139,16 +137,16 @@ import LogoPx from '../components/LogoPx.astro';
     <div class="wrap in">
       <div class="foot-tag">{lang === 'fr' ? 'Vos données, enfin lisibles.' : 'Your data, finally readable.'}</div>
       <div class="links">
-        <a href={r('work', lang)}>{ui.nav.work[lang]}</a><a href={r('pricing', lang)}>{ui.nav.pricing[lang]}</a><a href={r('about', lang)}>{ui.nav.about[lang]}</a><a href={r('game', lang)}>{ui.nav.game[lang]}</a><a href={r('contact', lang)}>{ui.nav.contact[lang]}</a>
+        <a href={r('work', lang)}>{ui.nav.work[lang]}</a><a href={r('about', lang)}>{ui.nav.about[lang]}</a><a href={r('game', lang)}>{ui.nav.game[lang]}</a><a href={r('contact', lang)}>{ui.nav.contact[lang]}</a>
       </div>
       <div class="links">
-        <a href={links.linkedin} target="_blank" rel="noopener">LinkedIn</a><a href={links.malt} target="_blank" rel="noopener">Malt</a>
+        <a href={links.linkedin} target="_blank" rel="noopener">LinkedIn</a>
         <a href={r('legal', lang)}>{ui.footer.legal[lang]}</a><a href={r('privacy', lang)}>{ui.footer.privacy[lang]}</a>
       </div>
     </div>
     <div class="foot-giant-box"><span class="foot-giant" aria-hidden="true">Kevin Radja</span></div>
     <div class="wrap">
-      <div class="foot-bot"><span>{ui.footer.siret[lang]}</span><span>© {new Date().getFullYear()} Kevin Radja · {ui.footer.line[lang]}</span></div>
+      <div class="foot-bot"><span>© {new Date().getFullYear()} Kevin Radja · {ui.footer.line[lang]}</span></div>
     </div>
   </footer>
   )}

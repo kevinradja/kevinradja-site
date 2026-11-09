@@ -9,7 +9,7 @@ const slugOf = (n: string) => n.split(' ')[0].toLowerCase();
 {testimonials.length > 0 && (
 <section class="sec c-avis" id="avis">
   <div class="wrap">
-    <div class="c-head"><div class="kicker">{T('Ils en parlent', 'What they say')}</div><h2>{T('Retours de mission.', 'Feedback from the field.')}</h2></div>
+    <div class="c-head"><div class="kicker">{T('Ils en parlent', 'What they say')}</div><h2>{T('Retours d’expérience.', 'Feedback from the field.')}</h2></div>
     <div class="avx">
       {testimonials.map((t, i) => {
         const p = t.project ? projects.find(x => x.slug === t.project) : undefined;
